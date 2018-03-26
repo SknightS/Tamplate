@@ -72,7 +72,7 @@
                             <div class="job-title-cell"><h6>Job title / Company name</h6></div>
                             <div class="job-type-cell"><h6>Type</h6></div>
                             <div class="location-cell"><h6>Location</h6></div>
-                            <div class="expired-date-cell"><h6>Expired Date</h6></div>
+                            <div class="expired-date-cell"><h6>Expired Dated</h6></div>
                             <div class="salary-cell"><h6>Salary</h6></div>
                         </div> <!-- end .table-cells -->
                     </div> <!-- end .table-header -->

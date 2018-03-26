@@ -191,3 +191,6 @@
 
 <!-- Footer -->
     @endsection
+@section('foot-js')
+
+    @endsection

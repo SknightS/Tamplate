@@ -93,3 +93,5 @@
 <script src="js/jquery.magnific-popup.js"></script>
 <!-- Scripts.js -->
 <script src="js/scripts.js"></script>
+
+@yield('foot-js')

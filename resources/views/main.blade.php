@@ -24,6 +24,7 @@
 
 
 
+
 <!-- Footer -->
 @include('footer')
 </body>

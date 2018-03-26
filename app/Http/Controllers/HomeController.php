@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Post;
+use App\Job;
+
 class HomeController extends Controller
 {
     /**
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -24,6 +27,11 @@ class HomeController extends Controller
     public function index()
     {
 
+       // $leasetpost=(new Post())->leasetpost();
+
+       // return $leasetpost;
+
         return view('home');
+      //  ->with('leasetpost' , $leasetpost);
     }
 }
