@@ -25,6 +25,7 @@ Route::view('job-listening','layouts.jobListening')->name('jobListening');
 Route::view('post-resume-form','layouts.post-resume-form')->name('post-resume-form');
 Route::view('about-us','layouts.about-us')->name('about-us');
 Route::view('contact-us','layouts.contact-us')->name('contact-us');
+Route::view('employee-dashboard','employee.employeDashboard')->name('employee');
 
 
 Route::get('/showpost', 'Test@showpost')->name('showpost');
