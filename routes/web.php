@@ -29,6 +29,7 @@ Route::view('employee-dashboard','employee.employeDashboard')->name('employee');
 
 
 Route::get('/showpost', 'Test@showpost')->name('showpost');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
