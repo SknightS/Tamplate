@@ -1,6 +1,6 @@
 @extends('employee.employeDashboard')
 @section('emp-contant')
-<div id="change-password" class="tab-pane fade in">
+
     <div class="password-form-wrapper">
         <h3 class="dark">Change Password</h3>
         <form class="password-form">
@@ -23,5 +23,5 @@
             <button type="submit" class="button">Save change</button>
         </div> <!-- end .password-button-wrapper -->
     </div> <!-- end .password-form-wrapper -->
-</div>
+
 @endsection

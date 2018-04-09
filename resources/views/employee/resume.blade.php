@@ -1,6 +1,8 @@
 @extends('employee.employeDashboard')
 @section('emp-contant')
-<div id="resume" class="tab-pane fade in">
+
+
+
 							    	<div class="profile-badge"><h6>My resume</h6></div>
 							        <div class="profile-wrapper">
 
@@ -121,5 +123,6 @@
 </div> <!-- end .profile-skills-wrapper -->
 
 </div> <!-- end .profile-wrapper -->
-</div>
+
+
     @endsection

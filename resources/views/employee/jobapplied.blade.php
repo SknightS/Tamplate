@@ -1,6 +1,6 @@
-@extends('main')
+@extends('employee.employeDashboard')
 @section('emp-contant')
-<div id="manage-applications" class="tab-pane fade in">
+
     <h3 class="tab-pane-title">Manage applications</h3>
     <div class="job-applications-list-wrapper">
         <div class="job-application flex items-center no-column no-wrap">
@@ -135,5 +135,5 @@
         </ul>
         <a href="#0" class="button">Next<i class="ion-ios-arrow-right"></i></a>
     </div> <!-- end .jobpress-custom-pager -->
-</div>
+
     @endsection

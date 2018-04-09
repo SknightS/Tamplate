@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade" id="login">
-                        <form class="login-form" method="POST" action="{{ route('login') }}">
+                        <form class="login-form" method="POST" action="">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 

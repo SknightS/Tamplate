@@ -56,7 +56,7 @@
                 </div> <!-- end .navigation -->
                 <div class="button-group-merged flex no-column">
                     <a href="{{route('postJob')}}" class="button">Post a Job</a>
-                    <a href="#register" class="button" data-toggle="modal" data-target=".bs-modal-sm">Sign Up</a>
+                    <a href="{{route('loginshow')}}" class="button"  data-target=".bs-modal-sm">Sign Up</a>
                 </div> <!-- end .button-group-merged -->
             </div> <!-- end .right -->
         </div> <!-- end .header-inner -->
