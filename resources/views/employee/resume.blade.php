@@ -27,7 +27,7 @@
             <div class="divider"></div>
 
             <div class="profile-about profile-section">
-                <h3 class="dark profile-title">About me<span><i class="ion-edit"></i></span></h3>
+                <h3 class="dark profile-title">About me<span><a style="cursor: pointer" onclick="editCandidateAboutMe()"><i class="ion-edit"></i></a></span></h3>
                 <p>Nullam semper erat arcu, ac tincidunt sem venenatis vel. Curabitur at dolor ac ligula fermentum euismod ac ullamcorper nulla. Integer blandit ultricies aliquam. Pellentesque quis dui varius, dapibus velit id, iaculis ipsum. Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien, tempus sit amet rutrum eu, commodo eu lacus. Morbi in ligula nibh. Maecenas ut mi at odio hendrerit eleif end tempor vitae augue. Fusce eget arcu et nibh dapibus maximus consectetur in est. Sed iaculis luctus nibh sed venenatis.</p>
             </div> <!-- end .profile-about -->
 
@@ -44,7 +44,7 @@
             <h6 class="projects-count">4 projects</h6>
         </div> <!-- end .profile-experience-left -->
         <div class="profile-experience-right">
-            <img src="images/company-logo-big01.jpg" alt="company-logo" class="img-responsive">
+            <img src="{{url('public/images/company-logo-big01.jpg')}}" alt="company-logo" class="img-responsive">
         </div> <!-- end .profile-experience-right -->
     </div> <!-- end .profile-experience -->
     <div class="spacer-md"></div>
@@ -57,7 +57,7 @@
             <h6 class="projects-count">4 projects</h6>
         </div> <!-- end .profile-experience-left -->
         <div class="profile-experience-right">
-            <img src="images/company-logo-big05.jpg" alt="company-logo" class="img-responsive">
+            <img src="{{url('public/images/company-logo-big05.jpg')}}" alt="company-logo" class="img-responsive">
         </div> <!-- end .profile-experience-right -->
     </div> <!-- end .profile-experience -->
 </div> <!-- end .profile-experience-wrapper -->
@@ -134,8 +134,9 @@
                 closeIcon: true,
                 type: 'orange',
                 typeAnimated: true,
+                draggable:true,
                 content: '' +
-                '<form action="" class="formName">' +
+                '<form id="CandidateForm" action="" class="formName">' +
                 '<div class="form-group">' +
                 '<div class="col-md-6">' +
                 '<label>Name</label>' +
@@ -217,7 +218,56 @@
                 onContentReady: function () {
                     // bind to events
                     var jc = this;
-                    this.$content.find('form').on('submit', function (e) {
+                    this.$content.find('#CandidateForm').on('submit', function (e) {
+                        // if the user submits the form by pressing enter in the field.
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                }
+            });
+
+        }
+        function editCandidateAboutMe() {
+
+            $.confirm({
+                title: 'Candidate Info! : About Me',
+                columnClass: 'large',
+                closeIcon: true,
+                type: 'orange',
+                typeAnimated: true,
+                draggable:true,
+                content: '' +
+                '<form id="CandidateFormAboutMe" action="" class="formName">' +
+                '<div class="form-group">' +
+                '<label>About Me</label>' +
+                '<textarea id="aboutMe" placeholder="Candidate about me" class="form-control" required rows="4" cols="50"></textarea>' +
+                '</div>' +
+                '</form>',
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var name = this.$content.find('#aboutMe').val();
+                            if(!name){
+                                $.alert('provide a valid aboutMe');
+                                return false;
+                            }
+                            $.alert('Your aboutMe is ' + name);
+                        }
+                    },
+                    tryAgain: {
+                        text: 'Cancel',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            //close
+                        }
+                    },
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    this.$content.find('#CandidateFormAboutMe').on('submit', function (e) {
                         // if the user submits the form by pressing enter in the field.
                         e.preventDefault();
                         jc.$$formSubmit.trigger('click'); // reference the button and click it
