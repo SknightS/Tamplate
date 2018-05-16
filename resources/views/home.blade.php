@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <div class="section hero-section transparent" style="background-image: url('images/background01.jpg');">
+    <div class="section hero-section transparent" style="background-image: url('public/images/background01.jpg');">
         <div class="inner">
             <div class="container">
                 <div class="job-search-form">
@@ -36,21 +36,21 @@
                             <a href="about.php">About us<i class="ion-ios-arrow-thin-right"></i></a>
                         </div> <!-- end .feature-box -->
                         <div class="features-box-icon flex no-wrap">
-                            <img src="images/feature-icon01.png" alt="cup-icon" class="img-responsive self-center">
+                            <img src="{{url('public/images/feature-icon01.png')}}" alt="cup-icon" class="img-responsive self-center">
                             <div class="content self-center">
                                 <h3>High average salary</h3>
                                 <a href="#0">Learn more<i class="ion-ios-arrow-thin-right"></i></a>
                             </div> <!-- end .content -->
                         </div> <!-- end .feature-box-icon -->
                         <div class="features-box-icon flex no-wrap">
-                            <img src="images/feature-icon02.png" alt="cup-icon" class="img-responsive self-center">
+                            <img src="{{url('public/images/feature-icon02.png')}}" alt="cup-icon" class="img-responsive self-center">
                             <div class="content self-center">
                                 <h3>2,500,000+ candidates</h3>
                                 <a href="#0">Our community<i class="ion-ios-arrow-thin-right"></i></a>
                             </div> <!-- end .content -->
                         </div> <!-- end .feature-box-icon -->
                         <div class="user-profile-icon self-center">
-                            <img src="images/profile-icon01.png" alt="profile-icon" class="img-responsive self-center">
+                            <img src="{{url('public/images/profile-icon01.png')}}" alt="profile-icon" class="img-responsive self-center">
                         </div> <!-- end .profile-icon -->
                     </div> <!-- end .features-bar-inner -->
                 </div> <!-- end .container -->
@@ -83,7 +83,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Company name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/company-logo01.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/company-logo01.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Web Designer needed</a></h4>
                                     <p class="small">Quick studio</p>
@@ -122,7 +122,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Company name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/company-logo02.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/company-logo02.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">We're hiring a fullstack developer</a></h4>
                                     <p class="small">Archive inc.</p>
@@ -161,7 +161,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Company name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/company-logo03.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/company-logo03.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Looking for a project leader</a></h4>
                                     <p class="small">Comply agency</p>
@@ -200,7 +200,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Company name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/company-logo04.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/company-logo04.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Front-end developer needed</a></h4>
                                     <p class="small">Folder cooperation</p>
@@ -239,7 +239,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Company name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/company-logo05.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/company-logo05.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Software Engineer</a></h4>
                                     <p class="small">Bookcover publisher</p>
@@ -299,27 +299,27 @@
                 <div class="category-grid">
                     <div class="category-row flex no-wrap space-between items-center">
                         <div class="item">
-                            <img src="images/category-icon01.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon01.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Finance</h4>
                             <p class="light">4286 Jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon02.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon02.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Construction</h4>
                             <p class="light">452 Jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon03.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon03.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Logistics</h4>
                             <p class="light">1867 Jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon04.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon04.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Art/Design</h4>
                             <p class="light">3094 jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon05.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon05.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Sales/Marketing</h4>
                             <p class="light">2955 jobs</p>
                         </div> <!-- end .item -->
@@ -327,27 +327,27 @@
 
                     <div class="category-row flex no-wrap space-between items-center">
                         <div class="item">
-                            <img src="images/category-icon06.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon06.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Science</h4>
                             <p class="light">470 Jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon07.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon07.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Technologies</h4>
                             <p class="light">4536 Jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon08.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon08.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Healthcare</h4>
                             <p class="light">2619 Jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon09.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon09.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Education/Training</h4>
                             <p class="light">1132 jobs</p>
                         </div> <!-- end .item -->
                         <div class="item">
-                            <img src="images/category-icon10.png" alt="category-icon" class="img-responsive">
+                            <img src="{{url('public/images/category-icon10.png')}}" alt="category-icon" class="img-responsive">
                             <h4>Food Services</h4>
                             <p class="light">757 jobs</p>
                         </div> <!-- end .item -->
@@ -386,7 +386,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/candidate-small01.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/candidate-small01.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Richard Thomas</a></h4>
 
@@ -420,7 +420,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/candidate-small02.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/candidate-small02.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Asron Bailey</a></h4>
                                     <p class="small">Archive inc.</p>
@@ -454,7 +454,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/candidate-small03.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/candidate-small03.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Tammy Dixon</a></h4>
 
@@ -488,7 +488,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/candidate-small04.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/candidate-small04.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Brandon Reynolds</a></h4>
 
@@ -522,7 +522,7 @@
                                 <div class="cell-mobile-label">
                                     <h6>Name</h6>
                                 </div> <!-- end .cell-label -->
-                                <img src="images/candidate-small05.jpg" alt="company-logo" class="img-responsive">
+                                <img src="{{url('public/images/candidate-small05.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
                                     <h4><a href="job-details.php">Kathy Crawford</a></h4>
 
@@ -570,7 +570,7 @@
     </div>
     <!-- end .section -->
 
-    <div class="section cta-section parallax text-center" style="background-image: url('images/background02.jpg');">
+    <div class="section cta-section parallax text-center" style="background-image: url('public/images/background02.jpg');">
         <div class="inner">
             <div class="container">
                 <h2>Looking for a job</h2>

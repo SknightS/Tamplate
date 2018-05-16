@@ -2,7 +2,7 @@
     <div class="container clearfix">
         <div class="header-inner flex space-between items-center">
             <div class="left">
-                <div class="logo"><a href="{{route('home')}}"><img src="images/logo.png" alt="JobPress" width="250" height="100" class="img-responsive"></a></div>
+                <div class="logo"><a href="{{route('home')}}"><img src="{{url('public/images/logo.png')}}" alt="JobPress" width="250" height="100" class="img-responsive"></a></div>
             </div> <!-- end .left -->
             <div class="right flex space-between no-column items-center">
                 <div class="navigation">

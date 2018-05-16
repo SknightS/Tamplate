@@ -1,39 +1,37 @@
 @extends('employee.employeDashboard')
 @section('emp-contant')
 
+    <div class="profile-badge"><h6>My resume</h6></div>
+        <div class="profile-wrapper">
 
+            <div class="profile-info profile-section flex no-column no-wrap">
+                <div class="profile-picture">
+                    <img src="{{url('public/images/candidate-big01.jpg')}}" alt="candidate-picture" class="img-responsive">
+                </div> <!-- end .user-picture -->
+                <div class="profile-meta">
+                    <h4 class="dark">Mark anderson  <span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>
+                    <p>UI/UX Designer</p>
+                    <div class="profile-contact flex items-center no-wrap no-column">
+                        <h6 class="contact-location">Manhattan,<span>NYC, USA</span></h6>
+                        <h6 class="contact-phone">(+01)-212-322-5732</h6>
+                        <h6 class="contact-email">mark.anderson@gmail.com</h6>
+                    </div> <!-- end .profile-contact -->
+                    <ul class="list-unstyled social-icons flex no-column">
+                        <li><a href="#0"><i class="ion-social-twitter"></i></a></li>
+                        <li><a href="#0"><i class="ion-social-facebook"></i></a></li>
+                        <li><a href="#0"><i class="ion-social-instagram"></i></a></li>
+                    </ul> <!-- end .social-icons -->
+                </div> <!-- end .profile-meta -->
+            </div> <!-- end .profile-info -->
 
-							    	<div class="profile-badge"><h6>My resume</h6></div>
-							        <div class="profile-wrapper">
+            <div class="divider"></div>
 
-										<div class="profile-info profile-section flex no-column no-wrap">
-											<div class="profile-picture">
-												<img src="images/candidate-big01.jpg" alt="candidate-picture" class="img-responsive">
-											</div> <!-- end .user-picture -->
-											<div class="profile-meta">
-												<h4 class="dark">Mark anderson</h4>
-												<p>UI/UX Designer</p>
-												<div class="profile-contact flex items-center no-wrap no-column">
-													<h6 class="contact-location">Manhattan,<span>NYC, USA</span></h6>
-													<h6 class="contact-phone">(+01)-212-322-5732</h6>
-													<h6 class="contact-email">mark.anderson@gmail.com</h6>
-</div> <!-- end .profile-contact -->
-<ul class="list-unstyled social-icons flex no-column">
-    <li><a href="#0"><i class="ion-social-twitter"></i></a></li>
-    <li><a href="#0"><i class="ion-social-facebook"></i></a></li>
-    <li><a href="#0"><i class="ion-social-instagram"></i></a></li>
-</ul> <!-- end .social-icons -->
-</div> <!-- end .profile-meta -->
-</div> <!-- end .profile-info -->
+            <div class="profile-about profile-section">
+                <h3 class="dark profile-title">About me<span><i class="ion-edit"></i></span></h3>
+                <p>Nullam semper erat arcu, ac tincidunt sem venenatis vel. Curabitur at dolor ac ligula fermentum euismod ac ullamcorper nulla. Integer blandit ultricies aliquam. Pellentesque quis dui varius, dapibus velit id, iaculis ipsum. Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien, tempus sit amet rutrum eu, commodo eu lacus. Morbi in ligula nibh. Maecenas ut mi at odio hendrerit eleif end tempor vitae augue. Fusce eget arcu et nibh dapibus maximus consectetur in est. Sed iaculis luctus nibh sed venenatis.</p>
+            </div> <!-- end .profile-about -->
 
-<div class="divider"></div>
-
-<div class="profile-about profile-section">
-    <h3 class="dark profile-title">About me<span><i class="ion-edit"></i></span></h3>
-    <p>Nullam semper erat arcu, ac tincidunt sem venenatis vel. Curabitur at dolor ac ligula fermentum euismod ac ullamcorper nulla. Integer blandit ultricies aliquam. Pellentesque quis dui varius, dapibus velit id, iaculis ipsum. Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien, tempus sit amet rutrum eu, commodo eu lacus. Morbi in ligula nibh. Maecenas ut mi at odio hendrerit eleif end tempor vitae augue. Fusce eget arcu et nibh dapibus maximus consectetur in est. Sed iaculis luctus nibh sed venenatis.</p>
-</div> <!-- end .profile-about -->
-
-<div class="divider"></div>
+            <div class="divider"></div>
 
 <div class="profile-experience-wrapper profile-section">
     <h3 class="dark profile-title">Work experience<span><i class="ion-edit"></i></span></h3>
@@ -124,5 +122,110 @@
 
 </div> <!-- end .profile-wrapper -->
 
-
     @endsection
+
+@section('foot-js')
+    <script>
+        function editCandidate() {
+
+            $.confirm({
+                title: 'Candidate Info!',
+                columnClass: 'large',
+                closeIcon: true,
+                type: 'orange',
+                typeAnimated: true,
+                content: '' +
+                '<form action="" class="formName">' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label>Name</label>' +
+                '<input type="text" id="name" placeholder="Candidate name" class="form-control" required />' +
+                '</div>' +
+                '<div class="col-md-6">' +
+                '<label>Profession</label>' +
+                '<input type="text" id="profession" placeholder="Candidate profession" class="form-control" required />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Phone</label>' +
+                '<input type="text" id="phone" placeholder="Candidate Phone" class="form-control col-md-4" required />' +
+                '</div>'+
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Email</label>' +
+                '<input type="email" id="email" placeholder="Candidate email" class="form-control col-md-4" required />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Address1</label>' +
+                '<input type="text" id="address1" placeholder="Candidate address1" class="form-control col-md-4" required />' +
+                '</div>'+
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Address2</label>' +
+                '<input type="text" id="address2" placeholder="Candidate address2" class="form-control col-md-4" required />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Address3</label>' +
+                '<input type="text" id="address3" placeholder="Candidate address3" class="form-control col-md-4" required />' +
+                '</div>'+
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Facebook</label>' +
+                '<input type="text" id="facebook" placeholder="Candidate facebook" class="form-control col-md-4" required />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Tweeter</label>' +
+                '<input type="text" id="tweeter" placeholder="Candidate tweeter acc" class="form-control col-md-4" required />' +
+                '</div>'+
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Instagram</label>' +
+                '<input type="text" id="instagram" placeholder="Candidate instagram" class="form-control col-md-4" required />' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Image</label>' +
+                '<input type="file" id="image" accept="image/*" placeholder="Candidate image" class="form-control col-md-4" />' +
+                '</div>' +
+                '</div>' +
+                '</form>',
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var name = this.$content.find('#name').val();
+                            if(!name){
+                                $.alert('provide a valid name');
+                                return false;
+                            }
+                            $.alert('Your name is ' + name);
+                        }
+                    },
+                    tryAgain: {
+                        text: 'Cancel',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            //close
+                        }
+                    },
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    this.$content.find('form').on('submit', function (e) {
+                        // if the user submits the form by pressing enter in the field.
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                }
+            });
+
+        }
+    </script>
+
+@endsection

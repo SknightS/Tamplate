@@ -1,4 +1,5 @@
-@include('employee.head')
+{{--@include('employee.head')--}}
+@include('head')
 		<!-- Breadcrumb Bar -->
 		<div class="section breadcrumb-bar solid-blue-bg">
 			<div class="inner">
@@ -26,10 +27,7 @@
                         <div class="right-side-content">
                             <div class="tab-content candidate-dashboard">
 
-                                @yield('emp-contant')
-
-                            </div>
-                        </div>
+                               @yield('emp-contant')
 
 							</div> <!-- end .candidate-dashboard -->
 						</div> <!-- end .right-side-content -->

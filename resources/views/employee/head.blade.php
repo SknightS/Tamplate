@@ -24,4 +24,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/grasshopper.css" rel="stylesheet">
 
+    <!-- font-awesome-->
+    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">--}}
+
 </head>
