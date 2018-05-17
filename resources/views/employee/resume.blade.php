@@ -34,10 +34,10 @@
             <div class="divider"></div>
 
 <div class="profile-experience-wrapper profile-section">
-    <h3 class="dark profile-title">Work experience<span><i class="ion-edit"></i></span><span><a style="cursor: pointer" onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
+    <h3 class="dark profile-title">Work experience<span><a style="cursor: pointer;display: block" id="workExperienceEdit" onclick="editCandidateWorkExperience()"><i class="ion-edit"></i></a><a style="cursor: pointer;display: none" id="WorkExperienceUpdate" onclick="updateCandidateWorkExperience()"><i class="ion-checkmark"></i></a><a style="cursor: pointer" onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
     <div class="profile-experience flex space-between no-wrap no-column">
         <div class="profile-experience-left">
-            <h5 class="profile-designation dark">UI/UX designer</h5>
+            <h5 class="profile-designation dark">UI/UX designer &nbsp;<span><a class="deleteIcon" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
             <h5 class="profile-company dark">Banana inc.</h5>
             <p class="small ultra-light">May 2015 - Present (1.5 years)</p>
             <p>Nulla molestie sed lorem non suscipit. Morbi imperdiet ex sit amet tortor faucibus ultricies. Fusce tincidunt elementum imperdiet.</p>
@@ -50,7 +50,7 @@
     <div class="spacer-md"></div>
     <div class="profile-experience flex space-between no-wrap no-column">
         <div class="profile-experience-left">
-            <h5 class="profile-designation dark">UI Designer</h5>
+            <h5 class="profile-designation dark">UI Designer<span><a class="deleteIcon" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
             <h5 class="profile-company dark">Whale creative</h5>
             <p class="small ultra-light">May 2013 - May 2015 (over 2 years)</p>
             <p>Nulla molestie sed lorem non suscipit. Morbi imperdiet ex sit amet tortor faucibus ultricies. Fusce tincidunt elementum imperdiet.</p>
@@ -65,15 +65,15 @@
 <div class="divider"></div>
 
 <div class="profile-education-wrapper profile-section">
-    <h4 class="dark profile-title">Education<span><i class="ion-edit"></i></span></h4>
+    <h4 class="dark profile-title">Education<span><a style="cursor: pointer;display: block" id="EducationEdit" onclick="editCandidateEducation()"><i class="ion-edit"></i></a><a style="cursor: pointer;display: none" id="EducationUpdate" onclick="updateCandidateEducation()"><i class="ion-checkmark"></i></a><a style="cursor: pointer" onclick="addCandidateEducation()"><i class="ion-plus"></i></a></span></h4>
         <div class="profile-education">
-            <h5 class="dark">Massachusetts Institute of Technology</h5>
+            <h5 class="dark">Massachusetts Institute of Technology&nbsp;<span><a class="deleteIconEducation" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
             <p>Bachelor of Computer Science</p>
             <p class="ultra-light">2010-2014</p>
         </div> <!-- end .profile-education -->
         <div class="spacer-md"></div>
         <div class="profile-education">
-            <h5 class="dark">School of Arts & Sciences of Stanford University</h5>
+            <h5 class="dark">School of Arts & Sciences of Stanford University&nbsp;<span><a class="deleteIconEducation" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
             <p>Bachelor of Arts & Sciences</p>
             <p class="ultra-light">2008-2012</p>
         </div> <!-- end .profile-education -->
@@ -245,11 +245,11 @@
                 '</div>' +
                 '<div class="form-group">' +
                 '<div class="col-md-6">' +
-                '<label class="col-md-2">Post Name</label>' +
+                '<label >Post Name</label>' +
                 '<input type="text" id="postName" placeholder="Post Name" class="form-control col-md-4" required />' +
                 '</div>'+
                 '<div class="col-md-6">' +
-                '<label class="col-md-2">Duration</label>' +
+                '<label >Duration</label>' +
                 '<input type="text" id="duration" placeholder="Duration" class="form-control col-md-4" required />' +
                 '</div>' +
                 '</div>' +
@@ -340,6 +340,34 @@
                     });
                 }
             });
+
+        }
+        function editCandidateWorkExperience() {
+
+            $(".deleteIcon").css("display", "block");
+            $("#workExperienceEdit").css("display", "none");
+            $("#WorkExperienceUpdate").css("display", "block");
+
+        }
+        function updateCandidateWorkExperience() {
+
+            $(".deleteIcon").css("display", "none");
+            $("#workExperienceEdit").css("display", "block");
+            $("#WorkExperienceUpdate").css("display", "none");
+
+        }
+        function editCandidateEducation() {
+
+            $(".deleteIconEducation").css("display", "block");
+            $("#EducationEdit").css("display", "none");
+            $("#EducationUpdate").css("display", "block");
+
+        }
+        function updateCandidateEducation() {
+
+            $(".deleteIconEducation").css("display", "none");
+            $("#EducationEdit").css("display", "block");
+            $("#EducationUpdate").css("display", "none");
 
         }
     </script>
