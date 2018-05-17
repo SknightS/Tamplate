@@ -34,7 +34,7 @@
             <div class="divider"></div>
 
 <div class="profile-experience-wrapper profile-section">
-    <h3 class="dark profile-title">Work experience<span><i class="ion-edit"></i></span></h3>
+    <h3 class="dark profile-title">Work experience<span><i class="ion-edit"></i></span><span><a style="cursor: pointer" onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
     <div class="profile-experience flex space-between no-wrap no-column">
         <div class="profile-experience-left">
             <h5 class="profile-designation dark">UI/UX designer</h5>
@@ -134,7 +134,8 @@
                 closeIcon: true,
                 type: 'orange',
                 typeAnimated: true,
-                draggable:true,
+                draggable: false,
+
                 content: '' +
                 '<form id="CandidateForm" action="" class="formName">' +
                 '<div class="form-group">' +
@@ -227,6 +228,70 @@
             });
 
         }
+        function addCandidateWorkExperience() {
+
+            $.confirm({
+                title: 'Candidate Info!',
+                columnClass: 'large',
+                closeIcon: true,
+                type: 'orange',
+                typeAnimated: true,
+                draggable: false,
+                content: '' +
+                '<form id="CandidateWorkExperienceForm" action="" class="">' +
+                '<div class="col-md-12">' +
+                '<label>Company Name</label>' +
+                '<input type="text" id="companyName" placeholder="Company Name" class="form-control" required />' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Post Name</label>' +
+                '<input type="text" id="postName" placeholder="Post Name" class="form-control col-md-4" required />' +
+                '</div>'+
+                '<div class="col-md-6">' +
+                '<label class="col-md-2">Duration</label>' +
+                '<input type="text" id="duration" placeholder="Duration" class="form-control col-md-4" required />' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-12">' +
+                '<label>Description</label>' +
+                '<textarea id="description" placeholder="Description" class="form-control" required rows="4" cols="50"></textarea>' +
+                '</div>' +
+
+                '</form>',
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var name = this.$content.find('#name').val();
+                            if(!name){
+                                $.alert('provide a valid name');
+                                return false;
+                            }
+                            $.alert('Your name is ' + name);
+                        }
+                    },
+                    tryAgain: {
+                        text: 'Cancel',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            //close
+                        }
+                    },
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    this.$content.find('#CandidateWorkExperienceForm').on('submit', function (e) {
+                        // if the user submits the form by pressing enter in the field.
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                }
+            });
+
+        }
         function editCandidateAboutMe() {
 
             $.confirm({
@@ -235,7 +300,8 @@
                 closeIcon: true,
                 type: 'orange',
                 typeAnimated: true,
-                draggable:true,
+                draggable: false,
+
                 content: '' +
                 '<form id="CandidateFormAboutMe" action="" class="formName">' +
                 '<div class="form-group">' +
