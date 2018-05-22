@@ -1,15 +1,21 @@
-{{--@include('employee.head')--}}
-@include('head')
+@include('employee.head')
+
 		<!-- Breadcrumb Bar -->
 		<div class="section breadcrumb-bar solid-blue-bg">
 			<div class="inner">
 				<div class="container">
 					<div class="breadcrumb-menu flex items-center no-column">
-						<img src="{{url('public/images/candidate06.jpg')}}" alt="avatar" class="img-responsive">
+
+						@if($candidateInfo->image != null)
+						<img src="{{url('public/employeeImages/'.$candidateInfo->image)}}" alt="avatar" class="img-responsive">
+						@else
+							<img src="{{url('public/employeeImages/dummy.jpg')}}" alt="avatar" class="img-responsive">
+						@endif
 						<div class="breadcrumb-info-dashboard">
-							<h2>Mark Anderson</h2>
-							<h4>UI/UX designer</h4>
+							<h2>{{$candidateInfo->name}}</h2>
+							<h4>{{$candidateInfo->professionTitle}}</h4>
 						</div> <!-- end .candidate-info -->
+
 					</div> <!-- end .breadcrumb-menu -->
 				</div> <!-- end .container -->
 			</div> <!-- end .inner -->

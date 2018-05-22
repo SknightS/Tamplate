@@ -23,6 +23,7 @@
     <!-- Style.css -->
     <link href="{{url('public/css/style.css')}}" rel="stylesheet">
     <link href="{{url('public/css/grasshopper.css')}}" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 
 </head>

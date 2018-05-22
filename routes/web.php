@@ -33,7 +33,8 @@ Auth::routes();
 
 
 //employee
-Route::view('employee-dashboard','employee.resume')->name('employee');
+//Route::view('employee-dashboard','employee.resume')->name('employee');
+Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');
