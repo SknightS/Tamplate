@@ -36,6 +36,8 @@ Auth::routes();
 //Route::view('employee-dashboard','employee.resume')->name('employee');
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
 
+Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');
+
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');
 Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepassword');

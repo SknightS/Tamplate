@@ -14,7 +14,8 @@
                     @endif
                 </div> <!-- end .user-picture -->
                 <div class="profile-meta">
-                    <h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>
+                    {{--<h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>--}}
+                    <h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" data-toggle="modal" data-target="#myModal"><i class="ion-edit"></i></a></span></h4>
                     <p>{{$candidateInfo->professionTitle}}</p>
                     <div class="profile-contact flex items-center no-wrap no-column">
                         <h6 class="contact-location">Manhattan,<span>NYC, USA</span></h6>
@@ -132,41 +133,69 @@
     @endsection
 
 @section('foot-js')
-    <script type="text/javascript">
-        $(document).ready(function(){
-            var counter = 2;
-            $("#addButton").click(function () {
-//                if(counter>10){
-//                    alert("Only 10 SocialLink allow");
-//                    return false;
-//                }
-//                var newTextBoxDiv = $(document.createElement('div'))
-//                    .attr("id", 'TextBoxDiv' + counter);
-//
-//                newTextBoxDiv.after().html('<div class="form-group">'+
-//                    '<div class="col-md-6">'+
-//                    '<label class="control-label col-md-3">Social Media Name#'+ counter + ' : </label>'+
-//                    '<div class="col-md-3">'+
-//                    '<input class="form-control input-height" type="text" id="socialMedieaName" name="socialMedieaName[]" >'+
-//                    '</div>'+
-//                    '</div>'+
-//                    '<div class="col-md-6">'+
-//                    '<label class="control-label col-md-3">Social Media Link#'+ counter + ' : </label>'+
-//                    '<div class="col-md-3">'+
-//                    '<input class="form-control input-height" type="text" id="socialMedieaLink" name="socialMedieaLink[]">'+
-//                    '</div>'+
-//                    '</div>'+
-//                    '</div>'
-//                );
-//                newTextBoxDiv.appendTo("#TextBoxesGroup");
-//                counter++;
-                alert('asd')
-            });
-        });
-    </script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function(){
+            $("#myModal").on("show.bs.modal", function(e) {
+
+
+                var id= '{{$candidateInfo->candidateId}}';
+                var name = '{{$candidateInfo->name}}';
+                var professionTitle = '{{$candidateInfo->professionTitle}}';
+                var phone = '{{$candidateInfo->phone}}';
+                var email = '{{$candidateInfo->email}}';
+
+                $.ajax({
+                    type: "POST",
+                    url: '{{route('employee.showInfo')}}',
+                    data: {name:name,profession:professionTitle,phone:phone,email:email,id:id},
+                    success: function(data){
+                       $(".modal-body").html(data);
+                        //console.log(data);
+
+                    },
+                });
+
+            });
+        });
+
         function editCandidate() {
+
+            {{--var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');--}}
+            {{--var id= '{{$candidateInfo->candidateId}}';--}}
+            {{--var name = '{{$candidateInfo->name}}';--}}
+            {{--var professionTitle = '{{$candidateInfo->professionTitle}}';--}}
+            {{--var phone = '{{$candidateInfo->phone}}';--}}
+            {{--var email = '{{$candidateInfo->email}}';--}}
+
+
+
+            {{--$("#myModal").on("show.bs.modal", function(e) {--}}
+                {{--var id = $(e.relatedTarget).data('target-id');--}}
+                {{--$.get( "/controller/" + id, function( data ) {--}}
+                    {{--$(".modal-body").html(data.html);--}}
+                {{--});--}}
+
+            {{--});--}}
+
+
+        {{--$.ajax({--}}
+            {{--type: "POST",--}}
+            {{--url: '{{route('employee.showInfo')}}',--}}
+            {{--data: {name:name,profession:professionTitle,phone:phone,email:email,id:id},--}}
+            {{--success: function(data){--}}
+                {{--//Probably add the code to close your modal box here if successful--}}
+                {{--$(".modal-body").html(data);--}}
+            {{--},--}}
+        {{--});--}}
 
             $.confirm({
                 title: 'Candidate Info!',

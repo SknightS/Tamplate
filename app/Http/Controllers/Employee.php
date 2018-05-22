@@ -30,12 +30,31 @@ class Employee extends Controller
 
         $userId=Auth::user()->id;
         $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+
         $socialLink = Socialmedia::where('fkCandidateId', $candidateInfo->candidateId)->get();
+
 
         return view('employee.resume', compact('candidateInfo','socialLink'));
 
 
     }
+    public function showInforForEdit(Request $r){
+
+        $socialLinks = Socialmedia::leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')->where('fkCandidateId', $r->id)->get();
+
+        $candidateInfo=array(
+            'id'=>$r->id,
+            'name'=>$r->name,
+            'professionTitle'=>$r->professionTitle,
+            'phone'=>$r->phone,
+            'email'=>$r->email,
+        );
+
+        $object = (object) $candidateInfo;
+        return view('employee.editCandidateInformation',['candidateInfo' => $object,'socialLink'=>$socialLinks])->render();
+
+    }
+
     public function showJobApplied(){
         return view('employee.jobapplied');
     }
