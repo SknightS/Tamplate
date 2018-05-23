@@ -40,9 +40,11 @@ Route::post('/employee-Info-update/{candidate}', 'Employee@CandidateInfoUpdate')
 
 
 Route::post('/employee-getAllCity}', 'Employee@getAllCityByState')->name('employee.getAllAddressCity');
-Route::post('/employee-getAllSocialMedia}', 'Employee@getAllSocialMedia')->name('employee.getAllSocialMedia');
 
-Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
+Route::post('/employee-AboutMe-Edit}', 'Employee@showCandidateAboutMeForEdit')->name('employee.editCandidateAboutMe');
+Route::post('/employee-AboutMe-update/{candidate}', 'Employee@CandidateAboutMeUpdate')->name('employee.updateCandidateAboutMe');
+
+//Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');

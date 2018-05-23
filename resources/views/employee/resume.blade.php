@@ -29,11 +29,11 @@
                         <h6 class="contact-email">{{$candidateInfo->email}}</h6>
                     </div> <!-- end .profile-contact -->
                     <div>
-                        <h5 class="dark">Social Media<span><a style="cursor: pointer" onclick="addCandidateSocialMedia()"><i class="ion-plus"></i></a></span></h5>
+                        {{--<h5 class="dark">Social Media<span><a style="cursor: pointer" onclick="addCandidateSocialMedia()"><i class="ion-plus"></i></a></span></h5>--}}
                     <ul class="list-unstyled social-icons flex no-column">
                         @foreach($socialLink as $socialLinks)
                         <li><a href="{{$socialLinks->link}}">{{$socialLinks->link}}</a>
-                            <span><a id="editSocialMedia" style="cursor: pointer;color: black" onclick="editSocialMedia()"><i class="ion-edit"></i></a></span>
+                            {{--<span><a id="editSocialMedia" style="cursor: pointer;color: black" onclick="editSocialMedia()"><i class="ion-edit"></i></a></span>--}}
                         </li>
                         @endforeach
                         {{--<li><a href="#0"><i class="ion-social-facebook"></i></a></li>--}}
@@ -47,7 +47,7 @@
 
             <div class="profile-about profile-section">
                 <h3 class="dark profile-title">About me<span><a style="cursor: pointer" onclick="editCandidateAboutMe()"><i class="ion-edit"></i></a></span></h3>
-                <p>Nullam semper erat arcu, ac tincidunt sem venenatis vel. Curabitur at dolor ac ligula fermentum euismod ac ullamcorper nulla. Integer blandit ultricies aliquam. Pellentesque quis dui varius, dapibus velit id, iaculis ipsum. Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien, tempus sit amet rutrum eu, commodo eu lacus. Morbi in ligula nibh. Maecenas ut mi at odio hendrerit eleif end tempor vitae augue. Fusce eget arcu et nibh dapibus maximus consectetur in est. Sed iaculis luctus nibh sed venenatis.</p>
+                <p>{{$candidateInfo->aboutme}}</p>
             </div> <!-- end .profile-about -->
 
             <div class="divider"></div>
@@ -174,53 +174,8 @@
             });
             @endif
 
-            {{--$("#myModal").on("show.bs.modal", function(e) {--}}
-
-
-                {{--var id= '{{$candidateInfo->candidateId}}';--}}
-                {{--var name = '{{$candidateInfo->name}}';--}}
-                {{--var professionTitle = '{{$candidateInfo->professionTitle}}';--}}
-                {{--var phone = '{{$candidateInfo->phone}}';--}}
-                {{--var email = '{{$candidateInfo->email}}';--}}
-                {{--var addressId = '{{$candidateInfo->address_addressId}}';--}}
-
-                {{--$.ajax({--}}
-                    {{--type: "POST",--}}
-                    {{--url: '{{route('employee.showInfo')}}',--}}
-                    {{--data: {name:name,profession:professionTitle,phone:phone,email:email,id:id,address:addressId},--}}
-                    {{--success: function(data){--}}
-                       {{--$(".modal-body").html(data);--}}
-                        {{--//console.log(data);--}}
-
-                    {{--},--}}
-                {{--});--}}
-
-            {{--});--}}
-
         });
 
-        function editSocialMedia() {
-
-            var id= '{{$candidateInfo->candidateId}}';
-
-            $.ajax({
-                type: "POST",
-                url: '{{route('employee.getAllSocialMedia')}}',
-                data: {id:id},
-                success: function(data){
-
-                    $('.modal-body').html(data);
-                    $('#myModal').modal({show:true});
-
-                },
-            });
-
-
-
-
-            //$("#myModal").modal();
-
-        }
 
         function editCandidate() {
 
@@ -240,12 +195,31 @@
                 success: function(data){
 
                     $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info!");
                     $('#myModal').modal({show:true});
 
                 },
             });
 
         }
+        function editCandidateAboutMe() {
+
+            var id= '{{$candidateInfo->candidateId}}';
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.editCandidateAboutMe')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModal').modal({show:true});
+
+                },
+            });
+
+        }
+
         function addCandidateWorkExperience() {
 
             $.confirm({
@@ -302,56 +276,6 @@
                     // bind to events
                     var jc = this;
                     this.$content.find('#CandidateWorkExperienceForm').on('submit', function (e) {
-                        // if the user submits the form by pressing enter in the field.
-                        e.preventDefault();
-                        jc.$$formSubmit.trigger('click'); // reference the button and click it
-                    });
-                }
-            });
-
-        }
-        function editCandidateAboutMe() {
-
-            $.confirm({
-                title: 'Candidate Info! : About Me',
-                columnClass: 'large',
-                closeIcon: true,
-                type: 'orange',
-                typeAnimated: true,
-                draggable: false,
-
-                content: '' +
-                '<form id="CandidateFormAboutMe" action="" class="formName">' +
-                '<div class="form-group">' +
-                '<label>About Me</label>' +
-                '<textarea id="aboutMe" placeholder="Candidate about me" class="form-control" required rows="4" cols="50"></textarea>' +
-                '</div>' +
-                '</form>',
-                buttons: {
-                    formSubmit: {
-                        text: 'Submit',
-                        btnClass: 'btn-blue',
-                        action: function () {
-                            var name = this.$content.find('#aboutMe').val();
-                            if(!name){
-                                $.alert('provide a valid aboutMe');
-                                return false;
-                            }
-                            $.alert('Your aboutMe is ' + name);
-                        }
-                    },
-                    tryAgain: {
-                        text: 'Cancel',
-                        btnClass: 'btn-red',
-                        action: function(){
-                            //close
-                        }
-                    },
-                },
-                onContentReady: function () {
-                    // bind to events
-                    var jc = this;
-                    this.$content.find('#CandidateFormAboutMe').on('submit', function (e) {
                         // if the user submits the form by pressing enter in the field.
                         e.preventDefault();
                         jc.$$formSubmit.trigger('click'); // reference the button and click it

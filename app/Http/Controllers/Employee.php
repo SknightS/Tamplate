@@ -114,18 +114,12 @@ class Employee extends Controller
 
 
     }
-    public function getAllSocialMedia(Request $r){
+    public function showCandidateAboutMeForEdit(Request $r){
 
-        $socialMedias = Socialmedia::select('socialmedia.id','socialmedia.link','socialmedianame.name')
-            ->leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')
-            ->where('socialmedia.fkCandidateId',$r->id)
-            ->get();
-
-        return view('employee.editSocialMediaInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress])->render();
+        $candidateInfo = Candidate::Select('aboutme')->where('candidateId', $r->id)->get();
 
 
-
-
+        return view('employee.editCandidateAbouteMe',['candidateInfo' => $candidateInfo,'id'=>$r->id])->render();
 
     }
     public function CandidateInfoUpdate($candidate,Request $r){
@@ -163,6 +157,18 @@ class Employee extends Controller
         $employeeInfo->address_addressId=$employeeAddress->addressId;
         $employeeInfo->save();
 
+
+
+        Session::flash('success_msg', 'Your Information Updated Successfully!');
+        return back();
+
+    }
+    public function CandidateAboutMeUpdate($candidate,Request $r){
+
+        $employeeInfo=Candidate::findOrFail($candidate);
+        $employeeInfo->aboutme=$r->aboutMe;
+
+        $employeeInfo->save();
 
 
         Session::flash('success_msg', 'Your Information Updated Successfully!');
