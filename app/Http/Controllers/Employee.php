@@ -36,11 +36,25 @@ class Employee extends Controller
         $userId=Auth::user()->id;
         $candidateInfo = Candidate::where('fkuserId', $userId)->first();
 
+        if ($candidateInfo->address_addressId !=null){
+
+            $employeeAddress=Address::select('address.addresscol','master_subarb.name as city','master_state.name as state')
+                ->leftJoin('master_subarb', 'master_subarb.id', '=', 'address.master_subarb_id')
+                ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id')
+                ->where('addressId',$candidateInfo->address_addressId)
+                ->get();
+
+        }else{
+            $employeeAddress=null;
+
+        }
+
         $socialLink = Socialmedia::where('fkCandidateId', $candidateInfo->candidateId)->get();
 
 
 
-        return view('employee.resume', compact('candidateInfo','socialLink'));
+
+        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress'));
 
 
     }
@@ -48,16 +62,30 @@ class Employee extends Controller
 
         $addressStates = DB::table('master_state')->get();
 
+        if ($r->address !=null){
+
+            $employeeAddress=Address::select('address.addresscol','master_subarb.name as city','master_subarb.id as cityId','master_state.name as state','master_state.id as stateId')
+                ->leftJoin('master_subarb', 'master_subarb.id', '=', 'address.master_subarb_id')
+                ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id')
+                ->where('addressId',$r->address)
+                ->get();
+
+        }else{
+            $employeeAddress=null;
+
+        }
+
         $candidateInfo=array(
             'id'=>$r->id,
             'name'=>$r->name,
             'professionTitle'=>$r->profession,
             'phone'=>$r->phone,
             'email'=>$r->email,
+            'address'=>$r->address,
         );
 
         $object = (object) $candidateInfo;
-        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates])->render();
+        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress])->render();
 
     }
 
@@ -106,13 +134,20 @@ class Employee extends Controller
             })->save($location2);
         }
 
-        $employeeInfo->save();
 
-        $employeeAddress=Address::findOrFail($employeeInfo->address_addressId);
+
+        if ($employeeInfo->address_addressId != null) {
+            $employeeAddress = Address::findOrFail($employeeInfo->address_addressId);
+        }else{
+            $employeeAddress= new Address();
+        }
         $employeeAddress->addresscol=$r->address;
         $employeeAddress->master_subarb_id=$r->cities;
 
         $employeeAddress->save();
+
+        $employeeInfo->address_addressId=$employeeAddress->addressId;
+        $employeeInfo->save();
 
 
 

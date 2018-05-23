@@ -22,7 +22,7 @@
     </div>
     </div>
     <div align="center" class="form-group">
-        <label style="text-align: center">Address States</label>
+        <label style="text-align: center">Address</label>
     </div>
 
     <div  class="form-group">
@@ -30,8 +30,15 @@
         <label class="col-md-2">States</label>
         <select class="form-control col-md-4" id="states" name="states">
             <option selected value="">Select States</option>
+
             @foreach($states as $state)
-                <option value="{{$state->id}}">{{$state->name}}</option>
+                @if($candidateInfo->address !=null)
+                    @foreach($address as $addresss)
+                <option @if($addresss->stateId==$state->id) selected @endif  value="{{$state->id}}">{{$state->name}}</option>
+                    @endforeach
+                @else
+                    <option  value="{{$state->id}}">{{$state->name}}</option>
+                @endif
             @endforeach
         </select>
         </div>
@@ -39,6 +46,9 @@
         <label class="col-md-2">City</label>
         <select class="form-control col-md-4" id="cities" name="cities">
             <option selected value="">Select City</option>
+            @if($candidateInfo->address !=null)
+                <option selected  value="{{$addresss->cityId}}">{{$addresss->city}}</option>
+            @endif
         </select>
         </div>
 
@@ -46,7 +56,11 @@
     <div  class="form-group">
         <div class="col-md-12">
         <label >Address</label>
-        <textarea class="form-control" id="address"name="address" rows="2"cols="5" placeholder="Your address"></textarea>
+            @if($candidateInfo->address !=null)
+                <textarea class="form-control" id="address"name="address" rows="2"cols="5" placeholder="Your address">{{$addresss->addresscol}}</textarea>
+            @else
+                <textarea class="form-control" id="address"name="address" rows="2"cols="5" placeholder="Your address"></textarea>
+            @endif
         </div>
     </div>
 

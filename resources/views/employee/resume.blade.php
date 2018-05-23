@@ -18,7 +18,13 @@
                     <h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" data-toggle="modal" data-target="#myModal"><i class="ion-edit"></i></a></span></h4>
                     <p>{{$candidateInfo->professionTitle}}</p>
                     <div class="profile-contact flex items-center no-wrap no-column">
-                        <h6 class="contact-location">Manhattan,<span>NYC, USA</span></h6>
+                        @if($employeeAddress!=null)
+                            @foreach($employeeAddress as $address)
+                            <h6 class="contact-location">{{$address->addresscol}},<span>{{$address->city}}, {{$address->state}}</span></h6>
+                            @endforeach
+                        @else
+                            <h6 class="contact-location"><span></span></h6>
+                        @endif
                         <h6 class="contact-phone">{{$candidateInfo->phone}}</h6>
                         <h6 class="contact-email">{{$candidateInfo->email}}</h6>
                     </div> <!-- end .profile-contact -->
@@ -171,11 +177,12 @@
                 var professionTitle = '{{$candidateInfo->professionTitle}}';
                 var phone = '{{$candidateInfo->phone}}';
                 var email = '{{$candidateInfo->email}}';
+                var addressId = '{{$candidateInfo->address_addressId}}';
 
                 $.ajax({
                     type: "POST",
                     url: '{{route('employee.showInfo')}}',
-                    data: {name:name,profession:professionTitle,phone:phone,email:email,id:id},
+                    data: {name:name,profession:professionTitle,phone:phone,email:email,id:id,address:addressId},
                     success: function(data){
                        $(".modal-body").html(data);
                         //console.log(data);
