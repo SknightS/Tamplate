@@ -22,6 +22,25 @@
     </div>
     </div>
 
+    <div class="form-group">
+        <div class="col-md-6">
+        <label class="col-md-2">Address States</label> <br>
+        <select class="form-control col-md-4" id="states" name="states">
+            <option selected value="">Select States</option>
+            @foreach($states as $state)
+                <option value="{{$state->id}}">{{$state->name}}</option>
+            @endforeach
+        </select>
+        </div>
+        <div class="col-md-6">
+        <label class="col-md-2">Address City</label> <br>
+        <select class="form-control col-md-4" id="cities" name="cities">
+            <option selected value="">Select City</option>
+        </select>
+        </div>
+
+    </div>
+
     <div class="row">
 
         <div class="col-md-6">
@@ -39,5 +58,30 @@
     </div>
 
 </form>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#states').change(function(){
+
+        var states=$('#states').val();
+
+        $.ajax({
+            type: "POST",
+            url: '{{route('employee.getAllAddressCity')}}',
+            data: {stateId:states},
+            success: function(data){
+
+                document.getElementById("cities").innerHTML = data;
+
+            },
+        });
+
+    });
+</script>
 
 

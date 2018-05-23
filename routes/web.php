@@ -38,6 +38,9 @@ Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
 Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');
 Route::post('/employee-Info-update/{candidate}', 'Employee@CandidateInfoUpdate')->name('employee.updateCandidateInfo');
 
+
+Route::post('/employee-getAllCity}', 'Employee@getAllCityByState')->name('employee.getAllAddressCity');
+
 Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');

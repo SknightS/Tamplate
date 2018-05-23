@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Socialmedia;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Candidate;
 use Session;
+use Image;
+use Illuminate\Support\Facades\DB;
 
 class Employee extends Controller
 {
@@ -42,6 +45,8 @@ class Employee extends Controller
     }
     public function showInforForEdit(Request $r){
 
+        $addressStates = DB::table('master_state')->get();
+
         $candidateInfo=array(
             'id'=>$r->id,
             'name'=>$r->name,
@@ -51,7 +56,7 @@ class Employee extends Controller
         );
 
         $object = (object) $candidateInfo;
-        return view('employee.editCandidateInformation',['candidateInfo' => $object])->render();
+        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates])->render();
 
     }
 
@@ -65,6 +70,21 @@ class Employee extends Controller
     public function showChangepassword(){
         return view('employee.changepassword');
     }
+    public function getAllCityByState(Request $r){
+
+        $addressCities = DB::table('master_subarb')->where('master_state_id',$r->stateId)->get();
+
+        if ($addressCities == null) {
+            echo "<option value='' selected>Select City</option>";
+        } else {
+            echo "<option value='' selected>Select City</option>";
+            foreach ($addressCities as $city) {
+                echo "<option value='$city->id'>$city->name</option>";
+            }
+        }
+
+
+    }
     public function CandidateInfoUpdate($candidate,Request $r){
 
         $employeeInfo=Candidate::findOrFail($candidate);
@@ -73,17 +93,17 @@ class Employee extends Controller
         $employeeInfo->phone=$r->phone;
         $employeeInfo->email=$r->email;
 
-//        if($r->hasFile('image')){
-//            $img = $r->file('image');
-//            $filename= $candidate.'profileImage'.'.'.$img->getClientOriginalExtension();
-//            $employeeInfo->image=$filename;
-//            $location = public_path('employeeImages/'.$filename);
-//            Image::make($img)->save($location);
-//            $location2 = public_path('employeeImages/thumb/'.$filename);
-//            Image::make($img)->resize(200, null, function ($constraint) {
-//                $constraint->aspectRatio();
-//            })->save($location2);
-//        }
+        if($r->hasFile('image')){
+            $img = $r->file('image');
+            $filename= $candidate.'profileImage'.'.'.$img->getClientOriginalExtension();
+            $employeeInfo->image=$filename;
+            $location = public_path('employeeImages/'.$filename);
+            Image::make($img)->save($location);
+            $location2 = public_path('employeeImages/thumb/'.$filename);
+            Image::make($img)->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location2);
+        }
 
 
         $employeeInfo->save();
