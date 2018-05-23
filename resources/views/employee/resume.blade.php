@@ -144,6 +144,25 @@
         });
 
         $(document).ready(function(){
+
+            @if(Session::has('success_msg'))
+            $.alert({
+                title: 'Success!',
+                type: 'green',
+                content: '{{Session::get('success_msg')}}',
+                buttons: {
+                    tryAgain: {
+                        text: 'Ok',
+                        btnClass: 'btn-green',
+                        action: function () {
+
+                        }
+                    }
+
+                }
+            });
+            @endif
+
             $("#myModal").on("show.bs.modal", function(e) {
 
 

@@ -1,5 +1,7 @@
 @include('employee.head')
 
+
+
 		<!-- Breadcrumb Bar -->
 		<div class="section breadcrumb-bar solid-blue-bg">
 			<div class="inner">
@@ -59,4 +61,7 @@
 		</div>
 	</div>
 </div>
+
+
+
 @include('footer')
