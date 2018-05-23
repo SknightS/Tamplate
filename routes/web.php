@@ -33,7 +33,12 @@ Auth::routes();
 
 
 //employee
-Route::view('employee-dashboard','employee.resume')->name('employee');
+//Route::view('employee-dashboard','employee.resume')->name('employee');
+Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
+Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');
+Route::post('/employee-Info-update/{candidate}', 'Employee@CandidateInfoUpdate')->name('employee.updateCandidateInfo');
+
+Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');

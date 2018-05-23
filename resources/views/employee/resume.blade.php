@@ -5,21 +5,29 @@
         <div class="profile-wrapper">
 
             <div class="profile-info profile-section flex no-column no-wrap">
+
                 <div class="profile-picture">
-                    <img src="{{url('public/images/candidate-big01.jpg')}}" alt="candidate-picture" class="img-responsive">
+                    @if($candidateInfo->image != null)
+                        <img src="{{url('public/employeeImages/'.$candidateInfo->image)}}" height="116px" width="116px" alt="candidate-picture" class="img-responsive">
+                    @else
+                        <img src="{{url('public/employeeImages/dummy.jpg')}}" height="116px" width="116px" alt="candidate-picture" class="img-responsive">
+                    @endif
                 </div> <!-- end .user-picture -->
                 <div class="profile-meta">
-                    <h4 class="dark">Mark anderson  <span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>
-                    <p>UI/UX Designer</p>
+                    {{--<h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>--}}
+                    <h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" data-toggle="modal" data-target="#myModal"><i class="ion-edit"></i></a></span></h4>
+                    <p>{{$candidateInfo->professionTitle}}</p>
                     <div class="profile-contact flex items-center no-wrap no-column">
                         <h6 class="contact-location">Manhattan,<span>NYC, USA</span></h6>
-                        <h6 class="contact-phone">(+01)-212-322-5732</h6>
-                        <h6 class="contact-email">mark.anderson@gmail.com</h6>
+                        <h6 class="contact-phone">{{$candidateInfo->phone}}</h6>
+                        <h6 class="contact-email">{{$candidateInfo->email}}</h6>
                     </div> <!-- end .profile-contact -->
                     <ul class="list-unstyled social-icons flex no-column">
-                        <li><a href="#0"><i class="ion-social-twitter"></i></a></li>
-                        <li><a href="#0"><i class="ion-social-facebook"></i></a></li>
-                        <li><a href="#0"><i class="ion-social-instagram"></i></a></li>
+                        @foreach($socialLink as $socialLinks)
+                        <li><a href="{{$socialLinks->link}}">{{$socialLinks->link}}</a></li>
+                        @endforeach
+                        {{--<li><a href="#0"><i class="ion-social-facebook"></i></a></li>--}}
+                        {{--<li><a href="#0"><i class="ion-social-instagram"></i></a></li>--}}
                     </ul> <!-- end .social-icons -->
                 </div> <!-- end .profile-meta -->
             </div> <!-- end .profile-info -->
@@ -125,8 +133,88 @@
     @endsection
 
 @section('foot-js')
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function(){
+
+            @if(Session::has('success_msg'))
+            $.alert({
+                title: 'Success!',
+                type: 'green',
+                content: '{{Session::get('success_msg')}}',
+                buttons: {
+                    tryAgain: {
+                        text: 'Ok',
+                        btnClass: 'btn-green',
+                        action: function () {
+
+                        }
+                    }
+
+                }
+            });
+            @endif
+
+            $("#myModal").on("show.bs.modal", function(e) {
+
+
+                var id= '{{$candidateInfo->candidateId}}';
+                var name = '{{$candidateInfo->name}}';
+                var professionTitle = '{{$candidateInfo->professionTitle}}';
+                var phone = '{{$candidateInfo->phone}}';
+                var email = '{{$candidateInfo->email}}';
+
+                $.ajax({
+                    type: "POST",
+                    url: '{{route('employee.showInfo')}}',
+                    data: {name:name,profession:professionTitle,phone:phone,email:email,id:id},
+                    success: function(data){
+                       $(".modal-body").html(data);
+                        //console.log(data);
+
+                    },
+                });
+
+            });
+        });
+
         function editCandidate() {
+
+            {{--var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');--}}
+            {{--var id= '{{$candidateInfo->candidateId}}';--}}
+            {{--var name = '{{$candidateInfo->name}}';--}}
+            {{--var professionTitle = '{{$candidateInfo->professionTitle}}';--}}
+            {{--var phone = '{{$candidateInfo->phone}}';--}}
+            {{--var email = '{{$candidateInfo->email}}';--}}
+
+
+
+            {{--$("#myModal").on("show.bs.modal", function(e) {--}}
+                {{--var id = $(e.relatedTarget).data('target-id');--}}
+                {{--$.get( "/controller/" + id, function( data ) {--}}
+                    {{--$(".modal-body").html(data.html);--}}
+                {{--});--}}
+
+            {{--});--}}
+
+
+        {{--$.ajax({--}}
+            {{--type: "POST",--}}
+            {{--url: '{{route('employee.showInfo')}}',--}}
+            {{--data: {name:name,profession:professionTitle,phone:phone,email:email,id:id},--}}
+            {{--success: function(data){--}}
+                {{--//Probably add the code to close your modal box here if successful--}}
+                {{--$(".modal-body").html(data);--}}
+            {{--},--}}
+        {{--});--}}
 
             $.confirm({
                 title: 'Candidate Info!',
@@ -141,21 +229,21 @@
                 '<div class="form-group">' +
                 '<div class="col-md-6">' +
                 '<label>Name</label>' +
-                '<input type="text" id="name" placeholder="Candidate name" class="form-control" required />' +
+                '<input type="text" id="name" placeholder="Candidate name" value="{{$candidateInfo->name}}" class="form-control" required />' +
                 '</div>' +
                 '<div class="col-md-6">' +
                 '<label>Profession</label>' +
-                '<input type="text" id="profession" placeholder="Candidate profession" class="form-control" required />' +
+                '<input type="text" id="profession" placeholder="Candidate profession" value="{{$candidateInfo->professionTitle}}" class="form-control" required />' +
                 '</div>' +
                 '</div>' +
                 '<div class="form-group">' +
                 '<div class="col-md-6">' +
                 '<label class="col-md-2">Phone</label>' +
-                '<input type="text" id="phone" placeholder="Candidate Phone" class="form-control col-md-4" required />' +
+                '<input type="text" id="phone" placeholder="Candidate Phone" value="{{$candidateInfo->phone}}" class="form-control col-md-4" required />' +
                 '</div>'+
                 '<div class="col-md-6">' +
                 '<label class="col-md-2">Email</label>' +
-                '<input type="email" id="email" placeholder="Candidate email" class="form-control col-md-4" required />' +
+                '<input type="email" id="email" placeholder="Candidate email" value="{{$candidateInfo->email}}" class="form-control col-md-4" required />' +
                 '</div>' +
                 '</div>' +
                 '<div class="form-group">' +
@@ -180,20 +268,14 @@
                 '</div>' +
                 '<div class="form-group">' +
                 '<div class="col-md-6">' +
-                '<label class="col-md-2">Tweeter</label>' +
-                '<input type="text" id="tweeter" placeholder="Candidate tweeter acc" class="form-control col-md-4" required />' +
-                '</div>'+
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Instagram</label>' +
-                '<input type="text" id="instagram" placeholder="Candidate instagram" class="form-control col-md-4" required />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
                 '<label class="col-md-2">Image</label>' +
                 '<input type="file" id="image" accept="image/*" placeholder="Candidate image" class="form-control col-md-4" />' +
                 '</div>' +
                 '</div>' +
+                '<div id="TextBoxesGroup" class="form-group">'+
+                '<label >Add Social Media Link</label>'+
+                '<a style="cursor: pointer" id="addButton"><i class="ion-plus"></i></a>'+
+                '</div>'+
                 '</form>',
                 buttons: {
                     formSubmit: {
@@ -368,6 +450,11 @@
             $(".deleteIconEducation").css("display", "none");
             $("#EducationEdit").css("display", "block");
             $("#EducationUpdate").css("display", "none");
+
+        }
+        function addSocialLink() {
+
+
 
         }
     </script>
