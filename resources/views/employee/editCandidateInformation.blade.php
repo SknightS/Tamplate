@@ -21,10 +21,13 @@
         <input type="email" id="email" placeholder="Candidate email" name="email" value="{{$candidateInfo->email}}" class="form-control col-md-4" required />
     </div>
     </div>
+    <div align="center" class="form-group">
+        <label style="text-align: center">Address States</label>
+    </div>
 
-    <div class="form-group">
+    <div  class="form-group">
         <div class="col-md-6">
-        <label class="col-md-2">Address States</label> <br>
+        <label class="col-md-2">States</label>
         <select class="form-control col-md-4" id="states" name="states">
             <option selected value="">Select States</option>
             @foreach($states as $state)
@@ -33,12 +36,18 @@
         </select>
         </div>
         <div class="col-md-6">
-        <label class="col-md-2">Address City</label> <br>
+        <label class="col-md-2">City</label>
         <select class="form-control col-md-4" id="cities" name="cities">
             <option selected value="">Select City</option>
         </select>
         </div>
 
+    </div>
+    <div  class="form-group">
+        <div class="col-md-12">
+        <label >Address</label>
+        <textarea class="form-control" id="address"name="address" rows="2"cols="5" placeholder="Your address"></textarea>
+        </div>
     </div>
 
     <div class="row">

@@ -7,6 +7,7 @@ use App\Socialmedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Candidate;
+use App\Address;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -105,8 +106,16 @@ class Employee extends Controller
             })->save($location2);
         }
 
-
         $employeeInfo->save();
+
+        $employeeAddress=Address::findOrFail($employeeInfo->address_addressId);
+        $employeeAddress->addresscol=$r->address;
+        $employeeAddress->master_subarb_id=$r->cities;
+
+        $employeeAddress->save();
+
+
+
         Session::flash('success_msg', 'Your Information Updated Successfully!');
         return back();
 
