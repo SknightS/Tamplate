@@ -114,6 +114,20 @@ class Employee extends Controller
 
 
     }
+    public function getAllSocialMedia(Request $r){
+
+        $socialMedias = Socialmedia::select('socialmedia.id','socialmedia.link','socialmedianame.name')
+            ->leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')
+            ->where('socialmedia.fkCandidateId',$r->id)
+            ->get();
+
+        return view('employee.editSocialMediaInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress])->render();
+
+
+
+
+
+    }
     public function CandidateInfoUpdate($candidate,Request $r){
 
         $employeeInfo=Candidate::findOrFail($candidate);

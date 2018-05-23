@@ -14,8 +14,8 @@
                     @endif
                 </div> <!-- end .user-picture -->
                 <div class="profile-meta">
-                    {{--<h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>--}}
-                    <h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" data-toggle="modal" data-target="#myModal"><i class="ion-edit"></i></a></span></h4>
+                    <h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" onclick="editCandidate()"><i class="ion-edit"></i></a></span></h4>
+                    {{--<h4 class="dark">{{$candidateInfo->name}}<span><a style="cursor: pointer" data-toggle="modal" data-target="#myModal"><i class="ion-edit"></i></a></span></h4>--}}
                     <p>{{$candidateInfo->professionTitle}}</p>
                     <div class="profile-contact flex items-center no-wrap no-column">
                         @if($employeeAddress!=null)
@@ -28,13 +28,18 @@
                         <h6 class="contact-phone">{{$candidateInfo->phone}}</h6>
                         <h6 class="contact-email">{{$candidateInfo->email}}</h6>
                     </div> <!-- end .profile-contact -->
+                    <div>
+                        <h5 class="dark">Social Media<span><a style="cursor: pointer" onclick="addCandidateSocialMedia()"><i class="ion-plus"></i></a></span></h5>
                     <ul class="list-unstyled social-icons flex no-column">
                         @foreach($socialLink as $socialLinks)
-                        <li><a href="{{$socialLinks->link}}">{{$socialLinks->link}}</a></li>
+                        <li><a href="{{$socialLinks->link}}">{{$socialLinks->link}}</a>
+                            <span><a id="editSocialMedia" style="cursor: pointer;color: black" onclick="editSocialMedia()"><i class="ion-edit"></i></a></span>
+                        </li>
                         @endforeach
                         {{--<li><a href="#0"><i class="ion-social-facebook"></i></a></li>--}}
                         {{--<li><a href="#0"><i class="ion-social-instagram"></i></a></li>--}}
                     </ul> <!-- end .social-icons -->
+                    </div>
                 </div> <!-- end .profile-meta -->
             </div> <!-- end .profile-info -->
 
@@ -169,151 +174,75 @@
             });
             @endif
 
-            $("#myModal").on("show.bs.modal", function(e) {
-
-
-                var id= '{{$candidateInfo->candidateId}}';
-                var name = '{{$candidateInfo->name}}';
-                var professionTitle = '{{$candidateInfo->professionTitle}}';
-                var phone = '{{$candidateInfo->phone}}';
-                var email = '{{$candidateInfo->email}}';
-                var addressId = '{{$candidateInfo->address_addressId}}';
-
-                $.ajax({
-                    type: "POST",
-                    url: '{{route('employee.showInfo')}}',
-                    data: {name:name,profession:professionTitle,phone:phone,email:email,id:id,address:addressId},
-                    success: function(data){
-                       $(".modal-body").html(data);
-                        //console.log(data);
-
-                    },
-                });
-
-            });
-        });
-
-        function editCandidate() {
-
-            {{--var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');--}}
-            {{--var id= '{{$candidateInfo->candidateId}}';--}}
-            {{--var name = '{{$candidateInfo->name}}';--}}
-            {{--var professionTitle = '{{$candidateInfo->professionTitle}}';--}}
-            {{--var phone = '{{$candidateInfo->phone}}';--}}
-            {{--var email = '{{$candidateInfo->email}}';--}}
-
-
-
             {{--$("#myModal").on("show.bs.modal", function(e) {--}}
-                {{--var id = $(e.relatedTarget).data('target-id');--}}
-                {{--$.get( "/controller/" + id, function( data ) {--}}
-                    {{--$(".modal-body").html(data.html);--}}
+
+
+                {{--var id= '{{$candidateInfo->candidateId}}';--}}
+                {{--var name = '{{$candidateInfo->name}}';--}}
+                {{--var professionTitle = '{{$candidateInfo->professionTitle}}';--}}
+                {{--var phone = '{{$candidateInfo->phone}}';--}}
+                {{--var email = '{{$candidateInfo->email}}';--}}
+                {{--var addressId = '{{$candidateInfo->address_addressId}}';--}}
+
+                {{--$.ajax({--}}
+                    {{--type: "POST",--}}
+                    {{--url: '{{route('employee.showInfo')}}',--}}
+                    {{--data: {name:name,profession:professionTitle,phone:phone,email:email,id:id,address:addressId},--}}
+                    {{--success: function(data){--}}
+                       {{--$(".modal-body").html(data);--}}
+                        {{--//console.log(data);--}}
+
+                    {{--},--}}
                 {{--});--}}
 
             {{--});--}}
 
+        });
 
-        {{--$.ajax({--}}
-            {{--type: "POST",--}}
-            {{--url: '{{route('employee.showInfo')}}',--}}
-            {{--data: {name:name,profession:professionTitle,phone:phone,email:email,id:id},--}}
-            {{--success: function(data){--}}
-                {{--//Probably add the code to close your modal box here if successful--}}
-                {{--$(".modal-body").html(data);--}}
-            {{--},--}}
-        {{--});--}}
+        function editSocialMedia() {
 
-            $.confirm({
-                title: 'Candidate Info!',
-                columnClass: 'large',
-                closeIcon: true,
-                type: 'orange',
-                typeAnimated: true,
-                draggable: false,
+            var id= '{{$candidateInfo->candidateId}}';
 
-                content: '' +
-                '<form id="CandidateForm" action="" class="formName">' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
-                '<label>Name</label>' +
-                '<input type="text" id="name" placeholder="Candidate name" value="{{$candidateInfo->name}}" class="form-control" required />' +
-                '</div>' +
-                '<div class="col-md-6">' +
-                '<label>Profession</label>' +
-                '<input type="text" id="profession" placeholder="Candidate profession" value="{{$candidateInfo->professionTitle}}" class="form-control" required />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Phone</label>' +
-                '<input type="text" id="phone" placeholder="Candidate Phone" value="{{$candidateInfo->phone}}" class="form-control col-md-4" required />' +
-                '</div>'+
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Email</label>' +
-                '<input type="email" id="email" placeholder="Candidate email" value="{{$candidateInfo->email}}" class="form-control col-md-4" required />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Address1</label>' +
-                '<input type="text" id="address1" placeholder="Candidate address1" class="form-control col-md-4" required />' +
-                '</div>'+
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Address2</label>' +
-                '<input type="text" id="address2" placeholder="Candidate address2" class="form-control col-md-4" required />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Address3</label>' +
-                '<input type="text" id="address3" placeholder="Candidate address3" class="form-control col-md-4" required />' +
-                '</div>'+
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Facebook</label>' +
-                '<input type="text" id="facebook" placeholder="Candidate facebook" class="form-control col-md-4" required />' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
-                '<label class="col-md-2">Image</label>' +
-                '<input type="file" id="image" accept="image/*" placeholder="Candidate image" class="form-control col-md-4" />' +
-                '</div>' +
-                '</div>' +
-                '<div id="TextBoxesGroup" class="form-group">'+
-                '<label >Add Social Media Link</label>'+
-                '<a style="cursor: pointer" id="addButton"><i class="ion-plus"></i></a>'+
-                '</div>'+
-                '</form>',
-                buttons: {
-                    formSubmit: {
-                        text: 'Submit',
-                        btnClass: 'btn-blue',
-                        action: function () {
-                            var name = this.$content.find('#name').val();
-                            if(!name){
-                                $.alert('provide a valid name');
-                                return false;
-                            }
-                            $.alert('Your name is ' + name);
-                        }
-                    },
-                    tryAgain: {
-                        text: 'Cancel',
-                        btnClass: 'btn-red',
-                        action: function(){
-                            //close
-                        }
-                    },
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.getAllSocialMedia')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModal').modal({show:true});
+
                 },
-                onContentReady: function () {
-                    // bind to events
-                    var jc = this;
-                    this.$content.find('#CandidateForm').on('submit', function (e) {
-                        // if the user submits the form by pressing enter in the field.
-                        e.preventDefault();
-                        jc.$$formSubmit.trigger('click'); // reference the button and click it
-                    });
-                }
+            });
+
+
+
+
+            //$("#myModal").modal();
+
+        }
+
+        function editCandidate() {
+
+            var id= '{{$candidateInfo->candidateId}}';
+            var name = '{{$candidateInfo->name}}';
+            var professionTitle = '{{$candidateInfo->professionTitle}}';
+            var phone = '{{$candidateInfo->phone}}';
+            var email = '{{$candidateInfo->email}}';
+            var addressId = '{{$candidateInfo->address_addressId}}';
+
+
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.showInfo')}}',
+                data: {name:name,profession:professionTitle,phone:phone,email:email,id:id,address:addressId},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModal').modal({show:true});
+
+                },
             });
 
         }
