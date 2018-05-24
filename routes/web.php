@@ -38,7 +38,6 @@ Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
 Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');
 Route::post('/employee-Info-update/{candidate}', 'Employee@CandidateInfoUpdate')->name('employee.updateCandidateInfo');
 
-
 Route::post('/employee-getAllCity}', 'Employee@getAllCityByState')->name('employee.getAllAddressCity');
 
 Route::post('/employee-AboutMe-Edit}', 'Employee@showCandidateAboutMeForEdit')->name('employee.editCandidateAboutMe');
@@ -46,10 +45,24 @@ Route::post('/employee-AboutMe-update/{candidate}', 'Employee@CandidateAboutMeUp
 
 
 Route::post('/employee-WorkExperience', 'Employee@CandidateAddWorkExperience')->name('employee.addCandidateWorkExperience');
-
 Route::post('/employee-Add-WorkExperience/{candidate}', 'Employee@insertCandidateWorkExperience')->name('employee.insertCandidateWorkExperience');
+Route::post('/employee-delete-WorkExperience', 'Employee@deleteCandidateWorkExperience')->name('employee.deleteWorkExperience');
+
+
+Route::post('/employee-Edit-WorkExperience', 'Employee@editCandidateWorkExperience')->name('employee.editCandidateWorkExperience');
+Route::post('/employee-WorkExperience-update/{experienceId}', 'Employee@CandidateWorkExperienceUpdate')->name('employee.updateCandidateWorkExperience');
 
 //Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
+
+
+Route::post('/employee-Education', 'Employee@addEducation')->name('employee.addEducation');
+Route::post('/employee-Add-Education/{candidate}', 'Employee@insertCandidateEducation')->name('employee.insertEducation');
+Route::post('/employee-delete-Education', 'Employee@deleteCandidateEducation')->name('employee.deleteEducation');
+Route::post('/employee-Edit-Education', 'Employee@editCandidateEducation')->name('employee.editCandidateEducation');
+Route::post('/employee-Education-update/{educationId}', 'Employee@CandidateEducationUpdate')->name('employee.updateCandidateEducation');
+
+
+
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');

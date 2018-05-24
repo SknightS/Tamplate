@@ -9,7 +9,7 @@
 					<div class="breadcrumb-menu flex items-center no-column">
 
 						@if($candidateInfo->image != null)
-						<img src="{{url('public/employeeImages/'.$candidateInfo->image)}}" alt="avatar" class="img-responsive">
+						<img src="{{url('public/employeeImages/thumb/'.$candidateInfo->image)}}" alt="avatar" class="img-responsive">
 						@else
 							<img src="{{url('public/employeeImages/dummy.jpg')}}" alt="avatar" class="img-responsive">
 						@endif

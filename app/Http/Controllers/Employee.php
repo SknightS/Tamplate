@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Candidate;
 use App\Address;
+use App\Education;
 use App\Workexperience;
 use Session;
 use Image;
@@ -53,11 +54,12 @@ class Employee extends Controller
         $socialLink = Socialmedia::where('fkCandidateId', $candidateInfo->candidateId)->get();
 
         $workExperience = Workexperience::where('fkcandidateId', $candidateInfo->candidateId)->get();
+        $education = Education::where('fkcandidateId', $candidateInfo->candidateId)->get();
 
 
 
 
-        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience'));
+        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education'));
 
 
     }
@@ -120,15 +122,13 @@ class Employee extends Controller
     public function showCandidateAboutMeForEdit(Request $r){
 
         $candidateInfo = Candidate::Select('aboutme')->where('candidateId', $r->id)->get();
-
-
-        return view('employee.editCandidateAbouteMe',['candidateInfo' => $candidateInfo,'id'=>$r->id])->render();
+        return view('employee.editCandidateAbouteMe',['candidateInfo' => $candidateInfo,'id'=>$r->id]);
 
     }
     public function CandidateAddWorkExperience(Request $r){
 
 
-        return view('employee.addCandidateWorkExperience',['id'=>$r->id])->render();
+        return view('employee.addCandidateWorkExperience',['id'=>$r->id]);
 
     }
     public function CandidateInfoUpdate($candidate,Request $r){
@@ -184,6 +184,7 @@ class Employee extends Controller
         return back();
 
     }
+
     public function insertCandidateWorkExperience($candidate,Request $r){
 
         $employeeWorkExperience=new Workexperience();
@@ -191,14 +192,106 @@ class Employee extends Controller
         $employeeWorkExperience->comapnyName=$r->companyName;
         $employeeWorkExperience->postName=$r->postName;
         $employeeWorkExperience->duration=$r->duration;
-        $employeeWorkExperience->description=$r->Description;
+        $employeeWorkExperience->description=$r->description;
         $employeeWorkExperience->fkcandidateId=$candidate;
-
 
         $employeeWorkExperience->save();
 
+        Session::flash('success_msg', 'Work Experience Added Successfully!');
+        return back();
 
-        Session::flash('success_msg', 'Your Information Updated Successfully!');
+    }
+    public function deleteCandidateWorkExperience(Request $r){
+
+        $employeeWorkExperience=Workexperience::destroy($r->id);
+
+    }
+    public function editCandidateWorkExperience(Request $r){
+
+        $workExperienceInfo = Workexperience::findOrFail($r->id);
+
+        return view('employee.editWorkExperience',['experience' => $workExperienceInfo,'id'=>$r->id]);
+
+    }
+    public function CandidateWorkExperienceUpdate($experienceId,Request $r){
+
+        $workExperienceInfo = Workexperience::findOrFail($experienceId);
+
+        $workExperienceInfo->comapnyName=$r->companyName;
+        $workExperienceInfo->postName=$r->postName;
+        $workExperienceInfo->duration=$r->duration;
+        $workExperienceInfo->description=$r->description;
+
+
+        $workExperienceInfo->save();
+
+        Session::flash('success_msg', 'Work Experience Updated Successfully!');
+        return back();
+
+    }
+
+    public function addEducation(Request $r){
+
+
+        return view('employee.addEducation',['id'=>$r->id]);
+
+    }
+
+    public function insertCandidateEducation($candidate,Request $r){
+
+
+
+        $education=new Education();
+
+        $education->schoolName=$r->schoolName;
+        $education->degreeName=$r->degreeName;
+        $education->startDate=$r->startDate;
+        if ($r->currentlyRunning){
+            $education->currentlyRunning=$r->currentlyRunning;
+        }else{
+            $education->endDate=$r->endDate;
+        }
+        $education->fkcandidateId=$candidate;
+
+        $education->save();
+
+        Session::flash('success_msg', 'Education Added Successfully!');
+        return back();
+
+    }
+
+    public function deleteCandidateEducation(Request $r){
+
+
+        $employeeEducation=Education::destroy($r->id);
+
+    }
+    public function editCandidateEducation(Request $r){
+
+        $educationInfo = Education::findOrFail($r->id);
+
+        return view('employee.editEducation',['education' => $educationInfo,'id'=>$r->id]);
+
+    }
+
+    public function CandidateEducationUpdate($educationId,Request $r){
+
+        $EducationInfo = Education::findOrFail($educationId);
+
+        $EducationInfo->schoolName=$r->schoolName;
+        $EducationInfo->degreeName=$r->degreeName;
+        $EducationInfo->startDate=$r->startDate;
+        if ($r->currentlyRunning){
+            $EducationInfo->currentlyRunning=$r->currentlyRunning;
+            $EducationInfo->endDate=null;
+        }else{
+            $EducationInfo->endDate=$r->endDate;
+            $EducationInfo->currentlyRunning='0';
+        }
+
+        $EducationInfo->save();
+
+        Session::flash('success_msg', 'Education Updated Successfully!');
         return back();
 
     }

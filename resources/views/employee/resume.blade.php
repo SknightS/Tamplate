@@ -8,7 +8,7 @@
 
                 <div class="profile-picture">
                     @if($candidateInfo->image != null)
-                        <img src="{{url('public/employeeImages/'.$candidateInfo->image)}}" height="116px" width="116px" alt="candidate-picture" class="img-responsive">
+                        <img src="{{url('public/employeeImages/thumb/'.$candidateInfo->image)}}" height="116px" width="116px" alt="candidate-picture" class="img-responsive">
                     @else
                         <img src="{{url('public/employeeImages/dummy.jpg')}}" height="116px" width="116px" alt="candidate-picture" class="img-responsive">
                     @endif
@@ -52,16 +52,16 @@
 
             <div class="divider"></div>
 
-<div class="profile-experience-wrapper profile-section">
+<div id="workExperience" class="profile-experience-wrapper profile-section">
     <h3 class="dark profile-title">Work experience<span><a style="cursor: pointer"  onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
     @foreach($workExperience as $workingExp)
     <div class="profile-experience flex space-between no-wrap no-column">
         <div class="profile-experience-left">
-            <h5 class="profile-designation dark">{{$workingExp->postName}}<span><a style="cursor: pointer;display: block" id="workExperienceEdit" onclick="editCandidateWorkExperience()"><i class="ion-edit"></i></a><a class="deleteIcon" data-panel-id="{{$workingExp->workExperienceId}}"onclick="deleteWorkExperince(this)" style="cursor: pointer;" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
+            <h5 class="profile-designation dark">{{$workingExp->postName}}<span><a data-panel-id="{{$workingExp->workExperienceId}}" onclick="editCandidateWorkExperience(this)" style="cursor: pointer;"><i  class="ion-edit"></i></a><a class="deleteIcon" data-panel-id="{{$workingExp->workExperienceId}}"onclick="deleteWorkExperince(this)" style="cursor: pointer;" onclick=""><i class="ion-android-delete"></i></a></span></h5>
             <h5 class="profile-company dark">{{$workingExp->comapnyName}}</h5>
-            <p class="small ultra-light">May 2015 - Present (1.5 years)</p>
+            <p class="small ultra-light">{{$workingExp->duration}}</p>
             <p>{{$workingExp->description}}</p>
-            <h6 class="projects-count">4 projects</h6>
+            {{--<h6 class="projects-count">4 projects</h6>--}}
         </div> <!-- end .profile-experience-left -->
         {{--<div class="profile-experience-right">--}}
             {{--<img src="{{url('public/images/company-logo-big01.jpg')}}" alt="company-logo" class="img-responsive">--}}
@@ -73,19 +73,17 @@
 
 <div class="divider"></div>
 
-<div class="profile-education-wrapper profile-section">
-    <h4 class="dark profile-title">Education<span><a style="cursor: pointer;display: block" id="EducationEdit" onclick="editCandidateEducation()"><i class="ion-edit"></i></a><a style="cursor: pointer;display: none" id="EducationUpdate" onclick="updateCandidateEducation()"><i class="ion-checkmark"></i></a><a style="cursor: pointer" onclick="addCandidateEducation()"><i class="ion-plus"></i></a></span></h4>
-        <div class="profile-education">
-            <h5 class="dark">Massachusetts Institute of Technology&nbsp;<span><a class="deleteIconEducation" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
-            <p>Bachelor of Computer Science</p>
-            <p class="ultra-light">2010-2014</p>
+<div id="Education" class="profile-education-wrapper profile-section">
+    <h3 class="dark profile-title">Education<span><a style="cursor: pointer" onclick="addCandidateEducation()"><i class="ion-plus"></i></a></span></h3>
+    @foreach($education as $edu)
+    <div class="profile-education">
+            <h5 class="dark">{{$edu->schoolName}}&nbsp;<span><a style="cursor: pointer;" data-panel-id="{{$edu->educationId}}" onclick="editCandidateEducation(this)"><i class="ion-edit"></i></a><a  style="cursor: pointer;" data-panel-id="{{$edu->educationId}}" onclick="deleteEducation(this)"><i class="ion-android-delete"></i></a></span></h5>
+            <p>{{$edu->degreeName}}</p>
+            <p class="ultra-light">{{$edu->startDate}} - @if($edu->currentlyRunning=='0'){{$edu->endDate}}@else{{"Currenty Running"}}@endif</p>
         </div> <!-- end .profile-education -->
         <div class="spacer-md"></div>
-        <div class="profile-education">
-            <h5 class="dark">School of Arts & Sciences of Stanford University&nbsp;<span><a class="deleteIconEducation" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
-            <p>Bachelor of Arts & Sciences</p>
-            <p class="ultra-light">2008-2012</p>
-        </div> <!-- end .profile-education -->
+    @endforeach
+
 </div> <!-- end .profile-education-wrapper -->
 
 <div class="divider"></div>
@@ -211,20 +209,101 @@
         }
         function deleteWorkExperince(x) {
 
-            var id= $(x).data('panel-id');
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure To delete this Work-Experience?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('employee.deleteCandidateWorkExperience')}}',
-                data: {id:id},
-                success: function(data){
+                            var id = $(x).data('panel-id');
 
-                    $('.modal-body').html(data);
-                    $('#myModal').modal({show:true});
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employee.deleteWorkExperience')}}',
+                                data: {id: id},
+                                success: function (data) {
 
-                },
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Work-Experience Deleted successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+
+                                                    $('#workExperience').load(document.URL +  ' #workExperience');
+
+                                                }
+                                            }
+
+                                        }
+                                    });
+
+                                },
+                            });
+                        }
+                    },
+                    No: function () {
+                    },
+                }
             });
+        }
+        function deleteEducation(x) {
 
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure To delete this Education?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
+
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employee.deleteEducation')}}',
+                                data: {id: id},
+                                success: function (data) {
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Education Deleted successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+
+                                                    $('#Education').load(document.URL +  ' #Education');
+
+                                                }
+                                            }
+
+                                        }
+                                    });
+
+                                },
+                            });
+                        }
+                    },
+                    No: function () {
+                    },
+                }
+            });
         }
 
         function addCandidateWorkExperience() {
@@ -246,12 +325,56 @@
 
 
         }
-        function editCandidateWorkExperience() {
+        function editCandidateWorkExperience(x) {
 
-            $(".deleteIcon").css("display", "block");
-            $("#workExperienceEdit").css("display", "none");
-            $("#WorkExperienceUpdate").css("display", "block");
+            var id = $(x).data('panel-id');
 
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.editCandidateWorkExperience')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info! : Work-Experience");
+                    $('#myModal').modal({show:true});
+
+                },
+            });
+        }
+        function addCandidateEducation() {
+
+            var id= '{{$candidateInfo->candidateId}}';
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.addEducation')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info! : Work-Experience");
+                    $('#myModal').modal({show:true});
+
+                },
+            });
+        }
+        function editCandidateEducation(x) {
+
+            var id = $(x).data('panel-id');
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.editCandidateEducation')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info! : Education");
+                    $('#myModal').modal({show:true});
+
+                },
+            });
         }
         function updateCandidateWorkExperience() {
 
@@ -260,13 +383,7 @@
             $("#WorkExperienceUpdate").css("display", "none");
 
         }
-        function editCandidateEducation() {
 
-            $(".deleteIconEducation").css("display", "block");
-            $("#EducationEdit").css("display", "none");
-            $("#EducationUpdate").css("display", "block");
-
-        }
         function updateCandidateEducation() {
 
             $(".deleteIconEducation").css("display", "none");
@@ -274,11 +391,7 @@
             $("#EducationUpdate").css("display", "none");
 
         }
-        function addSocialLink() {
 
-
-
-        }
     </script>
 
 @endsection
