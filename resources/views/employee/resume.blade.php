@@ -53,11 +53,11 @@
             <div class="divider"></div>
 
 <div class="profile-experience-wrapper profile-section">
-    <h3 class="dark profile-title">Work experience<span><a style="cursor: pointer" onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
+    <h3 class="dark profile-title">Work experience<span><a style="cursor: pointer"  onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
     @foreach($workExperience as $workingExp)
     <div class="profile-experience flex space-between no-wrap no-column">
         <div class="profile-experience-left">
-            <h5 class="profile-designation dark">{{$workingExp->postName}}<span><a style="cursor: pointer;display: block" id="workExperienceEdit" onclick="editCandidateWorkExperience()"><i class="ion-edit"></i></a><a class="deleteIcon" style="cursor: pointer;" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
+            <h5 class="profile-designation dark">{{$workingExp->postName}}<span><a style="cursor: pointer;display: block" id="workExperienceEdit" onclick="editCandidateWorkExperience()"><i class="ion-edit"></i></a><a class="deleteIcon" data-panel-id="{{$workingExp->workExperienceId}}"onclick="deleteWorkExperince(this)" style="cursor: pointer;" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
             <h5 class="profile-company dark">{{$workingExp->comapnyName}}</h5>
             <p class="small ultra-light">May 2015 - Present (1.5 years)</p>
             <p>{{$workingExp->description}}</p>
@@ -199,6 +199,23 @@
             $.ajax({
                 type: "POST",
                 url: '{{route('employee.editCandidateAboutMe')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModal').modal({show:true});
+
+                },
+            });
+
+        }
+        function deleteWorkExperince(x) {
+
+            var id= $(x).data('panel-id');
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.deleteCandidateWorkExperience')}}',
                 data: {id:id},
                 success: function(data){
 
