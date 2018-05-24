@@ -44,6 +44,11 @@ Route::post('/employee-getAllCity}', 'Employee@getAllCityByState')->name('employ
 Route::post('/employee-AboutMe-Edit}', 'Employee@showCandidateAboutMeForEdit')->name('employee.editCandidateAboutMe');
 Route::post('/employee-AboutMe-update/{candidate}', 'Employee@CandidateAboutMeUpdate')->name('employee.updateCandidateAboutMe');
 
+
+Route::post('/employee-WorkExperience', 'Employee@CandidateAddWorkExperience')->name('employee.addCandidateWorkExperience');
+
+Route::post('/employee-Add-WorkExperience/{candidate}', 'Employee@insertCandidateWorkExperience')->name('employee.insertCandidateWorkExperience');
+
 //Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');

@@ -53,32 +53,22 @@
             <div class="divider"></div>
 
 <div class="profile-experience-wrapper profile-section">
-    <h3 class="dark profile-title">Work experience<span><a style="cursor: pointer;display: block" id="workExperienceEdit" onclick="editCandidateWorkExperience()"><i class="ion-edit"></i></a><a style="cursor: pointer;display: none" id="WorkExperienceUpdate" onclick="updateCandidateWorkExperience()"><i class="ion-checkmark"></i></a><a style="cursor: pointer" onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
+    <h3 class="dark profile-title">Work experience<span><a style="cursor: pointer" onclick="addCandidateWorkExperience()"><i class="ion-plus"></i></a></span></h3>
+    @foreach($workExperience as $workingExp)
     <div class="profile-experience flex space-between no-wrap no-column">
         <div class="profile-experience-left">
-            <h5 class="profile-designation dark">UI/UX designer &nbsp;<span><a class="deleteIcon" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
-            <h5 class="profile-company dark">Banana inc.</h5>
+            <h5 class="profile-designation dark">{{$workingExp->postName}}<span><a style="cursor: pointer;display: block" id="workExperienceEdit" onclick="editCandidateWorkExperience()"><i class="ion-edit"></i></a><a class="deleteIcon" style="cursor: pointer;" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
+            <h5 class="profile-company dark">{{$workingExp->comapnyName}}</h5>
             <p class="small ultra-light">May 2015 - Present (1.5 years)</p>
-            <p>Nulla molestie sed lorem non suscipit. Morbi imperdiet ex sit amet tortor faucibus ultricies. Fusce tincidunt elementum imperdiet.</p>
+            <p>{{$workingExp->description}}</p>
             <h6 class="projects-count">4 projects</h6>
         </div> <!-- end .profile-experience-left -->
-        <div class="profile-experience-right">
-            <img src="{{url('public/images/company-logo-big01.jpg')}}" alt="company-logo" class="img-responsive">
-        </div> <!-- end .profile-experience-right -->
+        {{--<div class="profile-experience-right">--}}
+            {{--<img src="{{url('public/images/company-logo-big01.jpg')}}" alt="company-logo" class="img-responsive">--}}
+        {{--</div> <!-- end .profile-experience-right -->--}}
     </div> <!-- end .profile-experience -->
-    <div class="spacer-md"></div>
-    <div class="profile-experience flex space-between no-wrap no-column">
-        <div class="profile-experience-left">
-            <h5 class="profile-designation dark">UI Designer<span><a class="deleteIcon" style="cursor: pointer;display: none" onclick=""><b><i class="ion-android-delete"></i></b></a></span></h5>
-            <h5 class="profile-company dark">Whale creative</h5>
-            <p class="small ultra-light">May 2013 - May 2015 (over 2 years)</p>
-            <p>Nulla molestie sed lorem non suscipit. Morbi imperdiet ex sit amet tortor faucibus ultricies. Fusce tincidunt elementum imperdiet.</p>
-            <h6 class="projects-count">4 projects</h6>
-        </div> <!-- end .profile-experience-left -->
-        <div class="profile-experience-right">
-            <img src="{{url('public/images/company-logo-big05.jpg')}}" alt="company-logo" class="img-responsive">
-        </div> <!-- end .profile-experience-right -->
-    </div> <!-- end .profile-experience -->
+        <div class="spacer-md"></div>
+    @endforeach
 </div> <!-- end .profile-experience-wrapper -->
 
 <div class="divider"></div>
@@ -222,66 +212,21 @@
 
         function addCandidateWorkExperience() {
 
-            $.confirm({
-                title: 'Candidate Info!',
-                columnClass: 'large',
-                closeIcon: true,
-                type: 'orange',
-                typeAnimated: true,
-                draggable: false,
-                content: '' +
-                '<form id="CandidateWorkExperienceForm" action="" class="">' +
-                '<div class="col-md-12">' +
-                '<label>Company Name</label>' +
-                '<input type="text" id="companyName" placeholder="Company Name" class="form-control" required />' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<div class="col-md-6">' +
-                '<label >Post Name</label>' +
-                '<input type="text" id="postName" placeholder="Post Name" class="form-control col-md-4" required />' +
-                '</div>'+
-                '<div class="col-md-6">' +
-                '<label >Duration</label>' +
-                '<input type="text" id="duration" placeholder="Duration" class="form-control col-md-4" required />' +
-                '</div>' +
-                '</div>' +
-                '<div class="col-md-12">' +
-                '<label>Description</label>' +
-                '<textarea id="description" placeholder="Description" class="form-control" required rows="4" cols="50"></textarea>' +
-                '</div>' +
+            var id= '{{$candidateInfo->candidateId}}';
 
-                '</form>',
-                buttons: {
-                    formSubmit: {
-                        text: 'Submit',
-                        btnClass: 'btn-blue',
-                        action: function () {
-                            var name = this.$content.find('#name').val();
-                            if(!name){
-                                $.alert('provide a valid name');
-                                return false;
-                            }
-                            $.alert('Your name is ' + name);
-                        }
-                    },
-                    tryAgain: {
-                        text: 'Cancel',
-                        btnClass: 'btn-red',
-                        action: function(){
-                            //close
-                        }
-                    },
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.addCandidateWorkExperience')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Add-Candidate Info! : Work-Experience");
+                    $('#myModal').modal({show:true});
+
                 },
-                onContentReady: function () {
-                    // bind to events
-                    var jc = this;
-                    this.$content.find('#CandidateWorkExperienceForm').on('submit', function (e) {
-                        // if the user submits the form by pressing enter in the field.
-                        e.preventDefault();
-                        jc.$$formSubmit.trigger('click'); // reference the button and click it
-                    });
-                }
             });
+
 
         }
         function editCandidateWorkExperience() {

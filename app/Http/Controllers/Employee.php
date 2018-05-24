@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Candidate;
 use App\Address;
+use App\Workexperience;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -51,10 +52,12 @@ class Employee extends Controller
 
         $socialLink = Socialmedia::where('fkCandidateId', $candidateInfo->candidateId)->get();
 
+        $workExperience = Workexperience::where('fkcandidateId', $candidateInfo->candidateId)->get();
 
 
 
-        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress'));
+
+        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience'));
 
 
     }
@@ -122,6 +125,12 @@ class Employee extends Controller
         return view('employee.editCandidateAbouteMe',['candidateInfo' => $candidateInfo,'id'=>$r->id])->render();
 
     }
+    public function CandidateAddWorkExperience(Request $r){
+
+
+        return view('employee.addCandidateWorkExperience',['id'=>$r->id])->render();
+
+    }
     public function CandidateInfoUpdate($candidate,Request $r){
 
         $employeeInfo=Candidate::findOrFail($candidate);
@@ -169,6 +178,24 @@ class Employee extends Controller
         $employeeInfo->aboutme=$r->aboutMe;
 
         $employeeInfo->save();
+
+
+        Session::flash('success_msg', 'Your Information Updated Successfully!');
+        return back();
+
+    }
+    public function insertCandidateWorkExperience($candidate,Request $r){
+
+        $employeeWorkExperience=new Workexperience();
+
+        $employeeWorkExperience->comapnyName=$r->companyName;
+        $employeeWorkExperience->postName=$r->postName;
+        $employeeWorkExperience->duration=$r->duration;
+        $employeeWorkExperience->description=$r->Description;
+        $employeeWorkExperience->fkcandidateId=$candidate;
+
+
+        $employeeWorkExperience->save();
 
 
         Session::flash('success_msg', 'Your Information Updated Successfully!');
