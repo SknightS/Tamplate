@@ -174,28 +174,6 @@
             });
             @endif
 
-            {{--$("#myModal").on("show.bs.modal", function(e) {--}}
-
-
-                {{--var id= '{{$candidateInfo->candidateId}}';--}}
-                {{--var name = '{{$candidateInfo->name}}';--}}
-                {{--var professionTitle = '{{$candidateInfo->professionTitle}}';--}}
-                {{--var phone = '{{$candidateInfo->phone}}';--}}
-                {{--var email = '{{$candidateInfo->email}}';--}}
-                {{--var addressId = '{{$candidateInfo->address_addressId}}';--}}
-
-                {{--$.ajax({--}}
-                    {{--type: "POST",--}}
-                    {{--url: '{{route('employee.showInfo')}}',--}}
-                    {{--data: {name:name,profession:professionTitle,phone:phone,email:email,id:id,address:addressId},--}}
-                    {{--success: function(data){--}}
-                       {{--$(".modal-body").html(data);--}}
-                        {{--//console.log(data);--}}
-
-                    {{--},--}}
-                {{--});--}}
-
-            {{--});--}}
 
         });
 
