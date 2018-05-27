@@ -88,43 +88,21 @@
 
 <div class="divider"></div>
 
-<div class="profile-skills-wrapper profile-section">
-    <h3 class="dark profile-title">Summary skill<span><i class="ion-edit"></i></span></h3>
+<div id="Skill" class="profile-skills-wrapper profile-section">
+    <h3 class="dark profile-title">Summary skill<span><a style="cursor: pointer" onclick="addCandidateSkill()"><i class="ion-plus"></i></a></span></h3>
+    @foreach($skill as $personalSkill)
     <div class="progress-wrapper flex space-between items-center no-wrap">
-        <h6 class="progress-skill">HTML</h6>
+        <h6 class="progress-skill">{{$personalSkill->skillName}}</h6>
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{$personalSkill->percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$personalSkill->percentage}}%;">
             </div> <!-- end .progress-bar -->
         </div> <!-- end .progress -->
-        <h6 class="percentage"><span class="countTo" data-from="0" data-to="90">90</span>%</h6>
+        <h6 class="percentage"><span class="countTo" data-from="0" data-to="{{$personalSkill->percentage}}">{{$personalSkill->percentage}}</span>%</h6>
+        <span><a style="cursor: pointer;" data-panel-id="{{$personalSkill->id}}" onclick="editSkill(this)"><i class="ion-edit"></i></a><a  style="cursor: pointer;" data-panel-id="{{$personalSkill->id}}" onclick="deleteSkill(this)"><i class="ion-android-delete"></i></a></span>
     </div> <!-- end .progress-wrapper -->
+
     <div class="spacer-xs"></div>
-    <div class="progress-wrapper flex space-between items-center no-wrap">
-        <h6 class="progress-skill">WordPress</h6>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-            </div> <!-- end .progress-bar -->
-        </div> <!-- end .progress -->
-        <h6 class="percentage"><span class="countTo" data-from="0" data-to="80">80</span>%</h6>
-    </div> <!-- end .progress-wrapper -->
-    <div class="spacer-xs"></div>
-    <div class="progress-wrapper flex space-between items-center no-wrap">
-        <h6 class="progress-skill">PS</h6>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            </div> <!-- end .progress-bar -->
-        </div> <!-- end .progress -->
-        <h6 class="percentage"><span class="countTo" data-from="0" data-to="60">60</span>%</h6>
-    </div> <!-- end .progress-wrapper -->
-    <div class="spacer-xs"></div>
-    <div class="progress-wrapper flex space-between items-center no-wrap">
-        <h6 class="progress-skill">AI</h6>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-            </div> <!-- end .progress-bar -->
-        </div> <!-- end .progress -->
-        <h6 class="percentage"><span class="countTo" data-from="0" data-to="90">90</span>%</h6>
-    </div> <!-- end .progress-wrapper -->
+    @endforeach
 </div> <!-- end .profile-skills-wrapper -->
 
 </div> <!-- end .profile-wrapper -->
@@ -376,20 +354,93 @@
                 },
             });
         }
-        function updateCandidateWorkExperience() {
+        function addCandidateSkill() {
 
-            $(".deleteIcon").css("display", "none");
-            $("#workExperienceEdit").css("display", "block");
-            $("#WorkExperienceUpdate").css("display", "none");
+            var id= '{{$candidateInfo->candidateId}}';
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.addCandidateSkill')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Add-Candidate Info! : Skill");
+                    $('#myModal').modal({show:true});
+                  //  console.log(data);
+
+                },
+            });
+
 
         }
 
-        function updateCandidateEducation() {
+        function editSkill(x) {
 
-            $(".deleteIconEducation").css("display", "none");
-            $("#EducationEdit").css("display", "block");
-            $("#EducationUpdate").css("display", "none");
+            var id = $(x).data('panel-id');
 
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.editSkill')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info! : Skill");
+                    $('#myModal').modal({show:true});
+
+                },
+            });
+
+        }
+        function deleteSkill(x) {
+
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure To delete this Skill?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
+
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employee.deleteSkill')}}',
+                                data: {id: id},
+                                success: function (data) {
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Skill Deleted successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+
+                                                    $('#Skill').load(document.URL +  ' #Skill');
+
+                                                }
+                                            }
+
+                                        }
+                                    });
+
+                                },
+                            });
+                        }
+                    },
+                    No: function () {
+                    },
+                }
+            });
         }
 
     </script>

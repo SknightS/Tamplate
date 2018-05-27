@@ -10,6 +10,7 @@ use App\Candidate;
 use App\Address;
 use App\Education;
 use App\Workexperience;
+use App\Skill;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -56,10 +57,14 @@ class Employee extends Controller
         $workExperience = Workexperience::where('fkcandidateId', $candidateInfo->candidateId)->get();
         $education = Education::where('fkcandidateId', $candidateInfo->candidateId)->get();
 
+        $skill = Skill::select('skill.id','skill.percentage','master_skill.skillName')
+            ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
+            ->where('candidateId', $candidateInfo->candidateId)
+            ->get();
 
 
 
-        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education'));
+        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education','skill'));
 
 
     }
@@ -292,6 +297,100 @@ class Employee extends Controller
         $EducationInfo->save();
 
         Session::flash('success_msg', 'Education Updated Successfully!');
+        return back();
+
+    }
+
+    public function addSkill(Request $r){
+
+        $candidateId=$r->id;
+        $skills = DB::table('master_skill')->get();
+
+        return view('employee.addSkill',compact('candidateId','skills'));
+
+    }
+
+    public function editCandidateSkill(Request $r){
+
+        $skillInfo = Skill::select('skill.percentage','master_skill.skillName')
+            ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
+            ->where('skill.id', $r->id)->get();
+        $skillId = $r->id;
+        $skills = DB::table('master_skill')->get();
+
+        return view('employee.editSkill',compact('skillId','skillInfo','skills'));
+
+    }
+
+    public function deleteCandidateSkill(Request $r){
+
+
+        $employeeSkill=Skill::destroy($r->id);
+
+    }
+
+    public function insertCandidateSkill($candidate,Request $r){
+
+
+        $skillName=$r->skillName;
+        $skillPercenTage=$r->skillPercentage;
+        return $skillPercenTage;
+
+        for ($i=0;$i<count($skillName);$i++){
+
+            $skillInfo = DB::table('master_skill')->select('id')->where('skillName', $skillName[$i])->first();
+            if (!empty($skillInfo)){
+
+                $skillId=$skillInfo->id;
+
+            }else{
+                $skillId=DB::table('master_skill')->insertGetId(
+                    ['skillName' => $skillName[$i]]
+                );
+
+            }
+
+            $skill=new skill();
+            $skill->skillId=$skillId;
+            $skill->percentage=$skillPercenTage[$i];
+
+            $skill->candidateId=$candidate;
+
+            $skill->save();
+
+        }
+
+        Session::flash('success_msg', 'Skill Added Successfully!');
+        return back();
+
+    }
+    public function CandidateSkillUpdate($skillsId,Request $r){
+
+
+        $skillName=$r->skillName;
+
+
+
+            $skillInfo = DB::table('master_skill')->select('id')->where('skillName', $skillName)->first();
+            if (!empty($skillInfo)){
+
+                $skillId=$skillInfo->id;
+
+            }else{
+                $skillId=DB::table('master_skill')->insertGetId(
+                    ['skillName' => $skillName]
+                );
+
+            }
+
+            $skill=Skill::findOrFail($skillsId);
+            $skill->skillId=$skillId;
+            $skill->percentage=$r->skillPercentage;
+
+            $skill->save();
+
+
+        Session::flash('success_msg', 'Skill Updated Successfully!');
         return back();
 
     }
