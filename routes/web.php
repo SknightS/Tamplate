@@ -62,6 +62,13 @@ Route::post('/employee-Edit-Education', 'Employee@editCandidateEducation')->name
 Route::post('/employee-Education-update/{educationId}', 'Employee@CandidateEducationUpdate')->name('employee.updateCandidateEducation');
 
 
+Route::post('/employee-Skill', 'Employee@addSkill')->name('employee.addCandidateSkill');
+Route::post('/employee-Add-Skill/{candidate}', 'Employee@insertCandidateSkill')->name('employee.insertSkill');
+Route::post('/employee-Edit-Skill', 'Employee@editCandidateSkill')->name('employee.editSkill');
+Route::post('/employee-delete-Skill', 'Employee@deleteCandidateSkill')->name('employee.deleteSkill');
+Route::post('/employee-Skill-update/{skillId}', 'Employee@CandidateSkillUpdate')->name('employee.updateSkill');
+
+
 
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');
