@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Post;
 use App\Job;
+use App\Jobtype;
 
 class HomeController extends Controller
 {
@@ -31,7 +32,11 @@ class HomeController extends Controller
 
        // return $leasetpost;
 
-        return view('home');
+        $jobtype = jobtype::select('id', 'typeName', 'image')
+            ->get();
+
+        return view('home')
+            ->with('jobtype', $jobtype);
 
       //  ->with('leasetpost' , $leasetpost);
     }

@@ -8,4 +8,6 @@ class workexperience extends Model
 {
     //
     protected $table = 'workexperience';
+    public $timestamps = false;
+    public $primaryKey = 'workExperienceId';
 }

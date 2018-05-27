@@ -8,4 +8,6 @@ class education extends Model
 {
     //
     protected $table = 'education';
+    public $timestamps = false;
+    public $primaryKey = 'educationId';
 }
