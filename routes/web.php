@@ -86,5 +86,8 @@ Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepasswo
 //login
 Route::view('/Login', 'layouts.login')->name('loginshow');
 
+//register
+Route::view('/Sign-up', 'layouts.signup')->name('sigupShow');
+
 
 //Route::get('/home', 'HomeController@index')->name('home');
