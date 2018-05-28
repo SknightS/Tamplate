@@ -60,9 +60,7 @@
 
 
 <!-- Scripts -->
-<!-- jQuery -->
-<!--<script src="js/jquery-3.1.1.min.js"></script>-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
 <!-- Bootstrap -->
 <!--<script src="js/bootstrap.min.js"></script>-->
@@ -95,5 +93,10 @@
 <script src="{{url('public/js/scripts.js')}}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
+<!-- datepicker -->
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 
 @yield('foot-js')

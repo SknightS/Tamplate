@@ -8,4 +8,6 @@ class freetime extends Model
 {
     //
     protected $table = 'freetime';
+    public $timestamps = false;
+    public $primaryKey = 'id';
 }
