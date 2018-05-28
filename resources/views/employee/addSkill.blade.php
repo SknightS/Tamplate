@@ -64,7 +64,7 @@
         <div class="slidecontainer">
             <input type="range" min="1" max="100" value="01" class="slider" id="myRange">
             <p>Value: <span id="demo"></span> %</p>
-            <input type="text" id="skillPercentage" name="skillPercentage[]" class="form-control" required />
+            <input type="hidden" id="skillPercentage" name="skillPercentage[]" class="form-control" required />
         </div>
 
     </div>
@@ -148,7 +148,8 @@
             '<div class="slidecontainer">'+
                 '<input type="range" min="1" max="100" value="01" class="slider" id="myRange'+counter+'">'+
                 '<p>Value: <span id="demo'+counter+'"></span> %</p>'+
-            '<input type="text" id="skillPercentage'+counter+'" name="skillPercentage[]" class="form-control" required />'+
+            '<input type="hidden" id="skillPercentage'+counter+'" name="skillPercentage[]" class="form-control" required />'+
+
             '</div>'+
 
             '</div>'+'</div>'+
@@ -163,10 +164,14 @@
 
             slider.oninput = function() {
                 output.innerHTML = this.value;
-                $("#skillPercentage"+(counter)).val(this.value);
+
+                $("#skillPercentage"+(counter-1)).val(this.value);
+            //    alert(counter)
+
             };
 
             counter++;
+
         });
         $("#remove").click(function () {
             if(counter==2){
