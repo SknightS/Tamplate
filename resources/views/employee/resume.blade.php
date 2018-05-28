@@ -20,14 +20,14 @@
         .ui-autocomplete {
             position: absolute;
             top: 0;
-            left: 0;
+            left: 2px;
             z-index: 1510 !important;
             float: left;
             display: none;
             min-width: 160px;
             width: 160px;
-            padding: 4px 0;
-            margin: 2px 0 0 0;
+            padding: 8px 0;
+            margin: 8px 0 0 0;
             list-style: none;
             background-color: #ffffff;
             border-color: #ccc;
@@ -193,10 +193,14 @@
                             <td>{{date('h:m A',strtotime($FreeTime->startTime))}}</td>
                             <td>{{date('h:m A',strtotime($FreeTime->endTime))}}</td>
                             <td><a style="cursor: pointer;" data-panel-id="{{$FreeTime->id}}" onclick="editFreeTime(this)"><i class="ion-edit"></i></a><a  style="cursor: pointer;" data-panel-id="{{$FreeTime->id}}" onclick="deleteFreeTime(this)"><i class="ion-android-delete"></i></a></td>
+
+
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
 
 
 

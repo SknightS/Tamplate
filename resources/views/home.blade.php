@@ -306,7 +306,7 @@
                         @foreach($jobtype as $jt)
 
                             @if($count % 5 == 0)
-                             
+
 
 
                                 @endif
