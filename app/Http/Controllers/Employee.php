@@ -253,11 +253,11 @@ class Employee extends Controller
 
         $education->schoolName=$r->schoolName;
         $education->degreeName=$r->degreeName;
-        $education->startDate=$r->startDate;
+        $education->startDate=date('Y',strtotime($r->startDate));
         if ($r->currentlyRunning){
             $education->currentlyRunning=$r->currentlyRunning;
         }else{
-            $education->endDate=$r->endDate;
+            $education->endDate=date('Y',strtotime($r->endDate));
         }
         $education->fkcandidateId=$candidate;
 
@@ -288,12 +288,12 @@ class Employee extends Controller
 
         $EducationInfo->schoolName=$r->schoolName;
         $EducationInfo->degreeName=$r->degreeName;
-        $EducationInfo->startDate=$r->startDate;
+        $EducationInfo->startDate=date('Y',strtotime($r->startDate));
         if ($r->currentlyRunning){
             $EducationInfo->currentlyRunning=$r->currentlyRunning;
             $EducationInfo->endDate=null;
         }else{
-            $EducationInfo->endDate=$r->endDate;
+            $EducationInfo->endDate=date('Y',strtotime($r->endDate));
             $EducationInfo->currentlyRunning='0';
         }
 
