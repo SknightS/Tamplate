@@ -39,16 +39,12 @@
 
 <script>
     $( function() {
-        $( "#startDate" ).datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
+        $( "#startDate" ).datetimepicker({
+            format: "Y"
 
         });
-        $( "#endDate" ).datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
+        $( "#endDate" ).datetimepicker({
+            format: "Y"
         });
 
         if($('#currentlyRunning').is(":checked")) {

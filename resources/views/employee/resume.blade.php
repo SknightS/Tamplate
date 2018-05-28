@@ -105,6 +105,39 @@
     @endforeach
 </div> <!-- end .profile-skills-wrapper -->
 
+            <div class="divider"></div>
+
+            <div id="FreeTime" class="profile-skills-wrapper profile-section">
+                <h3 class="dark profile-title">Free Time<span><a style="cursor: pointer" onclick="addCandidateFreeTime()"><i class="ion-plus"></i></a></span></h3>
+
+                    <div class="col-md-12">
+                        <table class="table table-responsive table-bordered">
+                            <thead>
+                            <th>Day</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                            @foreach($FreeTimeInfo as $FreeTime)
+                                <tr>
+                            <td>{{$FreeTime->day}}</td>
+                            <td>{{date('h:m A',strtotime($FreeTime->startTime))}}</td>
+                            <td>{{date('h:m A',strtotime($FreeTime->endTime))}}</td>
+                            <td><a style="cursor: pointer;" data-panel-id="{{$FreeTime->id}}" onclick="editFreeTime(this)"><i class="ion-edit"></i></a><a  style="cursor: pointer;" data-panel-id="{{$FreeTime->id}}" onclick="deleteFreeTime(this)"><i class="ion-android-delete"></i></a></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
+
+
+
+                    <div class="spacer-xs"></div>
+
+
+            </div> <!-- end .profile-skills-wrapper -->
+
 </div> <!-- end .profile-wrapper -->
 
     @endsection
@@ -331,7 +364,7 @@
                 success: function(data){
 
                     $('.modal-body').html(data);
-                    $('#myModalLabel').html("Edit-Candidate Info! : Work-Experience");
+                    $('#myModalLabel').html("Add-Candidate Info! : Education");
                     $('#myModal').modal({show:true});
 
                 },
@@ -443,6 +476,96 @@
             });
         }
 
-    </script>
+        function addCandidateFreeTime() {
 
-@endsection
+            var id= '{{$candidateInfo->candidateId}}';
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.addCandidateFreeTime')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Add-Candidate Info! : Free Time");
+                    $('#myModal').modal({show:true});
+
+
+                },
+            });
+
+
+        }
+
+        function editFreeTime(x) {
+
+            var id = $(x).data('panel-id');
+
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employee.editFreeTime')}}',
+                data: {id:id},
+                success: function(data){
+
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info! : Free Time");
+                    $('#myModal').modal({show:true});
+
+                },
+            });
+
+        }
+
+        function deleteFreeTime(x) {
+
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure To delete this Free Time?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
+
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employee.deleteFreeTime')}}',
+                                data: {id: id},
+                                success: function (data) {
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Free Time Deleted successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+
+                                                    $('#FreeTime').load(document.URL +  ' #FreeTime');
+
+                                                }
+                                            }
+
+                                        }
+                                    });
+
+                                },
+                            });
+                        }
+                    },
+                    No: function () {
+                    },
+                }
+            });
+        }
+
+    </script>
+   @endsection

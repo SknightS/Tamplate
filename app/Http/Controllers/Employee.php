@@ -11,6 +11,7 @@ use App\Address;
 use App\Education;
 use App\Workexperience;
 use App\Skill;
+use App\Freetime;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -61,10 +62,12 @@ class Employee extends Controller
             ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
             ->where('candidateId', $candidateInfo->candidateId)
             ->get();
+        $FreeTimeInfo = Freetime::select('id','day','startTime','endTime')
+            ->where('candidateId', $candidateInfo->candidateId)->get();
 
 
 
-        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education','skill'));
+        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education','skill','FreeTimeInfo'));
 
 
     }
@@ -334,7 +337,7 @@ class Employee extends Controller
 
         $skillName=$r->skillName;
         $skillPercenTage=$r->skillPercentage;
-        return $skillPercenTage;
+
 
         for ($i=0;$i<count($skillName);$i++){
 
@@ -391,6 +394,74 @@ class Employee extends Controller
 
 
         Session::flash('success_msg', 'Skill Updated Successfully!');
+        return back();
+
+    }
+
+    public function addFreeTime(Request $r){
+
+        $candidateId=$r->id;
+        return view('employee.addFreeTime',compact('candidateId'));
+
+    }
+
+    public function editCandidateFreeTime(Request $r){
+
+        $FreeTimeInfo = Freetime::select('day','startTime','endTime')
+            ->where('id', $r->id)->get();
+        $FreeTimeId = $r->id;
+
+        return view('employee.editFreeTime',compact('FreeTimeInfo','FreeTimeId'));
+
+    }
+
+    public function CandidateFreeTimeUpdate($FreeTimeId,Request $r){
+
+        $FreeTimeInfo = Freetime::findOrFail($FreeTimeId);
+
+        $FreeTimeInfo->day=$r->dayName;
+        $FreeTimeInfo->startTime=date('H:i:s',strtotime($r->startTime));
+        $FreeTimeInfo->endTime=date('H:i:s',strtotime($r->endTime));
+
+
+        $FreeTimeInfo->save();
+
+        Session::flash('success_msg', 'Free Time Updated Successfully!');
+        return back();
+
+    }
+
+    public function deleteCandidateFreeTime(Request $r){
+
+
+        $freeTime=Freetime::destroy($r->id);
+
+    }
+
+    public function insertCandidateFreeTime($candidate,Request $r){
+
+
+        $dayName=$r->dayName;
+        $startTime=$r->startTime;
+        $endTime=$r->endTime;
+
+
+        for ($i=0;$i<count($dayName);$i++){
+
+
+            $freeTime=new Freetime();
+
+            $freeTime->day=$dayName[$i];
+            $freeTime->startTime=date('H:i:s',strtotime($startTime[$i]));
+            $freeTime->endTime=date('H:i:s',strtotime($endTime[$i]));
+
+            $freeTime->candidateId=$candidate;
+
+            $freeTime->save();
+
+        }
+
+        Session::flash('success_msg', 'Free Time Added Successfully!');
         return back();
 
     }
