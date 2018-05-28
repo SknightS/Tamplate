@@ -27,13 +27,14 @@
             transition: .2s;
         }
 
+
     </style>
 
     <div class="container">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6" style="padding: 50px">
-                <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -47,31 +48,46 @@
                                     </span>
                             @endif
                     </div>
+                    <div class="form-group{{ $errors->has('userType') ? ' has-error' : '' }}">
 
-                        <div class="form-group">
-                            <div class="col-md-12">
-                            <label for="callCodeByCountry" class="control-label">Mobile Number</label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="callCodeByCountry" name="callCodeByCountry" class="">
-                                    <option value="volvo">Select</option>
-                                    @foreach(countryArray as $callCode)
-                                        <option value="{{$callCode['code']}}">{{$callCode['name']."(".$callCode['code'].")"}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                            <input id="mobile" type="text" class="form-control" name="mobile" value="{{ old('mobile') }}" required autofocus>
-
-                            @if ($errors->has('mobile'))
+                            <label for="userType" class="control-label">Register As</label>
+                        <select id="userType" name="userType" required class="form-control">
+                            <option value="">Select</option>
+                            @foreach(UserType as $type)
+                                <option value="{{$type['code']}}">{{$type['name']}}</option>
+                            @endforeach
+                        </select>
+                            @if ($errors->has('userType'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('mobile') }}</strong>
+                                        <strong>{{ $errors->first('userType') }}</strong>
                                     </span>
                             @endif
-                            </div>
+                    </div>
+
+                        {{--<div class="form-group">--}}
+                            {{--<div class="col-md-12">--}}
+                            {{--<label for="callCodeByCountry" class="control-label">Mobile Number</label>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-6">--}}
+                                {{--<select id="callCodeByCountry" name="callCodeByCountry" class="">--}}
+                                    {{--<option value="volvo">Select</option>--}}
+                                    {{--@foreach(countryArray as $callCode)--}}
+                                        {{--<option value="{{$callCode['code']}}">{{$callCode['name']."(".$callCode['code'].")"}}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-6">--}}
+                            {{--<input id="mobile" type="text" class="form-control" name="mobile" value="{{ old('mobile') }}" required autofocus>--}}
+
+                            {{--@if ($errors->has('mobile'))--}}
+                                {{--<span class="help-block">--}}
+                                        {{--<strong>{{ $errors->first('mobile') }}</strong>--}}
+                                    {{--</span>--}}
+                            {{--@endif--}}
+                            {{--</div>--}}
 
 
-                        </div>
+                        {{--</div>--}}
 
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email" class="control-label">E-Mail Address</label>
@@ -103,7 +119,8 @@
                         </div>
                         <div class="col-md-6">
                             <label for="password" class="control-label">Confirm Password</label>
-                            <input id="conPassword" type="password" class="form-control confirmPassword" name="conPassword" required>
+                            <input id="password-confirm" type="password" class="form-control confirmPassword" name="password_confirmation" required>
+
                             <span id="progress-bar_text2" class="progress-bar_text">Password is blank</span>
                             @if ($errors->has('conPassword'))
                                 <span class="help-block">
@@ -126,15 +143,13 @@
                     <div class="form-group">
                         <div class="col-md-8 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">
-                                Login
+                                Create Account
                             </button>
 
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                Forgot Your Password?
-                            </a>
                         </div>
                     </div>
                 </form>
+
             </div>
             <div class="col-md-3"></div>
         </div>

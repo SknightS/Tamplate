@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Candidate;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -60,12 +62,29 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+//    protected function create(array $data)
+//    {
+//        return User::create([
+//            'name' => $data['name'],
+//            'email' => $data['email'],
+//            'password' => bcrypt($data['password']),
+//        ]);
+//    }
+    protected function AccountCreation(Request $r)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+
+        $user=new User();
+        $user->fkuserTypeId=$r->userType;
+        $user->email=$r->email;
+        $user->password=bcrypt($r->password);
+        $user->remember_token=null;
+        $user->save();
+
+        $candidate=new Candidate();
+        $candidate->email=$r->email;
+        $candidate->name=$r->name;
+        $candidate->fkuserId=$user->id;
+        $candidate->save();
+
     }
 }

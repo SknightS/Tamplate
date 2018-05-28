@@ -88,6 +88,7 @@ Route::view('/Login', 'layouts.login')->name('loginshow');
 
 //register
 Route::view('/Sign-up', 'layouts.signup')->name('sigupShow');
+Route::post('/Create-Account', 'Auth\RegisterController@AccountCreation')->name('register');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

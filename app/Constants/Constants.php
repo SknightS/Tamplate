@@ -2,6 +2,7 @@
 
 define('NameOfDays',array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"));
 
+
 define('countryArray',array(
     'AD'=>array('name'=>'ANDORRA','code'=>'376'),
     'AE'=>array('name'=>'UNITED ARAB EMIRATES','code'=>'971'),
@@ -233,6 +234,12 @@ define('countryArray',array(
     'ZA'=>array('name'=>'SOUTH AFRICA','code'=>'27'),
     'ZM'=>array('name'=>'ZAMBIA','code'=>'260'),
     'ZW'=>array('name'=>'ZIMBABWE','code'=>'263')
+));
+define('UserType',array(
+    'admin'=>array('name'=>'Admin','code'=>'admin'),
+    'emp'=>array('name'=>'Employee','code'=>'emp'),
+    'empr'=>array('name'=>'Employer','code'=>'empr'),
+
 ));
 
 
