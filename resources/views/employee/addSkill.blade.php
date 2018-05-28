@@ -50,8 +50,10 @@
 
 
                         <?php
-                    $arr1 = array('name' => $skill->skillName);
-                    array_push($test,$arr1);
+                   // $arr1 = array('name' => $skill->skillName);
+                    array_push($test,$skill->skillName);
+
+
 
                     } ?>
 
@@ -64,7 +66,7 @@
         <div class="slidecontainer">
             <input type="range" min="1" max="100" value="01" class="slider" id="myRange">
             <p>Value: <span id="demo"></span> %</p>
-            <input type="text" id="skillPercentage" name="skillPercentage[]" class="form-control" required />
+            <input type="hidden" id="skillPercentage" name="skillPercentage[]" class="form-control" required />
         </div>
 
     </div>
@@ -89,12 +91,15 @@
 
 
 
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    var js_array = [<?php echo '"'.implode('","', $test).'"' ?>];
+    $( function() {
 
-
-    var users = <?php echo json_encode($test); ?>;
-
+        $( "#skillName" ).autocomplete({
+            source: js_array
+        });
+    } );
 
     $('#ds').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
@@ -148,7 +153,8 @@
             '<div class="slidecontainer">'+
                 '<input type="range" min="1" max="100" value="01" class="slider" id="myRange'+counter+'">'+
                 '<p>Value: <span id="demo'+counter+'"></span> %</p>'+
-            '<input type="text" id="skillPercentage'+counter+'" name="skillPercentage[]" class="form-control" required />'+
+            '<input type="hidden" id="skillPercentage'+counter+'" name="skillPercentage[]" class="form-control" required />'+
+
             '</div>'+
 
             '</div>'+'</div>'+
@@ -163,10 +169,14 @@
 
             slider.oninput = function() {
                 output.innerHTML = this.value;
-                $("#skillPercentage"+(counter)).val(this.value);
+
+                $("#skillPercentage"+(counter-1)).val(this.value);
+            //    alert(counter)
+
             };
 
             counter++;
+
         });
         $("#remove").click(function () {
             if(counter==2){

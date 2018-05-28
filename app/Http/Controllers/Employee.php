@@ -11,6 +11,7 @@ use App\Address;
 use App\Education;
 use App\Workexperience;
 use App\Skill;
+use App\Freetime;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -61,10 +62,12 @@ class Employee extends Controller
             ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
             ->where('candidateId', $candidateInfo->candidateId)
             ->get();
+        $FreeTimeInfo = Freetime::select('id','day','startTime','endTime')
+            ->where('candidateId', $candidateInfo->candidateId)->get();
 
 
 
-        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education','skill'));
+        return view('employee.resume', compact('candidateInfo','socialLink','employeeAddress','workExperience','education','skill','FreeTimeInfo'));
 
 
     }
@@ -250,11 +253,11 @@ class Employee extends Controller
 
         $education->schoolName=$r->schoolName;
         $education->degreeName=$r->degreeName;
-        $education->startDate=$r->startDate;
+        $education->startDate=date('Y',strtotime($r->startDate));
         if ($r->currentlyRunning){
             $education->currentlyRunning=$r->currentlyRunning;
         }else{
-            $education->endDate=$r->endDate;
+            $education->endDate=date('Y',strtotime($r->endDate));
         }
         $education->fkcandidateId=$candidate;
 
@@ -285,12 +288,12 @@ class Employee extends Controller
 
         $EducationInfo->schoolName=$r->schoolName;
         $EducationInfo->degreeName=$r->degreeName;
-        $EducationInfo->startDate=$r->startDate;
+        $EducationInfo->startDate=date('Y',strtotime($r->startDate));
         if ($r->currentlyRunning){
             $EducationInfo->currentlyRunning=$r->currentlyRunning;
             $EducationInfo->endDate=null;
         }else{
-            $EducationInfo->endDate=$r->endDate;
+            $EducationInfo->endDate=date('Y',strtotime($r->endDate));
             $EducationInfo->currentlyRunning='0';
         }
 
@@ -334,7 +337,7 @@ class Employee extends Controller
 
         $skillName=$r->skillName;
         $skillPercenTage=$r->skillPercentage;
-        return $skillPercenTage;
+
 
         for ($i=0;$i<count($skillName);$i++){
 
@@ -391,6 +394,74 @@ class Employee extends Controller
 
 
         Session::flash('success_msg', 'Skill Updated Successfully!');
+        return back();
+
+    }
+
+    public function addFreeTime(Request $r){
+
+        $candidateId=$r->id;
+        return view('employee.addFreeTime',compact('candidateId'));
+
+    }
+
+    public function editCandidateFreeTime(Request $r){
+
+        $FreeTimeInfo = Freetime::select('day','startTime','endTime')
+            ->where('id', $r->id)->get();
+        $FreeTimeId = $r->id;
+
+        return view('employee.editFreeTime',compact('FreeTimeInfo','FreeTimeId'));
+
+    }
+
+    public function CandidateFreeTimeUpdate($FreeTimeId,Request $r){
+
+        $FreeTimeInfo = Freetime::findOrFail($FreeTimeId);
+
+        $FreeTimeInfo->day=$r->dayName;
+        $FreeTimeInfo->startTime=date('H:i:s',strtotime($r->startTime));
+        $FreeTimeInfo->endTime=date('H:i:s',strtotime($r->endTime));
+
+
+        $FreeTimeInfo->save();
+
+        Session::flash('success_msg', 'Free Time Updated Successfully!');
+        return back();
+
+    }
+
+    public function deleteCandidateFreeTime(Request $r){
+
+
+        $freeTime=Freetime::destroy($r->id);
+
+    }
+
+    public function insertCandidateFreeTime($candidate,Request $r){
+
+
+        $dayName=$r->dayName;
+        $startTime=$r->startTime;
+        $endTime=$r->endTime;
+
+
+        for ($i=0;$i<count($dayName);$i++){
+
+
+            $freeTime=new Freetime();
+
+            $freeTime->day=$dayName[$i];
+            $freeTime->startTime=date('H:i:s',strtotime($startTime[$i]));
+            $freeTime->endTime=date('H:i:s',strtotime($endTime[$i]));
+
+            $freeTime->candidateId=$candidate;
+
+            $freeTime->save();
+
+        }
+
+        Session::flash('success_msg', 'Free Time Added Successfully!');
         return back();
 
     }

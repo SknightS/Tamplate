@@ -54,9 +54,11 @@
                     </nav> <!-- end .main-nav -->
                     <a href="#" class="responsive-menu-open"><i class="ion-navicon"></i></a>
                 </div> <!-- end .navigation -->
+                <a href="{{route('postJob')}}" class="button">Post a Job</a>
                 <div class="button-group-merged flex no-column">
-                    <a href="{{route('postJob')}}" class="button">Post a Job</a>
-                    <a href="{{route('loginshow')}}" class="button"  data-target=".bs-modal-sm">Sign Up</a>
+
+                    <a href="{{route('sigupShow')}}" class="button">Sign up</a>
+                    <a href="{{route('loginshow')}}" class="button"  data-target=".bs-modal-sm">Sign in</a>
                 </div> <!-- end .button-group-merged -->
             </div> <!-- end .right -->
         </div> <!-- end .header-inner -->

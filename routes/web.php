@@ -69,6 +69,13 @@ Route::post('/employee-delete-Skill', 'Employee@deleteCandidateSkill')->name('em
 Route::post('/employee-Skill-update/{skillId}', 'Employee@CandidateSkillUpdate')->name('employee.updateSkill');
 
 
+Route::post('/employee-FreeTime', 'Employee@addFreeTime')->name('employee.addCandidateFreeTime');
+Route::post('/employee-Edit-FreeTime', 'Employee@editCandidateFreeTime')->name('employee.editFreeTime');
+Route::post('/employee-FreeTime-update/{FreeTimeId}', 'Employee@CandidateFreeTimeUpdate')->name('employee.updateFreeTime');
+Route::post('/employee-delete-FreeTime', 'Employee@deleteCandidateFreeTime')->name('employee.deleteFreeTime');
+Route::post('/employee-Add-FreeTime/{candidate}', 'Employee@insertCandidateFreeTime')->name('employee.insertFreeTime');
+
+
 
 
 Route::get('/Resume', 'Employee@showResume')->name('resume');
@@ -78,6 +85,9 @@ Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepasswo
 
 //login
 Route::view('/Login', 'layouts.login')->name('loginshow');
+
+//register
+Route::view('/Sign-up', 'layouts.signup')->name('sigupShow');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

@@ -300,13 +300,15 @@
 
 
                       @php
-                      $count = 0;
+                      $count = 1;
                       @endphp
-
+                    <div class="category-row flex no-wrap space-between items-center">
                         @foreach($jobtype as $jt)
 
                             @if($count % 5 == 0)
-                                <div class="category-row flex no-wrap space-between items-center">
+                             
+
+
                                 @endif
                         <div class="item">
                             <img src="{{url('public/images/'.$jt->image)}}" alt="category-icon" class="img-responsive">
@@ -315,12 +317,13 @@
                         </div> <!-- end .item -->
 
                                     @if($count % 5 == 0)
-                                        </div >
+
                                             @endif
                             @php
-                            $count = $count+1;
+                              $count++;
                             @endphp
                         @endforeach
+                    </div>
                         {{--<div class="item">--}}
                             {{--<img src="{{url('public/images/category-icon02.png')}}" alt="category-icon" class="img-responsive">--}}
                             {{--<h4>Construction</h4>--}}
