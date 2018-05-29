@@ -6,6 +6,12 @@
         <div class="row">
             <div class="col-lg-3"></div>
             <div class="col-lg-6" style="padding: 50px">
+
+                @if ($errors->has('notActive'))
+                    <span class="help-block">
+                                        <strong>{{ $errors->notActive}}</strong>
+                                    </span>
+                @endif
                 <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
 
@@ -38,7 +44,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
+                        <div class="col-md-6">
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me

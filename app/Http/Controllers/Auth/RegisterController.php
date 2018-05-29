@@ -100,14 +100,14 @@ class RegisterController extends Controller
     protected function AccountActive(Request $r)
     {
 
-        $ActiveInfo = Freetime::findOrFail($r->userId);
+        $ActiveInfo = User::findOrFail($r->userId);
         $ActiveInfo->active='1';
         $ActiveInfo->save();
 
         $user=array('email'=>$r->userEmail,'password'=>$r->userPass);
 
         Auth::login($user);
-        
+
 
     }
 }

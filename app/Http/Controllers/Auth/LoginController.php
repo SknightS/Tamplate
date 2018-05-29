@@ -38,18 +38,73 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectTo()
-    {
+//    public function redirectTo()
+//    {
+//
+//
+//        if (Auth::user()->fkuserTypeId == "admin") {
+//            return '/';
+//        }
+//        elseif (Auth::user()->fkuserTypeId == "emp") {
+//            return route('employee');
+//        }
+//        elseif (Auth::user()->fkuserTypeId == "empr") {
+//            return '/cashier/home';
+//        }
+//    }
 
+    public function login(\Illuminate\Http\Request $request) {
+        $this->validateLogin($request);
 
-        if (Auth::user()->fkuserTypeId == "admin") {
-            return '/';
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
         }
-        elseif (Auth::user()->fkuserTypeId == "emp") {
-            return route('employee');
+
+        // This section is the only change
+        if ($this->guard()->validate($this->credentials($request))) {
+            $user = $this->guard()->getLastAttempted();
+
+            // Make sure the user is active
+            if ($user->active=='1' && $this->attemptLogin($request)) {
+
+                // Send the normal successful login response
+
+//                $type=strtoupper(Auth::user()->userType->typeName);
+//                Session::put('userType',$type);
+
+                return $this->sendLoginResponse($request);
+            }
+//            elseif ($user->active =='0' && $this->attemptLogin($request)) {
+//
+//                // Increment the failed login attempts and redirect back to the
+//                // login form with an error message.
+//                $this->incrementLoginAttempts($request);
+//                return redirect()
+//                    ->back()
+//                    ->withInput($request->only($this->username(), 'remember'))
+//                    ->withErrors(['notActive' => 'You must be active Your account to login.']);
+//            }
+            else {
+
+                // Increment the failed login attempts and redirect back to the
+                // login form with an error message.
+                $this->incrementLoginAttempts($request);
+                return redirect()
+                    ->back()
+                    ->withInput($request->only($this->username(), 'remember'));
+
+            }
         }
-        elseif (Auth::user()->fkuserTypeId == "empr") {
-            return '/cashier/home';
-        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 }
