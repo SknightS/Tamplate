@@ -111,7 +111,7 @@
                 <h3 class="dark profile-title">Free Time<span><a style="cursor: pointer" onclick="addCandidateFreeTime()"><i class="ion-plus"></i></a></span></h3>
 
                     <div class="col-md-12">
-                        <table class="table table-responsive table-bordered">
+                        <table class="table table-bordered table-responsive">
                             <thead>
                             <th>Day</th>
                             <th>Start Time</th>
@@ -130,13 +130,10 @@
                             </tbody>
                         </table>
 
-
-
-
-                    <div class="spacer-xs"></div>
-
-
             </div> <!-- end .profile-skills-wrapper -->
+
+                <div class="spacer-xs"></div>
+
 
 </div> <!-- end .profile-wrapper -->
 
