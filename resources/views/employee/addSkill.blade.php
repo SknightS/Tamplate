@@ -50,8 +50,10 @@
 
 
                         <?php
-                    $arr1 = array('name' => $skill->skillName);
-                    array_push($test,$arr1);
+                   // $arr1 = array('name' => $skill->skillName);
+                    array_push($test,$skill->skillName);
+
+
 
                     } ?>
 
@@ -89,12 +91,15 @@
 
 
 
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    var js_array = [<?php echo '"'.implode('","', $test).'"' ?>];
+    $( function() {
 
-
-    var users = <?php echo json_encode($test); ?>;
-
+        $( "#skillName" ).autocomplete({
+            source: js_array
+        });
+    } );
 
     $('#ds').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
