@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Session;
 
 class LoginController extends Controller
 {
@@ -68,31 +69,18 @@ class LoginController extends Controller
         if ($this->guard()->validate($this->credentials($request))) {
             $user = $this->guard()->getLastAttempted();
 
+
+
             // Make sure the user is active
             if ($user->active=='1' && $this->attemptLogin($request)) {
-
                 // Send the normal successful login response
-
-//                $type=strtoupper(Auth::user()->userType->typeName);
-//                Session::put('userType',$type);
-
                 return $this->sendLoginResponse($request);
             }
-//            elseif ($user->active =='0' && $this->attemptLogin($request)) {
-//
-//                // Increment the failed login attempts and redirect back to the
-//                // login form with an error message.
-//                $this->incrementLoginAttempts($request);
-//                return redirect()
-//                    ->back()
-//                    ->withInput($request->only($this->username(), 'remember'))
-//                    ->withErrors(['notActive' => 'You must be active Your account to login.']);
-//            }
             else {
-
                 // Increment the failed login attempts and redirect back to the
                 // login form with an error message.
                 $this->incrementLoginAttempts($request);
+                Session::flash('notActive', 'please acivate Your Account. !! before Login .');
                 return redirect()
                     ->back()
                     ->withInput($request->only($this->username(), 'remember'));
