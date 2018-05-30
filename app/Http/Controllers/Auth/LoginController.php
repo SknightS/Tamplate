@@ -39,20 +39,19 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-//    public function redirectTo()
-//    {
-//
-//
-//        if (Auth::user()->fkuserTypeId == "admin") {
-//            return '/';
-//        }
-//        elseif (Auth::user()->fkuserTypeId == "emp") {
-//            return route('employee');
-//        }
-//        elseif (Auth::user()->fkuserTypeId == "empr") {
-//            return '/cashier/home';
-//        }
-//    }
+    public function redirectTo()
+    {
+
+        if (Auth::user()->fkuserTypeId == "admin") {
+            return '/';
+        }
+        elseif (Auth::user()->fkuserTypeId == "emp") {
+            return route('employee');
+        }
+        elseif (Auth::user()->fkuserTypeId == "empr") {
+            return '/cashier/home';
+        }
+    }
 
     public function login(\Illuminate\Http\Request $request) {
         $this->validateLogin($request);
