@@ -91,15 +91,20 @@ class RegisterController extends Controller
         $candidate->save();
 
         $data = array('name'=>$r->email,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password);
-        Mail::send('mail.AccountCreate', $data, function($message) use($data) {
-            $message->to($data['email'], 'STAFF NETWORK')->subject
-            ('New - Account');
-            $message->from('support@staffnetwork.com','STAFF NETWORK');
-        });
-        echo "HTML Email Sent. Check your inbox.";
+        try {
+            Mail::send('mail.AccountCreate', $data, function ($message) use ($data) {
+                $message->to($data['email'], 'STAFF NETWORK')->subject
+                ('New - Account');
+                //$message->from('support@staffnetwork.com','STAFF NETWORK');
+            });
+        }catch (\Exception $ex) {
+
+            echo "HTML Email Does not Sent. Check your inbox.";
+        }
+        //echo "HTML Email Sent. Check your inbox.";
 
     }
-    protected function AccountActive(Request $r)
+    public function AccountActive(Request $r)
     {
 
         $ActiveInfo = User::findOrFail($r->userId);
