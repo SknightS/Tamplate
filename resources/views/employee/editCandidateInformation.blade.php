@@ -27,8 +27,8 @@
 
     <div  class="form-group">
         <div class="col-md-6">
-        <label class="col-md-2">States</label>
-        <select class="form-control col-md-4" id="states" name="states">
+        <label class="col-md-2">States<span style="color: red">*</span></label>
+        <select class="form-control col-md-4" id="states" name="states" required>
             <option selected value="">Select States</option>
 
             @foreach($states as $state)
@@ -43,8 +43,8 @@
         </select>
         </div>
         <div class="col-md-6">
-        <label class="col-md-2">City</label>
-        <select class="form-control col-md-4" id="cities" name="cities">
+        <label class="col-md-2">City<span style="color: red">*</span></label>
+        <select class="form-control col-md-4" id="cities" name="cities"required>
             <option selected value="">Select City</option>
             @if($candidateInfo->address !=null)
                 <option selected  value="{{$addresss->cityId}}">{{$addresss->city}}</option>
@@ -55,7 +55,7 @@
     </div>
     <div  class="form-group">
         <div class="col-md-12">
-        <label >Address</label>
+        <label >Address<span style="color: red">*</span></label>
             @if($candidateInfo->address !=null)
                 <textarea class="form-control" id="address"name="address" rows="2"cols="5" placeholder="Your address">{{$addresss->addresscol}}</textarea>
             @else

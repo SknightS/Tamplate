@@ -24,12 +24,13 @@ class Employee extends Controller
         $this->middleware(function ($request, $next) {
 
 
-            if(Auth::user()->fkuserTypeId=='emp'){
+            if(Auth::check() && Auth::user()->fkuserTypeId=='emp'){
 
                 return $next($request);
 
             }else{
-                //write logic here
+                Session::flash('message', 'please Login to Account Again .');
+                return redirect()->guest(route('loginshow'));
             }
 
 

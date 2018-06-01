@@ -14,6 +14,11 @@
                         <strong >{{Session::get('notActive')}}</strong>
                     </span>
                 @endif
+                @if (Session::has('message'))
+                    <span style="color: red" class="help-block">
+                        <strong >{{Session::get('message')}}</strong>
+                    </span>
+                @endif
                 </div>
 
 

@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -42,6 +42,19 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+    protected function redirectTo()
+    {
+
+        if (Auth::user()->fkuserTypeId == "admin") {
+            return '/';
+        }
+        elseif (Auth::user()->fkuserTypeId == "emp") {
+            return route('employee');
+        }
+        elseif (Auth::user()->fkuserTypeId == "empr") {
+            return '/cashier/home';
+        }
     }
 
     /**
@@ -56,6 +69,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'userType' => 'required|string|min:3',
         ]);
     }
 
@@ -108,12 +122,28 @@ class RegisterController extends Controller
     {
 
         $ActiveInfo = User::findOrFail($r->userId);
-        $ActiveInfo->active='1';
-        $ActiveInfo->save();
 
-        $user=array('email'=>$r->userEmail,'password'=>$r->userPass);
+//        if ($ActiveInfo->active =='1'){
+//
+//            echo "<script>aletr('1')</script>";
+//            return redirect()->route('employee');
+//        }
+//        else {
 
-        Auth::login($user);
+
+            $ActiveInfo->active = '1';
+            $ActiveInfo->save();
+
+            Auth::loginUsingId($r->userId);
+
+
+            if ($ActiveInfo->fkuserTypeId == "emp") {
+                return redirect()->route('employee');
+            } elseif ($ActiveInfo->fkuserTypeId == "empr") {
+                return redirect()->route('home');
+            }
+//        }
+
 
 
     }
