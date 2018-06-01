@@ -43,19 +43,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-    protected function redirectTo()
-    {
 
-        if (Auth::user()->fkuserTypeId == "admin") {
-            return '/';
-        }
-        elseif (Auth::user()->fkuserTypeId == "emp") {
-            return route('employee');
-        }
-        elseif (Auth::user()->fkuserTypeId == "empr") {
-            return '/cashier/home';
-        }
-    }
 
     /**
      * Get a validator for an incoming registration request.
