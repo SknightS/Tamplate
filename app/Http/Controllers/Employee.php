@@ -24,12 +24,13 @@ class Employee extends Controller
         $this->middleware(function ($request, $next) {
 
 
-            if(Auth::user()->fkuserTypeId=='emp'){
+            if(Auth::check() && Auth::user()->fkuserTypeId=='emp'){
 
                 return $next($request);
 
             }else{
-                //write logic here
+                Session::flash('message', 'please Login to Account Again .');
+                return redirect()->guest(route('loginshow'));
             }
 
 
@@ -53,7 +54,9 @@ class Employee extends Controller
 
         }
 
-        $socialLink = Socialmedia::where('fkCandidateId', $candidateInfo->candidateId)->get();
+        $socialLink = Socialmedia::select('socialmedia.id','socialmedia.link','socialmedianame.name')
+                            ->leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')
+                            ->where('fkCandidateId', $candidateInfo->candidateId)->get();
 
         $workExperience = Workexperience::where('fkcandidateId', $candidateInfo->candidateId)->get();
         $education = Education::where('fkcandidateId', $candidateInfo->candidateId)->get();
@@ -98,17 +101,27 @@ class Employee extends Controller
         );
 
         $object = (object) $candidateInfo;
-        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress])->render();
+
+        $CandidateSocialLinks = Socialmedia::select('socialmedia.id','socialmedia.fkname','socialmedia.link','socialmedianame.name')
+            ->leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')
+            ->where('fkCandidateId', $r->id)->get();
+
+        $allSocialMedia=DB::table('socialmedianame')->get();
+
+
+
+        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress,'socialLink'=>$CandidateSocialLinks,'allSocialMedia'=>$allSocialMedia])->render();
 
     }
 
     public function showJobApplied(){
         return view('employee.jobapplied');
     }
-//    public function deleteSocialMedia(Request $r){
-//        $media=Socialmedia::findOrFail($r->id)->delete();
-//
-//    }
+    public function deleteSocialMedia(Request $r){
+
+        $media=Socialmedia::destroy($r->id);
+
+    }
     public function showChangepassword(){
         return view('employee.changepassword');
     }

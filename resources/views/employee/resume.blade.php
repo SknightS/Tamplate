@@ -97,7 +97,7 @@
                     {{--<h5 class="dark">Social Media<span><a style="cursor: pointer" onclick="addCandidateSocialMedia()"><i class="ion-plus"></i></a></span></h5>--}}
                     <ul class="list-unstyled social-icons flex no-column">
                         @foreach($socialLink as $socialLinks)
-                            <li><a href="{{$socialLinks->link}}">{{$socialLinks->link}}</a>
+                            <li><a href="{{$socialLinks->link}}">{{$socialLinks->name}}</a>
                                 {{--<span><a id="editSocialMedia" style="cursor: pointer;color: black" onclick="editSocialMedia()"><i class="ion-edit"></i></a></span>--}}
                             </li>
                         @endforeach
@@ -260,6 +260,7 @@
             var phone = '{{$candidateInfo->phone}}';
             var email = '{{$candidateInfo->email}}';
             var addressId = '{{$candidateInfo->address_addressId}}';
+
             $.ajax({
                 type: "POST",
                 url: '{{route('employee.showInfo')}}',
@@ -268,6 +269,7 @@
                     $('.modal-body').html(data);
                     $('#myModalLabel').html("Edit-Candidate Info!");
                     $('#myModal').modal({show:true});
+
                 },
             });
         }

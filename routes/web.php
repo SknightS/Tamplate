@@ -52,7 +52,7 @@ Route::post('/employee-delete-WorkExperience', 'Employee@deleteCandidateWorkExpe
 Route::post('/employee-Edit-WorkExperience', 'Employee@editCandidateWorkExperience')->name('employee.editCandidateWorkExperience');
 Route::post('/employee-WorkExperience-update/{experienceId}', 'Employee@CandidateWorkExperienceUpdate')->name('employee.updateCandidateWorkExperience');
 
-//Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteMedia');
+Route::post('/employee-deleteSocialMedia', 'Employee@deleteSocialMedia')->name('employee.deleteSocialMedia');
 
 
 Route::post('/employee-Education', 'Employee@addEducation')->name('employee.addEducation');

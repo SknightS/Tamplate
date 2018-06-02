@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -43,6 +43,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -56,6 +57,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'userType' => 'required|string|min:3',
         ]);
     }
 
@@ -91,24 +93,45 @@ class RegisterController extends Controller
         $candidate->save();
 
         $data = array('name'=>$r->email,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password);
-        Mail::send('mail.AccountCreate', $data, function($message) use($data) {
-            $message->to($data['email'], 'STAFF NETWORK')->subject
-            ('New - Account');
-            $message->from('support@staffnetwork.com','STAFF NETWORK');
-        });
-        echo "HTML Email Sent. Check your inbox.";
+        try {
+            Mail::send('mail.AccountCreate', $data, function ($message) use ($data) {
+                $message->to($data['email'], 'STAFF NETWORK')->subject
+                ('New - Account');
+                //$message->from('support@staffnetwork.com','STAFF NETWORK');
+            });
+        }catch (\Exception $ex) {
+
+            echo "HTML Email Does not Sent. Check your inbox.";
+        }
+        //echo "HTML Email Sent. Check your inbox.";
 
     }
-    protected function AccountActive(Request $r)
+    public function AccountActive(Request $r)
     {
 
         $ActiveInfo = User::findOrFail($r->userId);
-        $ActiveInfo->active='1';
-        $ActiveInfo->save();
 
-        $user=array('email'=>$r->userEmail,'password'=>$r->userPass);
+//        if ($ActiveInfo->active =='1'){
+//
+//            echo "<script>aletr('1')</script>";
+//            return redirect()->route('employee');
+//        }
+//        else {
 
-        Auth::login($user);
+
+            $ActiveInfo->active = '1';
+            $ActiveInfo->save();
+
+            Auth::loginUsingId($r->userId);
+
+
+            if ($ActiveInfo->fkuserTypeId == "emp") {
+                return redirect()->route('employee');
+            } elseif ($ActiveInfo->fkuserTypeId == "empr") {
+                return redirect()->route('home');
+            }
+//        }
+
 
 
     }

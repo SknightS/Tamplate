@@ -171,7 +171,7 @@
                 output.innerHTML = this.value;
 
                 $("#skillPercentage"+(counter-1)).val(this.value);
-            //    alert(counter)
+
 
             };
 

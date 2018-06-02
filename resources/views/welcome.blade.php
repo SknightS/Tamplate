@@ -353,6 +353,7 @@
                     </div> <!-- end .item -->
                 </div> <!-- end .category-row -->
             </div>	<!-- end .category-grid -->
+
         </div> <!-- end .container -->
     </div> <!-- end .inner -->
     <div class="background-text">
