@@ -298,37 +298,40 @@
                 <h1 class="light">Browse Categories</h1>
 
                 <div class="category-grid">
-                    <?php $counter=0;?>
-                        <div class="category-row flex no-wrap space-between items-center">
-                        @foreach($jobtype as $jt)
+                    <?php $counter=0;$firstFive=0;?>
 
-                            {{--@if($counter%5==0)--}}
-                                {{--{{$counter}}--}}
-                                {{--<div class="category-row flex no-wrap space-between items-center">--}}
-                            {{--@endif--}}
-
-                        <div class="item">
-                            <img src="public/images/{{$jt->image}}" alt="category-icon" class="img-responsive">
-                            <h4>{{$jt->typeName}}</h4>
-                            <p class="light">4286 Jobs</p>
-                        </div> <!-- end .item -->
-
-                            {{--@if($counter%5==0)--}}
-                            {{--</div> <!-- end .category-row -->--}}
-                            {{--@endif--}}
-
-                                <?php $counter++;?>
-                            
-                                @endforeach
-                            </div>
-                </div>	<!-- end .category-grid -->
+                    @foreach($jobtype as $jt)
 
 
-            </div> <!-- end .container -->
-        </div> <!-- end .inner -->
-        <div class="background-text">
-            <h1>Categories</h1>
-        </div> <!-- end .background-text -->
+
+
+                        @if($counter%5==0)
+                            <div class="category-row  flex no-wrap  space-between items-center ">
+                                @endif
+
+                                <div class="item">
+                                    <img src="public/images/{{$jt->image}}" alt="category-icon" class="img-responsive">
+                                    <h4>{{$jt->typeName}}</h4>
+                                    <p class="light">4286 Jobs</p>
+                                </div> <!-- end .item -->
+                                <?php $counter++; $firstFive++;?>
+                                @if($firstFive == 5)
+                            </div> <!-- end .category-row -->
+                        @else
+                            @if($counter!=0 && $counter%5==0)
+                </div> <!-- end .category-row -->
+                @endif
+                @endif
+                @endforeach
+
+            </div>	<!-- end .category-grid -->
+
+
+        </div> <!-- end .container -->
+    </div> <!-- end .inner -->
+    <div class="background-text">
+        <h1>Categories</h1>
+    </div> <!-- end .background-text -->
     </div> <!-- end .section -->
 
 
@@ -562,5 +565,4 @@
 
 
 <!-- CTA App Section -->
-
 
