@@ -1457,7 +1457,7 @@ select::-ms-expand {
 	-ms-flex: 0 20%;
 	flex: 0 20%;
 	padding: 30px 10px;
-	
+	position: relative;
 	max-width: 20%;
 	cursor: pointer;
 	-webkit-transition: .3s;
@@ -1489,7 +1489,7 @@ select::-ms-expand {
 	top: -200px;
 	left: -2px;
 	bottom: 0;
-	border: 1px solid rgba(46, 98, 230, 0);
+	
 	height: 100vh;
 	-webkit-box-shadow: 1px 0px 0px #2e62e6;
 	box-shadow: 1px 0px 0px #2e62e6;
