@@ -298,25 +298,32 @@
                 <h1 class="light">Browse Categories</h1>
 
                 <div class="category-grid">
-                    <?php $counter=0;?>
+                    <?php $counter=0;$firstFive=0;?>
+
                         @foreach($jobtype as $jt)
 
-                            @if($counter%5==0)
-                                <div class="category-row flex no-wrap space-between items-center">
+
+
+
+                                @if($counter%5==0)
+                                    <div class="category-row  flex no-wrap  space-between items-center ">
+                                @endif
+
+                                    <div class="item">
+                                        <img src="images/category-icon01.png" alt="category-icon" class="img-responsive">
+                                        <h4>Finance</h4>
+                                        <p class="light">4286 Jobs</p>
+                                    </div> <!-- end .item -->
+                                        <?php $counter++;$firstFive++;?>
+                            @if($firstFive == 5)
+                                    </div> <!-- end .category-row -->
+                            @else
+                                @if($counter!=0 && $counter%5==0)
+                                    </div> <!-- end .category-row -->
+                                @endif
                             @endif
-
-                        <div class="item">
-                            <img src="images/category-icon01.png" alt="category-icon" class="img-responsive">
-                            <h4>Finance</h4>
-                            <p class="light">4286 Jobs</p>
-                        </div> <!-- end .item -->
-
-                            @if($counter%5==0)
-                            </div> <!-- end .category-row -->
-                            @endif
-
-                                <?php $counter++;?>
                                 @endforeach
+
                 </div>	<!-- end .category-grid -->
 
 
