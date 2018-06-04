@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use App\Post;
 use App\Job;
 use App\Jobtype;
@@ -35,8 +35,16 @@ class HomeController extends Controller
         $jobtype = jobtype::select('id', 'typeName', 'image')
             ->get();
 
+        $post= Post::select('fkjobTypeId' ,DB::raw('COUNT(fkjobId) as total_post'))
+             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
+            ->groupBy('fkjobTypeId')
+            ->get();
+
+
+
         return view('home')
-            ->with('jobtype', $jobtype);
+            ->with('jobtype', $jobtype)
+            ->with('post', $post);
 
       //  ->with('leasetpost' , $leasetpost);
     }

@@ -309,7 +309,16 @@
                                 <div class="item">
                                     <img src="public/images/{{$jt->image}}" alt="category-icon" class="img-responsive">
                                     <h4>{{$jt->typeName}}</h4>
-                                    <p class="light">4286 Jobs</p>
+                                    <p class="light">
+                                        @foreach($post as $p )
+                                            @if($p->fkjobTypeId == $jt->id)
+                                                {{$p->total_post." Jobs"}}
+                                                @else
+                                                {{"0 Jobs"}}
+                                            @endif
+                                            @endforeach
+
+                                    </p>
                                 </div> <!-- end .item -->
                                 <?php $counter++;$firstFive++?>
 
