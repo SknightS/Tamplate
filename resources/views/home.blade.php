@@ -298,7 +298,7 @@
                 <h1 class="light">Browse Categories</h1>
 
                 <div class="category-grid">
-                    <?php $counter=0;?>
+                    <?php $counter=0;$firstFive=0;$total=count($jobtype)?>
 
                         @foreach($jobtype as $jt)
 
@@ -311,16 +311,18 @@
                                         <h4>Finance</h4>
                                         <p class="light">4286 Jobs</p>
                                     </div> <!-- end .item -->
-                                        <?php $counter++;?>
+                                        <?php $counter++;$firstFive++?>
+
                                 @if($counter%5==0)
                                     </div> <!-- end .category-row -->
                                 @endif
 
-                                @endforeach
+                        @endforeach
+                    @if($total%5!=0)
+                        </div> <!-- end .category-row -->
+                    @endif
 
                 </div>	<!-- end .category-grid -->
-
-
             </div> <!-- end .container -->
         </div> <!-- end .inner -->
         <div class="background-text">
