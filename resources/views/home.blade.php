@@ -299,24 +299,28 @@
 
                 <div class="category-grid">
                     <?php $counter=0;?>
+                        <div class="category-row flex no-wrap space-between items-center">
                         @foreach($jobtype as $jt)
 
-                            @if($counter%5==0)
-                                <div class="category-row flex no-wrap space-between items-center">
-                            @endif
+                            {{--@if($counter%5==0)--}}
+                                {{--{{$counter}}--}}
+                                {{--<div class="category-row flex no-wrap space-between items-center">--}}
+                            {{--@endif--}}
 
                         <div class="item">
-                            <img src="images/category-icon01.png" alt="category-icon" class="img-responsive">
-                            <h4>Finance</h4>
+                            <img src="public/images/{{$jt->image}}" alt="category-icon" class="img-responsive">
+                            <h4>{{$jt->typeName}}</h4>
                             <p class="light">4286 Jobs</p>
                         </div> <!-- end .item -->
 
-                            @if($counter%5==0)
-                            </div> <!-- end .category-row -->
-                            @endif
+                            {{--@if($counter%5==0)--}}
+                            {{--</div> <!-- end .category-row -->--}}
+                            {{--@endif--}}
 
                                 <?php $counter++;?>
+                            
                                 @endforeach
+                            </div>
                 </div>	<!-- end .category-grid -->
 
 
