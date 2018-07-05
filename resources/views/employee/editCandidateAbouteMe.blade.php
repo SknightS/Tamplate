@@ -4,7 +4,7 @@
     {{csrf_field()}}
     <div class="form-group">
         <div class="col-md-12">
-            <label class="col-md-2">About Me<span style="color: red">*</span></label>
+            <label >About Me<span style="color: red">*</span></label>
             <textarea id="aboutMe" placeholder="Candidate about me" name="aboutMe" class="form-control" required rows="4" cols="50">{{$candidate->aboutme}}</textarea>
         </div>
     </div>

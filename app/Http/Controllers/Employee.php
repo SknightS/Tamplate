@@ -115,7 +115,11 @@ class Employee extends Controller
     }
 
     public function showJobApplied(){
-        return view('employee.jobapplied');
+
+        $userId=Auth::user()->id;
+        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+
+        return view('employee.jobapplied',compact('candidateInfo'));
     }
     public function deleteSocialMedia(Request $r){
 

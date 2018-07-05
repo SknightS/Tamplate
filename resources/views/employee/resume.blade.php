@@ -281,6 +281,7 @@
                 data: {id:id},
                 success: function(data){
                     $('.modal-body').html(data);
+                    $('#myModalLabel').html("Edit-Candidate Info!: About Me");
                     $('#myModal').modal({show:true});
                 },
             });
