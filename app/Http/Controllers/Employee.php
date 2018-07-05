@@ -485,11 +485,22 @@ class Employee extends Controller
         $userId=Auth::user()->id;
         $candidateInfo = Candidate::where('fkuserId', $userId)->first();
 
-        $candidateAllAppliedJob=Requestjob::select('requestjob.*','post.description','job.jobName')
+//        $candidateAllAppliedJob=Requestjob::select('requestjob.*','post.description','job.jobName')
+//            ->leftJoin('post', 'post.id', '=', 'requestjob.post_id')
+//            ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
+//            ->where('requestjob.fkcandidateId', $candidateInfo->candidateId)
+//            ->paginate(1);
+
+        $candidateAllAppliedJob=Requestjob::select('requestjob.*','company_branch.name as companyName','job.jobName',
+            'jobtype.typeName as jobType','hirereport.startTime as jobStartTime','hirereport.endTime as jobEndTime',
+            'hirereport.start_code as jobStartCode','hirereport.finish_code as jobEndCode')
             ->leftJoin('post', 'post.id', '=', 'requestjob.post_id')
             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('hirereport', 'hirereport.fkrequestJobId', '=', 'requestjob.requestJobId')
             ->where('requestjob.fkcandidateId', $candidateInfo->candidateId)
-            ->paginate(1);
+            ->get();
 
 
       //  return $candidateAllAppliedJob;
