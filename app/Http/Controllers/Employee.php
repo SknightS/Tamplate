@@ -12,6 +12,7 @@ use App\Education;
 use App\Workexperience;
 use App\Skill;
 use App\Freetime;
+use App\Requestjob;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -114,20 +115,16 @@ class Employee extends Controller
 
     }
 
-    public function showJobApplied(){
 
-        $userId=Auth::user()->id;
-        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
-
-        return view('employee.jobapplied',compact('candidateInfo'));
-    }
     public function deleteSocialMedia(Request $r){
 
         $media=Socialmedia::destroy($r->id);
 
     }
     public function showChangepassword(){
-        return view('employee.changepassword');
+        $userId=Auth::user()->id;
+        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+        return view('employee.changepassword',compact('candidateInfo'));
     }
     public function getAllCityByState(Request $r){
 
@@ -481,6 +478,23 @@ class Employee extends Controller
         Session::flash('success_msg', 'Free Time Added Successfully!');
         return back();
 
+    }
+
+    public function showJobApplied(){
+
+        $userId=Auth::user()->id;
+        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+
+        $candidateAllAppliedJob=Requestjob::select('requestjob.*','post.description','job.jobName')
+            ->leftJoin('post', 'post.id', '=', 'requestjob.post_id')
+            ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
+            ->where('requestjob.fkcandidateId', $candidateInfo->candidateId)
+            ->paginate(1);
+
+
+      //  return $candidateAllAppliedJob;
+
+        return view('employee.jobapplied',compact('candidateInfo','candidateAllAppliedJob'));
     }
 
 }
