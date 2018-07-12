@@ -90,7 +90,7 @@
                 <td>{{$allAppliedJob->companyName}}</td>
                 <td>{{$allAppliedJob->jobType}}</td>
                 <td>{{$allAppliedJob->applyTime}}</td>
-                
+
                 <td>
                     @if($allAppliedJob->request_status=='2')
                     @if(empty($allAppliedJob->jobStartTime)  && empty($allAppliedJob->jobEndTime))
