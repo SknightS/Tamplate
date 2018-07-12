@@ -21,7 +21,7 @@ Route::view('candidatedetails','layouts.candidate-details')->name('candidatedeta
 Route::view('Companies','layouts.Companies')->name('Companies');
 Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');
 Route::view('post-job','layouts.postJob')->name('postJob');
-Route::view('job-listening','layouts.jobListening')->name('jobListening');
+//Route::view('job-listening','layouts.jobListening')->name('jobListening');
 Route::view('post-resume-form','layouts.post-resume-form')->name('post-resume-form');
 Route::view('about-us','layouts.about-us')->name('about-us');
 Route::view('contact-us','layouts.contact-us')->name('contact-us');
@@ -94,3 +94,6 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 
 //Route::get('/home', 'HomeController@index')->name('home');
+
+//job
+Route::get('/job-listening', 'JobController@index')->name('jobListening');

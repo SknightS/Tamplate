@@ -87,59 +87,59 @@
 
                 <div class="divider"></div>
 
-                <div class="latest-updates-widget-wrapper jobs-widget">
-                    <h6>Latest updates</h6>
-                    <div class="latest-update flex no-column no-wrap">
-                        <div class="left-side-inner">
-                            <img src="images/avatar11.jpg" alt="avatar" class="img-responsive">
-                        </div> <!-- end .left-side -->
-                        <div class="right-side-inner">
-                            <h5><span>James Patel</span>has got a job!</h5>
-                            <h5><span>Web Designer</span>for Banana Inc. in<a href="#0">Art/Design</a></h5>
-                        </div> <!-- end .right-side -->
-                    </div> <!-- end .latest-update -->
+                {{--<div class="latest-updates-widget-wrapper jobs-widget">--}}
+                    {{--<h6>Latest updates</h6>--}}
+                    {{--<div class="latest-update flex no-column no-wrap">--}}
+                        {{--<div class="left-side-inner">--}}
+                            {{--<img src="images/avatar11.jpg" alt="avatar" class="img-responsive">--}}
+                        {{--</div> <!-- end .left-side -->--}}
+                        {{--<div class="right-side-inner">--}}
+                            {{--<h5><span>James Patel</span>has got a job!</h5>--}}
+                            {{--<h5><span>Web Designer</span>for Banana Inc. in<a href="#0">Art/Design</a></h5>--}}
+                        {{--</div> <!-- end .right-side -->--}}
+                    {{--</div> <!-- end .latest-update -->--}}
 
-                    <div class="latest-update flex no-column no-wrap">
-                        <div class="left-side-inner">
-                            <img src="images/avatar12.jpg" alt="avatar" class="img-responsive">
-                        </div> <!-- end .left-side -->
-                        <div class="right-side-inner">
-                            <h5><span>Alice Phillips</span>has got a job!</h5>
-                            <h5><span>Web Designer</span>for Banana Inc. in<a href="#0">Art/Design</a></h5>
-                        </div> <!-- end .right-side -->
-                    </div> <!-- end .latest-update -->
+                    {{--<div class="latest-update flex no-column no-wrap">--}}
+                        {{--<div class="left-side-inner">--}}
+                            {{--<img src="images/avatar12.jpg" alt="avatar" class="img-responsive">--}}
+                        {{--</div> <!-- end .left-side -->--}}
+                        {{--<div class="right-side-inner">--}}
+                            {{--<h5><span>Alice Phillips</span>has got a job!</h5>--}}
+                            {{--<h5><span>Web Designer</span>for Banana Inc. in<a href="#0">Art/Design</a></h5>--}}
+                        {{--</div> <!-- end .right-side -->--}}
+                    {{--</div> <!-- end .latest-update -->--}}
 
-                    <div class="latest-update flex no-column no-wrap">
-                        <div class="left-side-inner">
-                            <img src="images/company-logo11.jpg" alt="company-logo" class="img-responsive">
-                        </div> <!-- end .left-side -->
-                        <div class="right-side-inner">
-                            <h5><span>Evotweet</span>has got a job!</h5>
-                            <h5><a href="#0">Front-end developer</a>needed in<a href="#0">Technologies</a></h5>
-                        </div> <!-- end .right-side -->
-                    </div> <!-- end .latest-update -->
+                    {{--<div class="latest-update flex no-column no-wrap">--}}
+                        {{--<div class="left-side-inner">--}}
+                            {{--<img src="images/company-logo11.jpg" alt="company-logo" class="img-responsive">--}}
+                        {{--</div> <!-- end .left-side -->--}}
+                        {{--<div class="right-side-inner">--}}
+                            {{--<h5><span>Evotweet</span>has got a job!</h5>--}}
+                            {{--<h5><a href="#0">Front-end developer</a>needed in<a href="#0">Technologies</a></h5>--}}
+                        {{--</div> <!-- end .right-side -->--}}
+                    {{--</div> <!-- end .latest-update -->--}}
 
-                    <div class="latest-update flex no-column no-wrap">
-                        <div class="left-side-inner">
-                            <img src="images/avatar13.jpg" alt="avatar" class="img-responsive">
-                        </div> <!-- end .left-side -->
-                        <div class="right-side-inner">
-                            <h5><span>Wayne Welch</span>has got a job!</h5>
-                            <h5><span>Software Engineer</span>for Apple Inc. in<a href="#0">Technologies</a></h5>
-                        </div> <!-- end .right-side -->
-                    </div> <!-- end .latest-update -->
+                    {{--<div class="latest-update flex no-column no-wrap">--}}
+                        {{--<div class="left-side-inner">--}}
+                            {{--<img src="images/avatar13.jpg" alt="avatar" class="img-responsive">--}}
+                        {{--</div> <!-- end .left-side -->--}}
+                        {{--<div class="right-side-inner">--}}
+                            {{--<h5><span>Wayne Welch</span>has got a job!</h5>--}}
+                            {{--<h5><span>Software Engineer</span>for Apple Inc. in<a href="#0">Technologies</a></h5>--}}
+                        {{--</div> <!-- end .right-side -->--}}
+                    {{--</div> <!-- end .latest-update -->--}}
 
-                    <div class="latest-update flex no-column no-wrap">
-                        <div class="left-side-inner">
-                            <img src="images/company-logo12.jpg" alt="company-logo" class="img-responsive">
-                        </div> <!-- end .left-side -->
-                        <div class="right-side-inner">
-                            <h5><span>Prymb Creative Studio</span>has got a job!</h5>
-                            <h5><a href="#0">We're looking for an Art Director</a>in<a href="#0">Tecnologies</a></h5>
-                        </div> <!-- end .right-side -->
-                    </div> <!-- end .latest-update -->
+                    {{--<div class="latest-update flex no-column no-wrap">--}}
+                        {{--<div class="left-side-inner">--}}
+                            {{--<img src="images/company-logo12.jpg" alt="company-logo" class="img-responsive">--}}
+                        {{--</div> <!-- end .left-side -->--}}
+                        {{--<div class="right-side-inner">--}}
+                            {{--<h5><span>Prymb Creative Studio</span>has got a job!</h5>--}}
+                            {{--<h5><a href="#0">We're looking for an Art Director</a>in<a href="#0">Tecnologies</a></h5>--}}
+                        {{--</div> <!-- end .right-side -->--}}
+                    {{--</div> <!-- end .latest-update -->--}}
 
-                </div> <!-- end .latest-updates-widget-wrapper -->
+                {{--</div> <!-- end .latest-updates-widget-wrapper -->--}}
 
             </div> <!-- end .left-side -->
 
@@ -333,65 +333,80 @@
                 <div class="job-categories-widget jobs-widget">
                     <h6>Categories</h6>
                     <ul class="job-categories list-unstyled">
+                        @foreach($jobtypename as $jpn)
                         <li class="job-category checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox1" type="checkbox">
-                            <label for="checkbox1">Fianance<span>4,286 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                            <input id="{{$jpn->id}}" type="checkbox">
+                            <label for="checkbox1">{{$jpn->typeName}}
+                                @foreach($jobcountt as $jc)
+                                    @if($jc->fkjobTypeId == $jpn->id)
+                                    <span> @if(empty($jc->total_post)){
+                                        {{"0 Jobs"}}
+                                        }
+                                        @else
+                                        {{$jc->total_post." Jobs"}}
+                                        @endif
+                                    </span>
+                                    @endif
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox2" type="checkbox">
-                            <label for="checkbox2">Constructions<span>452 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
+                                @endforeach
+                            </label>
+                            {{--<span><i class="ion-android-add"></i></span>--}}
                         </li>
+                        @endforeach
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox3" type="checkbox">
-                            <label for="checkbox3">Logistics<span>1,867 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox2" type="checkbox">--}}
+                            {{--<label for="checkbox2">Constructions<span>452 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox4" type="checkbox" checked="">
-                            <label for="checkbox4">Art/Design<span>3,094 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox3" type="checkbox">--}}
+                            {{--<label for="checkbox3">Logistics<span>1,867 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox5" type="checkbox">
-                            <label for="checkbox5">Sales/Marketing<span>2,955 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox4" type="checkbox" checked="">--}}
+                            {{--<label for="checkbox4">Art/Design<span>3,094 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox6" type="checkbox">
-                            <label for="checkbox6">Science<span>470 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox5" type="checkbox">--}}
+                            {{--<label for="checkbox5">Sales/Marketing<span>2,955 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox7" type="checkbox" checked="">
-                            <label for="checkbox7">Technologies<span>4,536 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox6" type="checkbox">--}}
+                            {{--<label for="checkbox6">Science<span>470 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox8" type="checkbox">
-                            <label for="checkbox8">Healthcare<span>2,619 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox7" type="checkbox" checked="">--}}
+                            {{--<label for="checkbox7">Technologies<span>4,536 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox9" type="checkbox">
-                            <label for="checkbox9">Education Training<span>1,132 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox8" type="checkbox">--}}
+                            {{--<label for="checkbox8">Healthcare<span>2,619 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
 
-                        <li class="checkbox flex space-between items-center no-column no-wrap">
-                            <input id="checkbox10" type="checkbox">
-                            <label for="checkbox10">Food Services<span>757 Jobs</span></label>
-                            <span><i class="ion-android-add"></i></span>
-                        </li>
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox9" type="checkbox">--}}
+                            {{--<label for="checkbox9">Education Training<span>1,132 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
+
+                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
+                            {{--<input id="checkbox10" type="checkbox">--}}
+                            {{--<label for="checkbox10">Food Services<span>757 Jobs</span></label>--}}
+                            {{--<span><i class="ion-android-add"></i></span>--}}
+                        {{--</li>--}}
                     </ul> <!-- end .job-categories -->
                 </div> <!-- end .job-categories-widget -->
 
