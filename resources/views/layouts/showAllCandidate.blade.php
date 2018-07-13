@@ -88,7 +88,8 @@
                 data: {skills:filterSkills},
                 success: function (data) {
 
-                    $("#CandidateInfo").html(data);
+                   // $("#CandidateInfo").html(data);
+                    console.log(data);
 
                 }
 
