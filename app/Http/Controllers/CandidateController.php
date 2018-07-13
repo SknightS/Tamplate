@@ -25,6 +25,7 @@ class CandidateController extends Controller
             ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId');
         if ($filterSkills != null) {
             $skill = $skill->whereIn('master_skill.skillName', $filterSkills);
+
         }
         $skill = $skill->get();
 
@@ -52,12 +53,17 @@ class CandidateController extends Controller
             $allCandidates=$allCandidates->whereIn('candidate.candidateId',$candidateSkill);
         }
 
+
+        $allSkill = Skill::select('skill.candidateId', 'master_skill.skillName')
+            ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
+        ->get();
+
         $allCandidates=$allCandidates->paginate(1);
 //        $allCandidates=$allCandidates->toSql();
 //        return $allCandidates;
 
         if ($r->ajax()) {
-            return view('layouts.showCandidateWithParameter',compact('allCandidates','skill'));
+            return view('layouts.showCandidateWithParameter',compact('allCandidates','allSkill'));
         }
 
         return view('layouts.showAllCandidate',compact('allCandidates','skill'));
@@ -71,12 +77,14 @@ class CandidateController extends Controller
         //return $filterLocation;
         $candidateSkill=array();
 
-            $skill = Skill::select('skill.candidateId', 'master_skill.skillName')
-                ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId');
+        $skill = Skill::select('skill.candidateId', 'master_skill.skillName')
+            ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId');
         if ($filterSkills != null) {
             $skill = $skill->whereIn('master_skill.skillName', $filterSkills);
+
         }
-            $skill = $skill->get();
+        $skill = $skill->get();
+
 
 
 
@@ -86,19 +94,11 @@ class CandidateController extends Controller
 
             }
         }
-
-
-
-
-
         $allCandidates = Candidate::select('candidate.candidateId','candidate.name','candidate.professionTitle','candidate.aboutme',
             'candidate.image','address.addresscol', 'master_subarb.name as city', 'master_state.name as state')
             ->leftJoin('address', 'address.addressId', '=', 'candidate.address_addressId')
             ->leftJoin('master_subarb', 'master_subarb.id', '=', 'address.master_subarb_id')
             ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id');
-
-
-
 
         if ($filterLocation != null){
 
@@ -109,11 +109,16 @@ class CandidateController extends Controller
             $allCandidates=$allCandidates->whereIn('candidate.candidateId',$candidateSkill);
         }
 
+
+        $allSkill = Skill::select('skill.candidateId', 'master_skill.skillName')
+            ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
+            ->get();
+
         $allCandidates=$allCandidates->paginate(1);
 //        $allCandidates=$allCandidates->toSql();
 //        return $allCandidates;
 
-        return view('layouts.showCandidateWithParameter',compact('allCandidates','skill'));
+        return view('layouts.showCandidateWithParameter',compact('allCandidates','allSkill'));
 
 
     }

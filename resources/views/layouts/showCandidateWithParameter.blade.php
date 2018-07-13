@@ -59,7 +59,7 @@
 
                     <ul class="list-unstyled candidate-skills flex no-column items-center">
 
-                        @foreach($skill as $personalSkill)
+                        @foreach($allSkill as $personalSkill)
                             @if($personalSkill->candidateId==$candidates->candidateId)
                                 <li><a href="#" class="button">{{$personalSkill->skillName}}</a></li>
                             @endif
