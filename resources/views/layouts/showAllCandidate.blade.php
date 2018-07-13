@@ -18,7 +18,7 @@
     </div> <!-- end .section -->
 
     <!-- Candidates Listing Section -->
-    <div class="section candidates-listing solid-light-grey-bg">
+    <div id="candidateContainer" class="section candidates-listing solid-light-grey-bg">
         <div class="inner">
             <div class="container">
                 <div class="page-content flex no-wrap space-between">
@@ -34,12 +34,12 @@
                     <div class="right-sidebar">
                         <div class="filter location-filter">
                             <h6 class="filter-widget-title">Filter by location</h6>
-                            <input type="text" value="New York" data-role="tagsinput" />
+                            <input type="text" id="filterLocation" data-role="tagsinput" />
                         </div> <!-- end .location-filter -->
 
                         <div class="filter skill-filter">
                             <h6 class="filter-widget-title">Filter by skill</h6>
-                            <input type="text"  id="filterSkill" data-role="tagsinput" />
+                            <input type="text" id="filterSkill" data-role="tagsinput" />
                         </div> <!-- end .skill-filter -->
 
                         <div class="filter categories-filter">
@@ -80,16 +80,19 @@
         function candidateInfo() {
 
             var filterSkills=$("#filterSkill").tagsinput('items');
+            var filterLocation=$("#filterLocation").tagsinput('items');
 
             $.ajax({
                 type: 'POST',
                 url: "{!! route('candidate.candidateParameter') !!}",
                 cache: false,
-                data: {skills:filterSkills},
+                data: {skills:filterSkills,location:filterLocation},
                 success: function (data) {
 
-                   // $("#CandidateInfo").html(data);
-                    console.log(data);
+                    $("#CandidateInfo").html(data);
+                   // console.log(data);
+
+
 
                 }
 
@@ -102,16 +105,72 @@
             candidateInfo();
 
 
-
         });
 
         $("#filterSkill").on('itemAdded', function(event) {
-//            $("#filterSkill").tagsinput('items');
+            candidateInfo();
+        });
+        $("#filterLocation").on('itemAdded', function(event) {
+            candidateInfo();
         });
 
 
 
 
+
+
+
+    </script>
+
+
+    <script>
+//        $(window).on('hashchange', function() {
+//            if (window.location.hash) {
+//                var page = window.location.hash.replace('#', '');
+//                if (page == Number.NaN || page <= 0) {
+//                    return false;
+//                }else{
+//                    getData(page);
+//                }
+//            }
+//        });
+        $(document).ready(function()
+        {
+            $(document).on('click', '.pagination a',function(event)
+            {
+                $('li').removeClass('active');
+                $(this).parent('li').addClass('active');
+                event.preventDefault();
+                var myurl = $(this).attr('href');
+                var page=$(this).attr('href').split('page=')[1];
+                getData(page);
+            });
+
+        });
+        function getData(page){
+            $.ajax(
+                {
+                    url: '?page=' + page,
+                    type: "get",
+                    datatype: "html",
+                    // beforeSend: function()
+                    // {
+                    //     you can show your loader
+                    // }
+                })
+                .done(function(data)
+                {
+
+
+                    $("#CandidateInfo").html(data);
+
+                    location.hash = page;
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                    alert('No response from server');
+                });
+        }
     </script>
 
 @endsection

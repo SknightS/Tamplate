@@ -52,20 +52,20 @@
                     {{--</h6>--}}
 
 
-                    <h6 class="contact-location">{{$candidates->addresscol}},<span>{{$candidates->city}}, {{$candidates->state}}</span></h6>
+                    <h6 class="contact-location">{{$candidates->addresscol}},<span>{{$candidates->city}}, {{$candidates->state}}</span></h6>&nbsp;&nbsp;
 
 
                     <h6 class="hourly-rate"><span>$45</span>/Hour</h6>
 
                     <ul class="list-unstyled candidate-skills flex no-column items-center">
 
-                        {{--@foreach($skill as $personalSkill)--}}
-                            {{--@if($personalSkill->candidateId==$candidates->candidateId)--}}
-                                {{--<li><a href="#" class="button">{{$personalSkill->skillName}}</a></li>--}}
-                            {{--@endif--}}
-                        {{--@endforeach--}}
+                        @foreach($skill as $personalSkill)
+                            @if($personalSkill->candidateId==$candidates->candidateId)
+                                <li><a href="#" class="button">{{$personalSkill->skillName}}</a></li>
+                            @endif
+                        @endforeach
 
-                                <li><a href="#" class="button">{{$candidates->skillName}}</a></li>
+                                {{--<li><a href="#" class="button">{{$candidates->skillName}}</a></li>--}}
 
 
                     </ul> <!-- end .candiate-skills -->
@@ -81,14 +81,24 @@
 
 <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">
     @if($allCandidates->currentPage()!= 1)
-        <a @if($allCandidates->currentPage()== 1) disabled @endif href="{{$allCandidates->previousPageUrl()}}" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>
+        <a data-id="{{$allCandidates->previousPageUrl()}}" href="javascript:void(0)" class="button pagiNextPrevBtn"><i class="ion-ios-arrow-left"></i>Prev</a>
     @endif
-    <ul class="list-unstyled flex no-column items-center">
+    <ul class="list-unstyled flex no-column items-center pagination">
         @for($i=$allCandidates->perPage(); $i <= $allCandidates->total();$i=($i+$allCandidates->perPage()))
             <li><a href="{{$allCandidates->url($i)}}">{{$i}}</a></li>
         @endfor
     </ul>
     @if($allCandidates->lastPage()!=$allCandidates->currentPage())
-        <a href="{{$allCandidates->nextPageUrl()}}" class="button">Next<i class="ion-ios-arrow-right"></i></a>
+        <a data-id="{{$allCandidates->nextPageUrl()}}"href="javascript:void(0)"  class="button pagiNextPrevBtn">Next<i class="ion-ios-arrow-right"></i></a>
     @endif
+
 </div> <!-- end .jobpress-custom-pager -->
+
+<script>
+    $(".pagiNextPrevBtn").on("click",function() {
+
+        var page=$(this).data('id').split('page=')[1];
+        getData(page)
+
+    });
+</script>

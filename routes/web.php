@@ -21,7 +21,7 @@ Route::view('candidate','layouts.candidate')->name('candidate');
 
 //candidate
 //Route::get('All-candidates','CandidateController@showAllCandidate')->name('allCandidate');
-Route::view('All-candidates','layouts.showAllCandidate')->name('allCandidate');
+Route::get('All-candidates','CandidateController@showAllCandidate')->name('allCandidate');
 
 Route::post('/show-All-candidates', 'CandidateController@showCandidateWithParameter')->name('candidate.candidateParameter');
 
