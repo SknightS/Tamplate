@@ -58,11 +58,15 @@
                     <h6 class="hourly-rate"><span>$45</span>/Hour</h6>
 
                     <ul class="list-unstyled candidate-skills flex no-column items-center">
+
                         @foreach($skill as $personalSkill)
                             @if($personalSkill->candidateId==$candidates->candidateId)
                                 <li><a href="#" class="button">{{$personalSkill->skillName}}</a></li>
                             @endif
                         @endforeach
+
+                                {{--<li><a href="#" class="button">{{$candidates->skillName}}</a></li>--}}
+
 
                     </ul> <!-- end .candiate-skills -->
                 </div> <!-- end .candidate-info-bottom -->

@@ -39,12 +39,13 @@
 
                         <div class="filter skill-filter">
                             <h6 class="filter-widget-title">Filter by skill</h6>
-                            <input type="text" value="HTML" id="filterSkill" data-role="tagsinput" />
+                            <input type="text"  id="filterSkill" data-role="tagsinput" />
                         </div> <!-- end .skill-filter -->
 
                         <div class="filter categories-filter">
                             <h6 class="filter-widget-title">Filter by categories</h6>
                             <div class="form-group">
+
                                 <select class="form-control" id="categories-filter">
                                     <option value="" selected disabled>Choose Categories</option>
                                     <option>Featured Developer</option>
@@ -52,6 +53,7 @@
                                     <option>Location</option>
                                     <option>Skills</option>
                                 </select>
+
                             </div> <!-- end .form-group -->
                         </div> <!-- end .categories-filter -->
 
@@ -77,11 +79,13 @@
 
         function candidateInfo() {
 
+            var filterSkills=$("#filterSkill").tagsinput('items');
+
             $.ajax({
                 type: 'POST',
                 url: "{!! route('candidate.candidateParameter') !!}",
                 cache: false,
-                data: {},
+                data: {skills:filterSkills},
                 success: function (data) {
 
                     $("#CandidateInfo").html(data);
@@ -93,18 +97,20 @@
         }
 
 
-
-
         $(document).ready(function() {
             candidateInfo();
 
-        });
-
-        $("#filterSkill").bind("keyup input paste", function() {
-            var skills=$("#filterSkill").val();
 
 
         });
+
+        $("#filterSkill").on('itemAdded', function(event) {
+//            $("#filterSkill").tagsinput('items');
+        });
+
+
+
+
     </script>
 
 @endsection
