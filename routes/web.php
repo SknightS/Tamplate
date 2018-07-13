@@ -27,7 +27,8 @@ Route::post('/show-All-candidates', 'CandidateController@showCandidateWithParame
 
 
 
-Route::view('candidatedetails','layouts.candidate-details')->name('candidatedetails');
+//Route::view('candidatedetails','layouts.candidate-details')->name('candidatedetails');
+Route::get('candidatedetails/{candidateId}','CandidateController@showResume')->name('candidatedetails');
 
 Route::view('Companies','layouts.Companies')->name('Companies');
 Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');

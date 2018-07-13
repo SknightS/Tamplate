@@ -37,7 +37,7 @@
             </div> <!-- end .candidate-image -->
 
             <div class="candidate-info">
-                <a href="{{route('candidatedetails')}}"> <h4 class="candidate-name">{{$candidates->name}}</h4>
+                <a href="{{route('candidatedetails',$candidates->candidateId)}}"> <h4 class="candidate-name">{{$candidates->name}}</h4>
                     <h5 class="candidate-designation">{{$candidates->professionTitle}}</h5>
                 </a>
 
