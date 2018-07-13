@@ -26,6 +26,8 @@ class JobController extends Controller
             ->groupBy('fkjobTypeId')
             ->get();
 
+        
+
         return view('layouts.jobListening')
             ->with('jobcountt', $jobpost)
             ->with('jobtypename',$jobtype );
