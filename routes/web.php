@@ -16,8 +16,19 @@
 //})->name('home');
 
 Route::get('/', 'HomeController@index')->name('home');
+
 Route::view('candidate','layouts.candidate')->name('candidate');
+
+//candidate
+//Route::get('All-candidates','CandidateController@showAllCandidate')->name('allCandidate');
+Route::get('All-candidates','CandidateController@showAllCandidate')->name('allCandidate');
+
+Route::post('/show-All-candidates', 'CandidateController@showCandidateWithParameter')->name('candidate.candidateParameter');
+
+
+
 Route::view('candidatedetails','layouts.candidate-details')->name('candidatedetails');
+
 Route::view('Companies','layouts.Companies')->name('Companies');
 Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');
 Route::view('post-job','layouts.postJob')->name('postJob');
@@ -33,6 +44,7 @@ Auth::routes();
 
 
 //employee
+
 //Route::view('employee-dashboard','employee.resume')->name('employee');
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
 Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');

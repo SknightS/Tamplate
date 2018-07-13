@@ -3,7 +3,7 @@
 
 
 @include('head')
-<body>
+<body id="body">
 
 <!-- Header -->
 @include('menu')
