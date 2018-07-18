@@ -31,6 +31,7 @@
                     </div> <!-- end .left-content -->
 
 
+
                     <div class="right-sidebar">
                         <div class="filter location-filter">
                             <h6 class="filter-widget-title">Filter by location</h6>
@@ -110,7 +111,13 @@
         $("#filterSkill").on('itemAdded', function(event) {
             candidateInfo();
         });
+        $('#filterSkill').on('itemRemoved', function(event) {
+            candidateInfo();
+        });
         $("#filterLocation").on('itemAdded', function(event) {
+            candidateInfo();
+        });
+        $('#filterLocation').on('itemRemoved', function(event) {
             candidateInfo();
         });
 
@@ -148,10 +155,15 @@
 
         });
         function getData(page){
+
+            var filterSkills=$("#filterSkill").tagsinput('items');
+            var filterLocation=$("#filterLocation").tagsinput('items');
+
             $.ajax(
                 {
                     url: '?page=' + page,
                     type: "get",
+                    data: {skills:filterSkills,location:filterLocation},
                     datatype: "html",
                     // beforeSend: function()
                     // {
@@ -163,6 +175,7 @@
 
 
                     $("#CandidateInfo").html(data);
+
 
                     location.hash = page;
                 })

@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Candidate;
+use App\Company;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
+
+use Session;
 
 use Auth;
 
@@ -86,23 +89,45 @@ class RegisterController extends Controller
         $user->active='0';
         $user->save();
 
-        $candidate=new Candidate();
-        $candidate->email=$r->email;
-        $candidate->name=$r->name;
-        $candidate->fkuserId=$user->id;
-        $candidate->save();
+        if ($r->userType == UserType['empr']['code']){
+
+            $company=new Company();
+
+            $company->email=$r->email;
+            $company->name=$r->name;
+            $company->fkuserId=$user->id;
+            $company->save();
+
+
+        } elseif ($r->userType == UserType['emp']['code']){
+
+            $candidate=new Candidate();
+            $candidate->email=$r->email;
+            $candidate->name=$r->name;
+            $candidate->fkuserId=$user->id;
+            $candidate->save();
+
+
+        }
+
+
 
         $data = array('name'=>$r->email,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password);
         try {
             Mail::send('mail.AccountCreate', $data, function ($message) use ($data) {
-                $message->to($data['email'], 'STAFF NETWORK')->subject
-                ('New - Account');
+                $message->to($data['email'], 'STAFF NETWORK')->subject('New - Account');
                 //$message->from('support@staffnetwork.com','STAFF NETWORK');
             });
+            Session::flash('success_msg', 'Account Activation Mail is sent to your mail');
+
         }catch (\Exception $ex) {
 
-            echo "HTML Email Does not Sent. Check your inbox.";
+          //  echo "HTML Email Does not Sent. Check your inbox.";
+
+            Session::flash('notActive', 'Account Activation Email Does not Sent.Please contact us');
+
         }
+        redirect()->route('home');
         //echo "HTML Email Sent. Check your inbox.";
 
     }

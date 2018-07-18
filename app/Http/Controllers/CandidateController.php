@@ -10,6 +10,7 @@ use App\Workexperience;
 use App\Freetime;
 use Illuminate\Http\Request;
 
+
 class CandidateController extends Controller
 {
 
@@ -66,8 +67,10 @@ class CandidateController extends Controller
 //        $allCandidates=$allCandidates->toSql();
 //        return $allCandidates;
 
+
         if ($r->ajax()) {
-            return view('layouts.showCandidateWithParameter',compact('allCandidates','allSkill'));
+
+            return view('layouts.showCandidateWithParameter',compact('allCandidates','allSkill','currentPage'));
         }
 
         return view('layouts.showAllCandidate',compact('allCandidates','skill'));

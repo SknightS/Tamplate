@@ -85,7 +85,7 @@
     @endif
     <ul class="list-unstyled flex no-column items-center pagination">
         @for($i=$allCandidates->perPage(); $i <= $allCandidates->total();$i=($i+$allCandidates->perPage()))
-            <li><a href="{{$allCandidates->url($i)}}">{{$i}}</a></li>
+            <li ><a href="{{$allCandidates->url($i)}}">{{$i}}</a></li>
         @endfor
     </ul>
     @if($allCandidates->lastPage()!=$allCandidates->currentPage())
@@ -98,6 +98,7 @@
     $(".pagiNextPrevBtn").on("click",function() {
 
         var page=$(this).data('id').split('page=')[1];
+
         getData(page)
 
     });

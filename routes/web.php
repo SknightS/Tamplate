@@ -26,12 +26,16 @@ Route::get('All-candidates','CandidateController@showAllCandidate')->name('allCa
 Route::post('/show-All-candidates', 'CandidateController@showCandidateWithParameter')->name('candidate.candidateParameter');
 
 
+Route::get('Companies','CompanyController@showAllCompany')->name('Companies');
+Route::get('Companydetails/{id}','CompanyController@showCompanydetails')->name('Companydetails');
+
+
 
 //Route::view('candidatedetails','layouts.candidate-details')->name('candidatedetails');
 Route::get('candidatedetails/{candidateId}','CandidateController@showResume')->name('candidatedetails');
 
-Route::view('Companies','layouts.Companies')->name('Companies');
-Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');
+//Route::view('Companies','layouts.Companies')->name('Companies');
+//Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');
 Route::view('post-job','layouts.postJob')->name('postJob');
 //Route::view('job-listening','layouts.jobListening')->name('jobListening');
 Route::view('post-resume-form','layouts.post-resume-form')->name('post-resume-form');
