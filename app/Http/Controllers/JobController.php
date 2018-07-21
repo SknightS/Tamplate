@@ -21,12 +21,19 @@ class JobController extends Controller
     {
         $jobtype = jobtype::select('id', 'typeName')
             ->get();
+        $alljob = Post::select()
+            ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
+          
+        ->get();
+
+
+
         $jobpost= Post::select('fkjobTypeId' ,DB::raw('COUNT(fkjobId) as total_post'))
             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
             ->groupBy('fkjobTypeId')
             ->get();
 
-        
+
 
         return view('layouts.jobListening')
             ->with('jobcountt', $jobpost)
