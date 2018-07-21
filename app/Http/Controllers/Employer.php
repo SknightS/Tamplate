@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class Employer extends Controller
 {
+
     //
+
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -27,21 +29,41 @@ class Employer extends Controller
         });
     }
 
-    public function index(){
+
+    public function index()
+    {
 
         return view('employer/employerDashboard');
     }
 
-    public function favoriteEmployee(){
+    public function favoriteEmployee()
+    {
         return view('employer/favorite-candidates');
     }
-    public function myprofile(){
+
+    public function myprofile()
+    {
         return view('employer/myprofile');
     }
-    public function manageJob(){
+
+    public function manageJob()
+    {
         return view('employer/manage-job');
     }
-    public function manageApplication(){
+
+    public function manageApplication()
+    {
         return view('employer/manage-application');
+
     }
-}
+        public function showDashboard() // show employer Dashboard
+        {
+
+            // $userId=Auth::user()->id;
+
+            return view('employer.resume');
+
+
+        }
+    }
+

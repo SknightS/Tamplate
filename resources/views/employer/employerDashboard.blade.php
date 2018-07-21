@@ -1,4 +1,5 @@
 @include('employer.head')
+
 		{{--<!-- Responsive Menu -->--}}
 		{{--<div class="responsive-menu">--}}
 			{{--<a href="#" class="responsive-menu-close"><i class="ion-android-close"></i></a>--}}
@@ -20,6 +21,7 @@
 			</div> <!-- end .inner -->
 		</div> <!-- end .section -->
 
+
 		<!-- Employer Dashboard -->
 		<div class="section employer-dashboard-content solid-light-grey-bg">
 			<div class="inner">
@@ -32,8 +34,7 @@
 							<div class="tab-content employer-dashboard">
 
 
-									@yield('empr-content')
-
+								@yield('empr-content')
 
 
 							</div> <!-- end .employer-dashboard -->
@@ -44,5 +45,9 @@
 			</div> <!-- end .inner -->
 		</div> <!-- end .section -->
 
+
 		<!-- Footer -->
-		@include('employer.footer')
+
+
+@include('employer.footer')
+

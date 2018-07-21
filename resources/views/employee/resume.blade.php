@@ -66,6 +66,7 @@
             background-image: none;
         }
     </style>
+
     <div class="profile-badge"><h6>My resume</h6></div>
     <div class="profile-wrapper">
 

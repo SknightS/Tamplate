@@ -49,7 +49,9 @@ class LoginController extends Controller
             return route('employee');
         }
         elseif (Auth::user()->fkuserTypeId == "empr") {
+
             return route('employer');
+
         }
     }
 

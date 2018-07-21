@@ -19,11 +19,11 @@ class CandidateController extends Controller
 
     }
 
-    public function showAllCandidate(Request $r)
+    public function showAllCandidate(Request $r) //show all cadidate with skill and address
     {
         $filterSkills=$r->skills;
         $filterLocation=$r->location;
-        //return $filterLocation;
+
         $candidateSkill=array();
 
         $skill = Skill::select('skill.candidateId', 'master_skill.skillName')
@@ -33,8 +33,6 @@ class CandidateController extends Controller
 
         }
         $skill = $skill->get();
-
-
 
         if ($filterSkills != null){
             foreach ($skill as $skills){
@@ -64,8 +62,7 @@ class CandidateController extends Controller
         ->get();
 
         $allCandidates=$allCandidates->paginate(1);
-//        $allCandidates=$allCandidates->toSql();
-//        return $allCandidates;
+
 
 
         if ($r->ajax()) {
@@ -77,11 +74,11 @@ class CandidateController extends Controller
 
 
     }
-    public function showCandidateWithParameter(Request $r)
+    public function showCandidateWithParameter(Request $r) // filter cadidate with skill and address
     {
         $filterSkills=$r->skills;
         $filterLocation=$r->location;
-        //return $filterLocation;
+
         $candidateSkill=array();
 
         $skill = Skill::select('skill.candidateId', 'master_skill.skillName')
@@ -91,9 +88,6 @@ class CandidateController extends Controller
 
         }
         $skill = $skill->get();
-
-
-
 
         if ($filterSkills != null){
             foreach ($skill as $skills){
@@ -122,18 +116,15 @@ class CandidateController extends Controller
             ->get();
 
         $allCandidates=$allCandidates->paginate(1);
-//        $allCandidates=$allCandidates->toSql();
-//        return $allCandidates;
+
 
         return view('layouts.showCandidateWithParameter',compact('allCandidates','allSkill'));
 
 
     }
 
-    public function showResume($candidateId){
-
-       // return $userId;
-
+    public function showResume($candidateId) // retun candidate resume
+    {
 
         $candidateInfo = Candidate::findOrFail($candidateId);
 
@@ -163,7 +154,6 @@ class CandidateController extends Controller
             ->get();
         $FreeTimeInfo = Freetime::select('id','day','startTime','endTime')
             ->where('candidateId', $candidateInfo->candidateId)->get();
-
 
 
         return view('layouts.showCandidateDetails', compact('candidateInfo','socialLink','employeeAddress','workExperience','education','skill','FreeTimeInfo'));

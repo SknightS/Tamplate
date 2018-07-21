@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Companybranch;
 use App\Company;
 use App\Address;
 
@@ -15,19 +16,23 @@ class CompanyController extends Controller
 
     }
 
-    public function showAllCompany()
+    public function showAllCompany() //return all companies with branch
     {
-        $allCompanies= Company::select('company.companyId','company.image','company_branch.name','company_branch.address_addressId','company_branch.phone','company_branch.email')
-                        ->leftJoin('company_branch', 'company_branch.company_companyId', '=', 'company.companyId')
+        $allCompaniesWithBranch= Companybranch::select('company.companyId','company.image','company_branch.name as branchName','company_branch.address_addressId',
+                                'company_branch.phone','company_branch.email','address.addresscol','master_subarb.name as city',
+                                'master_state.name as state')
+                        ->leftJoin('company', 'company_branch.company_companyId', '=', 'company.companyId')
+                        ->leftJoin('address', 'address.addressId', '=', 'company_branch.address_addressId')
+                        ->leftJoin('master_subarb', 'master_subarb.id', '=', 'address.master_subarb_id')
+                        ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id')
                         ->get();
 
-       // return $allCompanies;
 
-        return view('layouts.showAllCompany',compact('allCompanies'));
+        return view('layouts.showAllCompany',compact('allCompaniesWithBranch'));
 
 
     }
-    public function showCompanydetails($id)
+    public function showCompanydetails($id) // retun selected company details
     {
         $companyDetails = Company::leftJoin('company_branch', 'company_branch.company_companyId', '=', 'company.companyId')->findOrFail($id);
 
@@ -44,7 +49,7 @@ class CompanyController extends Controller
             $companyAddress=null;
 
         }
-        //return $companyDetails;
+
 
         return view('layouts.showCompanyDetails',compact('companyDetails','companyAddress'));
 

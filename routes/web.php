@@ -50,7 +50,7 @@ Auth::routes();
 
 //employee
 
-//Route::view('employee-dashboard','employee.resume')->name('employee');
+
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
 Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');
 Route::post('/employee-Info-update/{candidate}', 'Employee@CandidateInfoUpdate')->name('employee.updateCandidateInfo');
@@ -92,6 +92,7 @@ Route::post('/employee-FreeTime-update/{FreeTimeId}', 'Employee@CandidateFreeTim
 Route::post('/employee-delete-FreeTime', 'Employee@deleteCandidateFreeTime')->name('employee.deleteFreeTime');
 Route::post('/employee-Add-FreeTime/{candidate}', 'Employee@insertCandidateFreeTime')->name('employee.insertFreeTime');
 
+
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');
 Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepassword');
@@ -120,3 +121,8 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 //job
 Route::get('/job-listening', 'JobController@index')->name('jobListening');
+
+
+//Employer
+
+//Route::get('/employer-dashboard', 'Employer@showDashboard')->name('employer.dashboard');
