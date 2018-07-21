@@ -39,6 +39,7 @@
 
 							</div> <!-- end .candidate-dashboard -->
 						</div> <!-- end .right-side-content -->
+
 					</div> <!-- end .candidate-dashboard-wrapper -->
 				</div> <!-- end .container -->
 			</div> <!-- end .inner -->

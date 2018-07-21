@@ -49,7 +49,7 @@ class LoginController extends Controller
             return route('employee');
         }
         elseif (Auth::user()->fkuserTypeId == "empr") {
-            return '/cashier/home';
+            return route('employer.dashboard');
         }
     }
 

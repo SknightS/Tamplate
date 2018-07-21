@@ -62,6 +62,8 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'userType' => 'required|string|min:3',
         ]);
+
+
     }
 
     /**
@@ -80,6 +82,13 @@ class RegisterController extends Controller
 //    }
     protected function AccountCreation(Request $r)
     {
+        $validatedData = $r->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:100|unique:user,email',
+            'password' => 'required|string|min:6|confirmed',
+            'userType' => 'required|string|max:5',
+        ]);
+
 
         $user=new User();
         $user->fkuserTypeId=$r->userType;
@@ -89,30 +98,8 @@ class RegisterController extends Controller
         $user->active='0';
         $user->save();
 
-        if ($r->userType == UserType['empr']['code']){
 
-            $company=new Company();
-
-            $company->email=$r->email;
-            $company->name=$r->name;
-            $company->fkuserId=$user->id;
-            $company->save();
-
-
-        } elseif ($r->userType == UserType['emp']['code']){
-
-            $candidate=new Candidate();
-            $candidate->email=$r->email;
-            $candidate->name=$r->name;
-            $candidate->fkuserId=$user->id;
-            $candidate->save();
-
-
-        }
-
-
-
-        $data = array('name'=>$r->email,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password);
+        $data = array('name'=>$r->name,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password);
         try {
             Mail::send('mail.AccountCreate', $data, function ($message) use ($data) {
                 $message->to($data['email'], 'STAFF NETWORK')->subject('New - Account');
@@ -124,10 +111,10 @@ class RegisterController extends Controller
 
           //  echo "HTML Email Does not Sent. Check your inbox.";
 
-            Session::flash('notActive', 'Account Activation Email Does not Sent.Please contact us');
+            Session::flash('error_msg', 'Account Activation Email Does not Sent.Please contact us');
 
         }
-        redirect()->route('home');
+        return redirect()->route('home');
         //echo "HTML Email Sent. Check your inbox.";
 
     }
@@ -135,29 +122,35 @@ class RegisterController extends Controller
     {
 
         $ActiveInfo = User::findOrFail($r->userId);
-
-//        if ($ActiveInfo->active =='1'){
-//
-//            echo "<script>aletr('1')</script>";
-//            return redirect()->route('employee');
-//        }
-//        else {
+        $ActiveInfo->active = '1';
+        $ActiveInfo->save();
 
 
-            $ActiveInfo->active = '1';
-            $ActiveInfo->save();
+        if ($ActiveInfo->fkuserTypeId == UserType['emp']['code']) {
 
+            $candidate = new Candidate();
+
+            $candidate->email = $ActiveInfo->email;
+            $candidate->name = $r->name;
+            $candidate->fkuserId = $ActiveInfo->id;
+
+            $candidate->save();
             Auth::loginUsingId($r->userId);
+            return redirect()->route('employee');
+        }
+        elseif ($ActiveInfo->fkuserTypeId == UserType['empr']['code']) {
 
+//            $company=new Company();
+//
+//            $company->companyLoginId=$ActiveInfo->email;
+//            $company->companyName=$r->name;
+//            $company->fkuserId=$ActiveInfo->id;
+//
+//            $company->save();
+//            Auth::loginUsingId($r->userId);
 
-            if ($ActiveInfo->fkuserTypeId == "emp") {
-                return redirect()->route('employee');
-            } elseif ($ActiveInfo->fkuserTypeId == "empr") {
-                return redirect()->route('home');
-            }
-//        }
-
-
+            return redirect()->route('employer.dashboard');
+        }
 
     }
 }

@@ -18,6 +18,7 @@ Password: {{$pass}}<br>
                             <div class="form-group">
 
                                 <input type="hidden"  class="form-control" id="userId" name="userId" value="{{$userId}}" placeholder="User Id" required />
+                                <input type="hidden"  class="form-control" id="name" name="name" value="{{$name}}" placeholder="name" required />
                             </div>
 
 

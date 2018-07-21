@@ -571,3 +571,47 @@
 
 <!-- CTA App Section -->
 
+@section('foot-js')
+    <script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).ready(function(){
+            @if(Session::has('success_msg'))
+            $.alert({
+                title: 'Success!',
+                type: 'green',
+                content: '{{Session::get('success_msg')}}',
+                buttons: {
+                    tryAgain: {
+                        text: 'Ok',
+                        btnClass: 'btn-green',
+                        action: function () {
+                        }
+                    }
+                }
+            });
+            @elseif(Session::has('error_msg'))
+            $.alert({
+                title: 'Error!',
+                type: 'red',
+                content: '{{Session::get('error_msg')}}',
+                buttons: {
+                    tryAgain: {
+                        text: 'Ok',
+                        btnClass: 'btn-red',
+                        action: function () {
+                        }
+                    }
+                }
+            });
+            @endif
+        });
+
+    </script>
+
+@endsection
+

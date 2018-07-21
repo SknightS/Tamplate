@@ -37,7 +37,8 @@ class Employee extends Controller
 
         });
     }
-    public function showResume(){
+    public function showResume() // return employee resume with all related info
+    {
 
         $userId=Auth::user()->id;
         $candidateInfo = Candidate::where('fkuserId', $userId)->first();
@@ -75,7 +76,9 @@ class Employee extends Controller
 
 
     }
-    public function showInforForEdit(Request $r){
+
+    public function showInforForEdit(Request $r) //show edit modal for employee basic info
+    {
 
         $addressStates = DB::table('master_state')->get();
 
@@ -103,57 +106,20 @@ class Employee extends Controller
 
         $object = (object) $candidateInfo;
 
-        $CandidateSocialLinks = Socialmedia::select('socialmedia.id','socialmedia.fkname','socialmedia.link','socialmedianame.name')
-            ->leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')
-            ->where('fkCandidateId', $r->id)->get();
+//        $CandidateSocialLinks = Socialmedia::select('socialmedia.id','socialmedia.fkname','socialmedia.link','socialmedianame.name')
+//            ->leftJoin('socialmedianame', 'socialmedianame.id', '=', 'socialmedia.fkname')
+//            ->where('fkCandidateId', $r->id)->get();
 
-        $allSocialMedia=DB::table('socialmedianame')->get();
-
-
-
-        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress,'socialLink'=>$CandidateSocialLinks,'allSocialMedia'=>$allSocialMedia])->render();
-
-    }
+//        $allSocialMedia=DB::table('socialmedianame')->get();
 
 
-    public function deleteSocialMedia(Request $r){
 
-        $media=Socialmedia::destroy($r->id);
+        return view('employee.editCandidateInformation',['candidateInfo' => $object,'states'=>$addressStates,'address'=>$employeeAddress])->render();
 
     }
-    public function showChangepassword(){
-        $userId=Auth::user()->id;
-        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
-        return view('employee.changepassword',compact('candidateInfo'));
-    }
-    public function getAllCityByState(Request $r){
 
-        $addressCities = DB::table('master_subarb')->where('master_state_id',$r->stateId)->get();
-
-        if ($addressCities == null) {
-            echo "<option value='' selected>Select City</option>";
-        } else {
-            echo "<option value='' selected>Select City</option>";
-            foreach ($addressCities as $city) {
-                echo "<option value='$city->id'>$city->name</option>";
-            }
-        }
-
-
-    }
-    public function showCandidateAboutMeForEdit(Request $r){
-
-        $candidateInfo = Candidate::Select('aboutme')->where('candidateId', $r->id)->get();
-        return view('employee.editCandidateAbouteMe',['candidateInfo' => $candidateInfo,'id'=>$r->id]);
-
-    }
-    public function CandidateAddWorkExperience(Request $r){
-
-
-        return view('employee.addCandidateWorkExperience',['id'=>$r->id]);
-
-    }
-    public function CandidateInfoUpdate($candidate,Request $r){
+    public function CandidateInfoUpdate($candidate,Request $r) // employee info update
+    {
 
         $employeeInfo=Candidate::findOrFail($candidate);
         $employeeInfo->name=$r->name;
@@ -194,7 +160,16 @@ class Employee extends Controller
         return back();
 
     }
-    public function CandidateAboutMeUpdate($candidate,Request $r){
+
+    public function showCandidateAboutMeForEdit(Request $r) // show edit modal of employee about me
+    {
+
+        $candidateInfo = Candidate::Select('aboutme')->where('candidateId', $r->id)->get();
+        return view('employee.editCandidateAbouteMe',['candidateInfo' => $candidateInfo,'id'=>$r->id]);
+
+    }
+    public function CandidateAboutMeUpdate($candidate,Request $r) // employee aboute me update
+    {
 
         $employeeInfo=Candidate::findOrFail($candidate);
         $employeeInfo->aboutme=$r->aboutMe;
@@ -206,8 +181,16 @@ class Employee extends Controller
         return back();
 
     }
+    public function CandidateAddWorkExperience(Request $r) // show add modal of employee WorkExperience
+    {
 
-    public function insertCandidateWorkExperience($candidate,Request $r){
+
+        return view('employee.addCandidateWorkExperience',['id'=>$r->id]);
+
+    }
+
+    public function insertCandidateWorkExperience($candidate,Request $r) // employee work experience insert
+    {
 
         $employeeWorkExperience=new Workexperience();
 
@@ -223,19 +206,17 @@ class Employee extends Controller
         return back();
 
     }
-    public function deleteCandidateWorkExperience(Request $r){
 
-        $employeeWorkExperience=Workexperience::destroy($r->id);
-
-    }
-    public function editCandidateWorkExperience(Request $r){
+    public function editCandidateWorkExperience(Request $r) // show edit modal of employee work experience
+    {
 
         $workExperienceInfo = Workexperience::findOrFail($r->id);
 
         return view('employee.editWorkExperience',['experience' => $workExperienceInfo,'id'=>$r->id]);
 
     }
-    public function CandidateWorkExperienceUpdate($experienceId,Request $r){
+    public function CandidateWorkExperienceUpdate($experienceId,Request $r) // employee work experience update
+    {
 
         $workExperienceInfo = Workexperience::findOrFail($experienceId);
 
@@ -252,14 +233,23 @@ class Employee extends Controller
 
     }
 
-    public function addEducation(Request $r){
+    public function deleteCandidateWorkExperience(Request $r) // employee selected work experience delete
+    {
+
+        $employeeWorkExperience=Workexperience::destroy($r->id);
+
+    }
+
+    public function addEducation(Request $r) // show add modal of employee education
+    {
 
 
         return view('employee.addEducation',['id'=>$r->id]);
 
     }
 
-    public function insertCandidateEducation($candidate,Request $r){
+    public function insertCandidateEducation($candidate,Request $r) //employee education insert
+    {
 
 
 
@@ -282,13 +272,15 @@ class Employee extends Controller
 
     }
 
-    public function deleteCandidateEducation(Request $r){
+    public function deleteCandidateEducation(Request $r) //employee education delete
+    {
 
 
         $employeeEducation=Education::destroy($r->id);
 
     }
-    public function editCandidateEducation(Request $r){
+    public function editCandidateEducation(Request $r) // show edit modal of employee education
+    {
 
         $educationInfo = Education::findOrFail($r->id);
 
@@ -296,7 +288,8 @@ class Employee extends Controller
 
     }
 
-    public function CandidateEducationUpdate($educationId,Request $r){
+    public function CandidateEducationUpdate($educationId,Request $r) //employee selected education update
+    {
 
         $EducationInfo = Education::findOrFail($educationId);
 
@@ -318,7 +311,8 @@ class Employee extends Controller
 
     }
 
-    public function addSkill(Request $r){
+    public function addSkill(Request $r) // show add modal for employee skill
+    {
 
         $candidateId=$r->id;
         $skills = DB::table('master_skill')->get();
@@ -327,7 +321,8 @@ class Employee extends Controller
 
     }
 
-    public function editCandidateSkill(Request $r){
+    public function editCandidateSkill(Request $r) // show edit modal of employee skill
+    {
 
         $skillInfo = Skill::select('skill.percentage','master_skill.skillName')
             ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
@@ -339,14 +334,16 @@ class Employee extends Controller
 
     }
 
-    public function deleteCandidateSkill(Request $r){
+    public function deleteCandidateSkill(Request $r) // delete selected skill of employee
+    {
 
 
         $employeeSkill=Skill::destroy($r->id);
 
     }
 
-    public function insertCandidateSkill($candidate,Request $r){
+    public function insertCandidateSkill($candidate,Request $r) // insert employee skill
+    {
 
 
         $skillName=$r->skillName;
@@ -381,30 +378,31 @@ class Employee extends Controller
         return back();
 
     }
-    public function CandidateSkillUpdate($skillsId,Request $r){
+    public function CandidateSkillUpdate($skillsId,Request $r) //employee selected skill update
+    {
 
 
         $skillName=$r->skillName;
 
 
 
-            $skillInfo = DB::table('master_skill')->select('id')->where('skillName', $skillName)->first();
-            if (!empty($skillInfo)){
+        $skillInfo = DB::table('master_skill')->select('id')->where('skillName', $skillName)->first();
+        if (!empty($skillInfo)){
 
-                $skillId=$skillInfo->id;
+            $skillId=$skillInfo->id;
 
-            }else{
-                $skillId=DB::table('master_skill')->insertGetId(
-                    ['skillName' => $skillName]
-                );
+        }else{
+            $skillId=DB::table('master_skill')->insertGetId(
+                ['skillName' => $skillName]
+            );
 
-            }
+        }
 
-            $skill=Skill::findOrFail($skillsId);
-            $skill->skillId=$skillId;
-            $skill->percentage=$r->skillPercentage;
+        $skill=Skill::findOrFail($skillsId);
+        $skill->skillId=$skillId;
+        $skill->percentage=$r->skillPercentage;
 
-            $skill->save();
+        $skill->save();
 
 
         Session::flash('success_msg', 'Skill Updated Successfully!');
@@ -412,14 +410,50 @@ class Employee extends Controller
 
     }
 
-    public function addFreeTime(Request $r){
+
+
+
+    public function deleteSocialMedia(Request $r) //delete social media
+    {
+
+        $media=Socialmedia::destroy($r->id);
+
+    }
+
+    public function showChangepassword() // show change password page
+    {
+        $userId=Auth::user()->id;
+        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+        return view('employee.changepassword',compact('candidateInfo'));
+    }
+    public function getAllCityByState(Request $r) // show all cities of selected state
+    {
+
+        $addressCities = DB::table('master_subarb')->where('master_state_id',$r->stateId)->get();
+
+        if ($addressCities == null) {
+            echo "<option value='' selected>Select City</option>";
+        } else {
+            echo "<option value='' selected>Select City</option>";
+            foreach ($addressCities as $city) {
+                echo "<option value='$city->id'>$city->name</option>";
+            }
+        }
+
+
+    }
+
+
+    public function addFreeTime(Request $r) //show add modal for employee free time
+    {
 
         $candidateId=$r->id;
         return view('employee.addFreeTime',compact('candidateId'));
 
     }
 
-    public function editCandidateFreeTime(Request $r){
+    public function editCandidateFreeTime(Request $r) // show edit modal for employee free time
+    {
 
         $FreeTimeInfo = Freetime::select('day','startTime','endTime')
             ->where('id', $r->id)->get();
@@ -429,7 +463,8 @@ class Employee extends Controller
 
     }
 
-    public function CandidateFreeTimeUpdate($FreeTimeId,Request $r){
+    public function CandidateFreeTimeUpdate($FreeTimeId,Request $r) //employee selected free time update
+    {
 
         $FreeTimeInfo = Freetime::findOrFail($FreeTimeId);
 
@@ -445,14 +480,16 @@ class Employee extends Controller
 
     }
 
-    public function deleteCandidateFreeTime(Request $r){
+    public function deleteCandidateFreeTime(Request $r) // delete employee selected free time
+    {
 
 
         $freeTime=Freetime::destroy($r->id);
 
     }
 
-    public function insertCandidateFreeTime($candidate,Request $r){
+    public function insertCandidateFreeTime($candidate,Request $r) // insert employee free time
+    {
 
 
         $dayName=$r->dayName;
@@ -480,7 +517,8 @@ class Employee extends Controller
 
     }
 
-    public function showJobApplied(){
+    public function showJobApplied() // show all aplied job of the employee and related info
+    {
 
         $userId=Auth::user()->id;
         $candidateInfo = Candidate::where('fkuserId', $userId)->first();
@@ -503,7 +541,7 @@ class Employee extends Controller
             ->get();
 
 
-      //  return $candidateAllAppliedJob;
+
 
         return view('employee.jobapplied',compact('candidateInfo','candidateAllAppliedJob'));
     }

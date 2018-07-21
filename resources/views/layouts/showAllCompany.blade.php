@@ -60,24 +60,31 @@
                 </div>
                 <div id="products" class="row list-group">
 
-                    @foreach($allCompanies as $allCompany)
+                    @foreach($allCompaniesWithBranch as $allCompany)
                     <div class="item  col-xs-4 col-lg-4">
                         <a href="{{route('Companydetails',$allCompany->companyId)}}">
                             <div class="thumbnail">
-                                <img class="group list-group-image" src="images/company/download%20(1).png"  alt="" />
+
+                                @if($allCompany->image != null)
+                                    <img style="height:100px;"  src="{{url('public/employerImages/thumb/'.$allCompany->image)}}" alt="company-logo" class=" group list-group-image">
+                                @else
+                                    <img style="height:100px;" src="{{url('public/employeeImages/dummy.jpg')}}" alt="company-logo" class="img-responsive group list-group-image">
+                                @endif
+
+
                                 <div class="caption">
-                                    <h4 class="group inner list-group-item-heading">
-                                        <b>Company Name:</b> {{$allCompany->name}}</h4>
-                                    <h4 class="group inner list-group-item-heading">
-                                        &nbsp;&nbsp;&nbsp;<a href="#">{{$allCompany->name}}</a></h4>
+                                    <h4 style="color: #a0a7ba" class="group inner list-group-item-heading">
+                                        <b>Company Name:</b>&nbsp;&nbsp;{{$allCompany->branchName}}</h4>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6">
-                                            <h4 class="group inner list-group-item-heading">
-                                                <b>Address:</b> Mirpur :10</h4>
+                                            <h4 style="color:#a0a7ba " class="group inner list-group-item-heading">
+                                                <b>Address:</b> {{$allCompany->addresscol}},<span>{{$allCompany->city}}, {{$allCompany->state}}</span>
+                                            </h4>
                                         </div>
 
                                     </div>
                                 </div>
+
                             </div>
                         </a>
                     </div>
