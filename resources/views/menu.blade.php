@@ -12,7 +12,10 @@
                             <!--                            <li><a href="about.php">About</a></li>-->
                             <li class="menu-item">
                                 {{--<a href="{{route('candidate')}}">Candidates</a>--}}
+
                                 <a href="{{route('allCandidate')}}"> Candidates</a>
+
+
                                 <!--                                <ul>-->
                                 <!--                                    <li><a href="candidates-listing.php">Browse Candidates</a></li>-->
                                 <!--                                    <li><a href="companies-listing.php">Browse Companies</a></li>-->

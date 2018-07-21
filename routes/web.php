@@ -26,11 +26,16 @@ Route::get('All-candidates','CandidateController@showAllCandidate')->name('allCa
 Route::post('/show-All-candidates', 'CandidateController@showCandidateWithParameter')->name('candidate.candidateParameter');
 
 
+Route::get('Companies','CompanyController@showAllCompany')->name('Companies');
+Route::get('Companydetails/{id}','CompanyController@showCompanydetails')->name('Companydetails');
 
-Route::view('candidatedetails','layouts.candidate-details')->name('candidatedetails');
 
-Route::view('Companies','layouts.Companies')->name('Companies');
-Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');
+
+//Route::view('candidatedetails','layouts.candidate-details')->name('candidatedetails');
+Route::get('candidatedetails/{candidateId}','CandidateController@showResume')->name('candidatedetails');
+
+//Route::view('Companies','layouts.Companies')->name('Companies');
+//Route::view('Companiesdetails','layouts.company-details')->name('Companiesdetails');
 Route::view('post-job','layouts.postJob')->name('postJob');
 //Route::view('job-listening','layouts.jobListening')->name('jobListening');
 Route::view('post-resume-form','layouts.post-resume-form')->name('post-resume-form');
@@ -87,12 +92,18 @@ Route::post('/employee-FreeTime-update/{FreeTimeId}', 'Employee@CandidateFreeTim
 Route::post('/employee-delete-FreeTime', 'Employee@deleteCandidateFreeTime')->name('employee.deleteFreeTime');
 Route::post('/employee-Add-FreeTime/{candidate}', 'Employee@insertCandidateFreeTime')->name('employee.insertFreeTime');
 
-
-
-
 Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');
 Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepassword');
+
+//employer
+
+Route::get('/employer-dashboard', 'Employer@myprofile')->name('employer');
+Route::get('/employer/favoriteEmployee', 'Employer@favoriteEmployee')->name('favoriteEmployee');
+Route::get('/employer/myprofile', 'Employer@myprofile')->name('myprofile');
+Route::get('/employer/manage-job', 'Employer@manageJob')->name('managejob');
+Route::get('/employer/manage-application', 'Employer@manageApplication')->name('manageapplication');
+
 
 
 //login

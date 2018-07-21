@@ -177,8 +177,8 @@
         <div id="FreeTime" class="profile-skills-wrapper profile-section">
             <h3 class="dark profile-title">Free Time<span><a style="cursor: pointer" onclick="addCandidateFreeTime()"><i class="ion-plus"></i></a></span></h3>
 
-            <div class="col-md-12">
-                <table class="table table-responsive table-bordered">
+            <div class="table table-responsive">
+                <table class="table table-bordered">
                     <thead>
                     <th>Day</th>
                     <th>Start Time</th>

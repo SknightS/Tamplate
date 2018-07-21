@@ -37,7 +37,7 @@
             </div> <!-- end .candidate-image -->
 
             <div class="candidate-info">
-                <a href="{{route('candidatedetails')}}"> <h4 class="candidate-name">{{$candidates->name}}</h4>
+                <a href="{{route('candidatedetails',$candidates->candidateId)}}"> <h4 class="candidate-name">{{$candidates->name}}</h4>
                     <h5 class="candidate-designation">{{$candidates->professionTitle}}</h5>
                 </a>
 
@@ -59,7 +59,7 @@
 
                     <ul class="list-unstyled candidate-skills flex no-column items-center">
 
-                        @foreach($skill as $personalSkill)
+                        @foreach($allSkill as $personalSkill)
                             @if($personalSkill->candidateId==$candidates->candidateId)
                                 <li><a href="#" class="button">{{$personalSkill->skillName}}</a></li>
                             @endif
@@ -85,7 +85,7 @@
     @endif
     <ul class="list-unstyled flex no-column items-center pagination">
         @for($i=$allCandidates->perPage(); $i <= $allCandidates->total();$i=($i+$allCandidates->perPage()))
-            <li><a href="{{$allCandidates->url($i)}}">{{$i}}</a></li>
+            <li ><a href="{{$allCandidates->url($i)}}">{{$i}}</a></li>
         @endfor
     </ul>
     @if($allCandidates->lastPage()!=$allCandidates->currentPage())
@@ -98,6 +98,7 @@
     $(".pagiNextPrevBtn").on("click",function() {
 
         var page=$(this).data('id').split('page=')[1];
+
         getData(page)
 
     });

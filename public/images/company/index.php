@@ -2,7 +2,7 @@
 <html lang="en">
 	
 <!-- Mirrored from jobpress.icookcode.net/dev/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Dec 2017 10:13:12 GMT -->
-<?php include ('head.php') ?>
+<?php include ('head.blade.php') ?>
 	<body>
 
 		<!-- Header -->

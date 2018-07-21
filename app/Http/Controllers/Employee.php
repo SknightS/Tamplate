@@ -37,6 +37,7 @@ class Employee extends Controller
 
         });
     }
+
     public function showResume(){
 
         $userId=Auth::user()->id;

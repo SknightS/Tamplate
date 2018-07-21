@@ -41,7 +41,6 @@ class HomeController extends Controller
             ->get();
 
 
-
         return view('home')
             ->with('jobtype', $jobtype)
             ->with('post', $post);

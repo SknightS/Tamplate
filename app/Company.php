@@ -8,4 +8,6 @@ class company extends Model
 {
     //
     protected $table = 'company';
+    public $timestamps = false;
+    public $primaryKey = 'companyId';
 }
