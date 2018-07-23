@@ -97,6 +97,10 @@ Route::get('/Resume', 'Employee@showResume')->name('resume');
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');
 Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepassword');
 
+Route::get('/getskilljson', 'CandidateController@getskilljson')->name('getskilljson');
+
+
+
 //employer
 
 Route::get('/employer-dashboard', 'Employer@myprofile')->name('employer');

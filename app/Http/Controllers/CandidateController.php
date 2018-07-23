@@ -160,4 +160,12 @@ class CandidateController extends Controller
 
 
     }
+
+    public function getskilljson(){
+        $skill = Skill::select('skill.id','skill.percentage','master_skill.skillName')
+            ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
+           ->get();
+
+        return response()->json($skill);
+    }
 }

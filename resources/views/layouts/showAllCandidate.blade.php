@@ -1,6 +1,6 @@
 @extends('main')
 @section('head')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    {{--<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">--}}
     <style>
         .slidecontainer {
             width: 100%;
@@ -39,6 +39,7 @@
     @endsection
 @section('content')
     <!-- Breadcrumb Bar -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <div class="section breadcrumb-bar solid-blue-bg">
         <div class="inner">
             <div class="container">
@@ -108,7 +109,69 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{--<script>--}}
+        {{--$( function() {--}}
+            {{--var availableTags = [--}}
+                {{--"Altstadt",--}}
+                {{--"Altstadt",--}}
+                {{--"Bahnhofsviertel",--}}
+                {{--"Bergen-Enkheim",--}}
+                {{--"Bergen-Enkheim",--}}
+                {{--"Berkersheim",--}}
+                {{--"Bockenheim",--}}
+                {{--"Bockenheim",--}}
+                {{--"Bockenheim",--}}
+                {{--"Bockenheim",--}}
+                {{--"Bockenheim",--}}
+                {{--"Bonames",--}}
+                {{--"Bonames",--}}
+                {{--"Bornheim",--}}
+                {{--"Bornheim",--}}
+                {{--"Bornheim",--}}
+                {{--"Bornheim",--}}
+                {{--"Dornbusch",--}}
+                {{--"Dornbusch",--}}
 
+
+            {{--];--}}
+{{--//            $( "#filterSkill" ).autocomplete({--}}
+{{--//                source: availableTags--}}
+{{--//            });--}}
+            {{--$("#filterSkill").tagsinput({--}}
+                {{--'defaultText':'add...',--}}
+                {{--'autocomplete_url': '',--}}
+                {{--'autocomplete' :{--}}
+                    {{--'source': availableTags--}}
+                {{--}--}}
+            {{--});--}}
+
+        {{--} );--}}
+    {{--</script>--}}
+
+    <script>
+    var countries = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+    url: "{{route('getskilljson')}}",
+    filter: function(list) {
+    return $.map(list, function(name) {
+    return { name: name }; });
+    }
+    }
+    });
+    countries.initialize();
+
+    $('#filterSkill').tagsinput({
+    typeaheadjs: {
+    name: 'countries',
+    displayKey: 'name',
+    valueKey: 'name',
+    source: countries.ttAdapter()
+    }
+    });
+    </script>
     <script>
 
         $.ajaxSetup({
