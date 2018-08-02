@@ -1,5 +1,8 @@
 @extends('main')
 @section('head')
+    <link href="{{url('public/css/typeahead.css')}}"  rel="stylesheet" />
+    <link href="{{url('public/css/bootstrap-tagsinput.css')}}"  rel="stylesheet" />
+
     {{--<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">--}}
     <style>
         .slidecontainer {
@@ -110,6 +113,8 @@
 
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{url('public/js/typehead.js')}}"></script>
+    <script src="{{url('public/js/bootstrap-tagsinput.js')}}"></script>
     {{--<script>--}}
         {{--$( function() {--}}
             {{--var availableTags = [--}}
