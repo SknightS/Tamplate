@@ -110,6 +110,8 @@
 
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+
     {{--<script>--}}
         {{--$( function() {--}}
             {{--var availableTags = [--}}
