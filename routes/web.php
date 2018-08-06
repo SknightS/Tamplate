@@ -129,4 +129,4 @@ Route::get('/job-listening', 'JobController@index')->name('jobListening');
 
 //Employer
 
-//Route::get('/employer-dashboard', 'Employer@showDashboard')->name('employer.dashboard');
+Route::get('/employer-dashboard', 'EmployerController@showDashboard')->name('employer.dashboard');

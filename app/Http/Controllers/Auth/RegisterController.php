@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Employer;
 use App\User;
 use App\Candidate;
 use App\Company;
@@ -136,18 +137,21 @@ class RegisterController extends Controller
 
             $candidate->save();
             Auth::loginUsingId($r->userId);
+
             return redirect()->route('employee');
         }
         elseif ($ActiveInfo->fkuserTypeId == UserType['empr']['code']) {
 
-//            $company=new Company();
-//
-//            $company->companyLoginId=$ActiveInfo->email;
+
+
+            $company=new Company();
+
+            $company->companyLoginId=$ActiveInfo->email;
 //            $company->companyName=$r->name;
-//            $company->fkuserId=$ActiveInfo->id;
-//
-//            $company->save();
-//            Auth::loginUsingId($r->userId);
+            $company->fkuserId=$ActiveInfo->id;
+
+            $company->save();
+            Auth::loginUsingId($r->userId);
 
             return redirect()->route('employer.dashboard');
         }

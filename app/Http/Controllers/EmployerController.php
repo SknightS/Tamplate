@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
-class Employer extends Controller
+class EmployerController extends Controller
 {
 
     //
@@ -56,14 +57,18 @@ class Employer extends Controller
         return view('employer/manage-application');
 
     }
-        public function showDashboard() // show employer Dashboard
-        {
 
-            // $userId=Auth::user()->id;
+    // show employer Dashboard
+    public function showDashboard()
+    {
 
-            return view('employer.resume');
+         $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+
+        return view('employer.resume',compact('employerInfo'));
 
 
-        }
     }
+}
 

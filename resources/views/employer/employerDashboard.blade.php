@@ -11,11 +11,18 @@
 			<div class="inner">
 				<div class="container">
 					<div class="breadcrumb-menu flex items-center no-column">
-						<img src="images/company-logo-big01.jpg" alt="company-logo" class="img-responsive">
+
+						@if($employerInfo->image != null)
+							<img src="{{url('public/employerImages/thumb/'.$employerInfo->image)}}" alt="avatar" class="img-responsive">
+						@else
+							<img src="{{url('public/employerImages/dummy.jpg')}}" alt="avatar" class="img-responsive">
+						@endif
 						<div class="breadcrumb-info-dashboard">
-							<h2>Banana inc.</h2>
-							<h4>Cupertino, CA, USA</h4>
+							<h2>{{$employerInfo->name}}</h2>
+							{{--<h4>{{$candidateInfo->professionTitle}}</h4>--}}
 						</div> <!-- end .candidate-info -->
+
+
 					</div> <!-- end .breadcrumb-menu -->
 				</div> <!-- end .container -->
 			</div> <!-- end .inner -->
