@@ -146,14 +146,14 @@ class RegisterController extends Controller
 
             $company=new Company();
 
-            $company->companyLoginId=$ActiveInfo->email;
-//            $company->companyName=$r->name;
+            $company->cp_email=$ActiveInfo->email;
+            $company->contact_person_name=$r->name;
             $company->fkuserId=$ActiveInfo->id;
 
             $company->save();
             Auth::loginUsingId($r->userId);
 
-            return redirect()->route('employer.dashboard');
+            return redirect()->route('employer.profile');
         }
 
     }

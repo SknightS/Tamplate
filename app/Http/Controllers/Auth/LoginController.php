@@ -50,7 +50,7 @@ class LoginController extends Controller
         }
         elseif (Auth::user()->fkuserTypeId == "empr") {
 
-            return route('employer.dashboard');
+            return route('employer.profile');
 
         }
     }
