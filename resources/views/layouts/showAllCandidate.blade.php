@@ -156,13 +156,13 @@
 
     <script>
     var countries = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('skill'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
     url: "{{route('getskilljson')}}",
     filter: function(list) {
-    return $.map(list, function(name) {
-    return { name: name }; });
+    return $.map(list, function(skill) {
+    return { skill: skill }; });
     }
     }
     });
@@ -171,8 +171,8 @@
     $('#filterSkill').tagsinput({
     typeaheadjs: {
     name: 'countries',
-    displayKey: 'name',
-    valueKey: 'name',
+    displayKey: 'skill',
+    valueKey: 'skill',
     source: countries.ttAdapter()
     }
     });
