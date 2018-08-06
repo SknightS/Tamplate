@@ -141,7 +141,7 @@ class EmployerController extends Controller
 
     }
 
-    public function EmployerInfoUpdate($employer,Request $r) // employee info update
+    public function EmployerInfoUpdate($employer,Request $r) // employer info update
     {
 
         $employerInfo=Company::findOrFail($employer);
@@ -184,6 +184,7 @@ class EmployerController extends Controller
 
     }
 
+
     // show employer Company
     public function showMyCompany()
     {
@@ -193,7 +194,7 @@ class EmployerController extends Controller
         $employerInfo = Company::where('fkuserId', $userId)->first();
 
 
-        $employerCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.image','company_branch.name as branchName','company_branch.address_addressId',
+        $employerCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.id as branchId','company_branch.image','company_branch.name as branchName','company_branch.address_addressId',
             'company_branch.phone','company_branch.email','address.addresscol','master_subarb.name as city',
             'master_state.name as state')
             ->leftJoin('company', 'company_branch.company_companyId', '=', 'company.companyId')
@@ -217,7 +218,7 @@ class EmployerController extends Controller
 
         $addressStates = DB::table('master_state')->get();
 
-        $employerCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.image','company_branch.name as branchName','company_branch.address_addressId',
+        $employerCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.image','company_branch.about','company_branch.name as branchName','company_branch.address_addressId',
             'company_branch.phone','company_branch.email','address.addresscol','master_subarb.id as cityId','master_subarb.name as cityName',
             'master_state.id as state')
             ->leftJoin('company', 'company_branch.company_companyId', '=', 'company.companyId')
@@ -227,10 +228,52 @@ class EmployerController extends Controller
             ->where('company_branch.id',$companyBranchId)
             ->get();
 
-        //return $employerCompaniesWithBranch;
 
-        return view('employer.editCompanyAllInfo',compact('companyId','employerCompaniesWithBranch','addressStates'));
+        return view('employer.editCompanyAllInfo',compact('companyBranchId','employerCompaniesWithBranch','addressStates'));
 
+
+    }
+
+    public function employerCompanyInfoUpdate($branchId,Request $r) // employer company info update
+    {
+
+        $branchInfo=Companybranch::findOrFail($branchId);
+        $branchInfo->name=$r->name;
+        $branchInfo->phone=$r->phone;
+        $branchInfo->email=$r->email;
+        $branchInfo->about=$r->about;
+
+        if($r->hasFile('image')){
+            $img = $r->file('image');
+            $filename= $branchId.'profileImage'.'.'.$img->getClientOriginalExtension();
+            $branchInfo->image=$filename;
+            $location = public_path('companyImages/'.$filename);
+            Image::make($img)->save($location);
+            $location2 = public_path('companyImages/thumb/'.$filename);
+            Image::make($img)->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location2);
+        }
+
+
+
+        if ($branchInfo->address_addressId != null) {
+            $branchAddress = Address::findOrFail($branchInfo->address_addressId);
+        }else{
+            $branchAddress= new Address();
+        }
+        $branchAddress->addresscol=$r->address;
+        $branchAddress->master_subarb_id=$r->cities;
+
+        $branchAddress->save();
+
+        $branchInfo->address_addressId=$branchAddress->addressId;
+        $branchInfo->save();
+
+
+
+        Session::flash('success_msg', 'Your Information Updated Successfully!');
+        return redirect()->route('employer.companyInfo');
 
     }
 }
