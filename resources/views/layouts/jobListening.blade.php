@@ -168,6 +168,7 @@
                     </div> <!-- end .right-side -->
                 </div> <!-- end .sort-by-wrapper -->
 
+                @foreach($alljob as $aj)
                 <div class="bookmarked-jobs-list-wrapper on-listing-page">
                     <div class="bookmarked-job-wrapper">
                         <div class="bookmarked-job flex no-wrap no-column ">
@@ -175,22 +176,22 @@
                                 <img src="images/company-logo-big01.jpg" alt="company-icon" class="img-responsive">
                             </div> <!-- end .job-icon -->
                             <div class="bookmarked-job-info">
-                                <h4 class="dark flex no-column">We need a web designer</h4>
-                                <h5>Banana inc.</h5>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
+                                <h4 class="dark flex no-column">{{$aj->jobName}}</h4>
+                                <h5>{{$aj->cname}}</h5>
+                                <p>{{$aj->pdes}}</p>
                                 <div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
                                     <div class="bookmarked-job-meta flex items-center no-wrap no-column">
-                                        <ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">
-                                            <li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>
-                                        </ul> <!-- end .candidates-avatar -->
-                                        <h6 class="bookmarked-job-category">Art/Design</h6>
-                                        <h6 class="candidate-location">Park ave,<span>nyc, usa</span></h6>
-                                        <h6 class="hourly-rate">$45<span>/Hour</span></h6>
+                                        {{--<ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">--}}
+                                            {{--<li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>--}}
+                                            {{--<li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>--}}
+                                            {{--<li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>--}}
+                                        {{--</ul> <!-- end .candidates-avatar -->--}}
+                                        <h6 class="bookmarked-job-category">{{$aj->typeName}}</h6>
+                                        <h6 class="candidate-location">{{$aj->address}}</h6>
+                                        <h6 class="hourly-rate">{{$aj->job_amount}}<span>/Hour</span></h6>
                                     </div> <!-- end .bookmarked-job-meta -->
                                     <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-                                        <i class="ion-ios-heart wishlist-icon"></i>
+                                        {{--<i class="ion-ios-heart wishlist-icon"></i>--}}
                                         <a href="#0" class="button">more detail</a>
                                     </div> <!-- end .right-side-bookmarked-job-meta -->
                                 </div> <!-- end .bookmarked-job-info-bottom -->
@@ -198,122 +199,10 @@
                         </div> <!-- end .bookmarked-job -->
                     </div> <!-- end .bookmarked-job-wrapper -->
 
-                    <div class="bookmarked-job-wrapper">
-                        <div class="bookmarked-job flex no-wrap no-column ">
-                            <div class="job-company-icon">
-                                <img src="images/company-logo-big02.jpg" alt="company-icon" class="img-responsive">
-                            </div> <!-- end .job-icon -->
-                            <div class="bookmarked-job-info">
-                                <h4 class="dark flex no-column">We're looking for a designer</h4>
-                                <h5>Cat studio</h5>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
-                                <div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
-                                    <div class="bookmarked-job-meta flex items-center no-wrap no-column">
-                                        <ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">
-                                            <li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>
-                                        </ul> <!-- end .candidates-avatar -->
-                                        <h6 class="bookmarked-job-category">Art/Design</h6>
-                                        <h6 class="candidate-location">Cupertino,<span>CA, USA</span></h6>
-                                        <h6 class="hourly-rate">$45<span>/Hour</span></h6>
-                                    </div> <!-- end .bookmarked-job-meta -->
-                                    <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-                                        <i class="ion-ios-heart wishlist-icon"></i>
-                                        <a href="#0" class="button">more detail</a>
-                                    </div> <!-- end .right-side-bookmarked-job-meta -->
-                                </div> <!-- end .bookmarked-job-info-bottom -->
-                            </div> <!-- end .bookmarked-job-info -->
-                        </div> <!-- end .bookmarked-job -->
-                    </div> <!-- end .bookmarked-job-wrapper -->
 
-                    <div class="bookmarked-job-wrapper">
-                        <div class="bookmarked-job flex no-wrap no-column ">
-                            <div class="job-company-icon">
-                                <img src="images/company-logo-big03.jpg" alt="company-icon" class="img-responsive">
-                            </div> <!-- end .job-icon -->
-                            <div class="bookmarked-job-info">
-                                <h4 class="dark flex no-column">We need a web designer</h4>
-                                <h5>Bull creative angency</h5>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
-                                <div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
-                                    <div class="bookmarked-job-meta flex items-center no-wrap no-column">
-                                        <ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">
-                                            <li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>
-                                        </ul> <!-- end .candidates-avatar -->
-                                        <h6 class="bookmarked-job-category">Art/Design</h6>
-                                        <h6 class="candidate-location">Cupertino,<span>CA, USA</span></h6>
-                                        <h6 class="hourly-rate">$45<span>/Hour</span></h6>
-                                    </div> <!-- end .bookmarked-job-meta -->
-                                    <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-                                        <i class="ion-ios-heart wishlist-icon"></i>
-                                        <a href="#0" class="button">more detail</a>
-                                    </div> <!-- end .right-side-bookmarked-job-meta -->
-                                </div> <!-- end .bookmarked-job-info-bottom -->
-                            </div> <!-- end .bookmarked-job-info -->
-                        </div> <!-- end .bookmarked-job -->
-                    </div> <!-- end .bookmarked-job-wrapper -->
-
-                    <div class="bookmarked-job-wrapper">
-                        <div class="bookmarked-job flex no-wrap no-column ">
-                            <div class="job-company-icon">
-                                <img src="images/company-logo-big04.jpg" alt="company-icon" class="img-responsive">
-                            </div> <!-- end .job-icon -->
-                            <div class="bookmarked-job-info">
-                                <h4 class="dark flex no-column">We need a web designer</h4>
-                                <h5>Elephant studio</h5>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
-                                <div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
-                                    <div class="bookmarked-job-meta flex items-center no-wrap no-column">
-                                        <ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">
-                                            <li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>
-                                        </ul> <!-- end .candidates-avatar -->
-                                        <h6 class="bookmarked-job-category">Art/Design</h6>
-                                        <h6 class="candidate-location">Cupertino,<span>CA, USA</span></h6>
-                                        <h6 class="hourly-rate">$45<span>/Hour</span></h6>
-                                    </div> <!-- end .bookmarked-job-meta -->
-                                    <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-                                        <i class="ion-ios-heart wishlist-icon"></i>
-                                        <a href="#0" class="button">more detail</a>
-                                    </div> <!-- end .right-side-bookmarked-job-meta -->
-                                </div> <!-- end .bookmarked-job-info-bottom -->
-                            </div> <!-- end .bookmarked-job-info -->
-                        </div> <!-- end .bookmarked-job -->
-                    </div> <!-- end .bookmarked-job-wrapper -->
-
-                    <div class="bookmarked-job-wrapper">
-                        <div class="bookmarked-job flex no-wrap no-column ">
-                            <div class="job-company-icon">
-                                <img src="images/company-logo-big04.jpg" alt="company-icon" class="img-responsive">
-                            </div> <!-- end .job-icon -->
-                            <div class="bookmarked-job-info">
-                                <h4 class="dark flex no-column">We need a web designer</h4>
-                                <h5>Banana inc.</h5>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
-                                <div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
-                                    <div class="bookmarked-job-meta flex items-center no-wrap no-column">
-                                        <ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">
-                                            <li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>
-                                            <li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>
-                                        </ul> <!-- end .candidates-avatar -->
-                                        <h6 class="bookmarked-job-category">Art/Design</h6>
-                                        <h6 class="candidate-location">Cupertino,<span>CA, USA</span></h6>
-                                        <h6 class="hourly-rate">$45<span>/Hour</span></h6>
-                                    </div> <!-- end .bookmarked-job-meta -->
-                                    <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-                                        <i class="ion-ios-heart wishlist-icon"></i>
-                                        <a href="#0" class="button">more detail</a>
-                                    </div> <!-- end .right-side-bookmarked-job-meta -->
-                                </div> <!-- end .bookmarked-job-info-bottom -->
-                            </div> <!-- end .bookmarked-job-info -->
-                        </div> <!-- end .bookmarked-job -->
-                    </div> <!-- end .bookmarked-job-wrapper -->
                 </div> <!-- end .bookmarked-jobs-list-wrapper -->
+                @endforeach
+
                 <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">
                     <a href="#0" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>
                     <ul class="list-unstyled flex no-column items-center">
