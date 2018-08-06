@@ -11,14 +11,14 @@
 
             @foreach($employerCompaniesWithBranch as $allCompany)
                 <div class="item  col-xs-4 col-lg-4">
-                    <span><a style="cursor: pointer" data-panel-id="{{$allCompany->companyId}}" onclick="editEmployerCompany(this)"><i class="ion-edit"></i></a></span>
+                    <span><a style="cursor: pointer" data-panel-id="{{$allCompany->branchId}}" onclick="editEmployerCompany(this)"><i class="ion-edit"></i></a></span>
                     <a href="{{route('Companydetails',$allCompany->companyId)}}">
                         <div class="thumbnail">
 
                             @if($allCompany->image != null)
-                                <img style="height:100px;"  src="{{url('public/employerImages/thumb/'.$allCompany->image)}}" alt="company-logo" class=" group list-group-image">
+                                <img style="height:100px;"  src="{{url('public/companyImages/thumb/'.$allCompany->image)}}" alt="company-logo" class=" group list-group-image">
                             @else
-                                <img style="height:100px;" src="{{url('public/employeeImages/dummy.jpg')}}" alt="company-logo" class="img-responsive group list-group-image">
+                                <img style="height:100px;" src="{{url('public/companyImages/dummy.jpg')}}" alt="company-logo" class="img-responsive group list-group-image">
                             @endif
 
 
@@ -26,7 +26,7 @@
                                 <h4 style="color: #a0a7ba" class="group inner list-group-item-heading">
                                     <b>Company Name:</b>&nbsp;&nbsp;{{$allCompany->branchName}}</h4>
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-6">
+                                    <div class="col-xs-12 col-md-12">
                                         <h4 style="color:#a0a7ba " class="group inner list-group-item-heading">
                                             <b>Address:</b> {{$allCompany->addresscol}},<span>{{$allCompany->city}}, {{$allCompany->state}}</span>
                                         </h4>
@@ -91,7 +91,7 @@
                     //console.log(data)
                 },
             });
-            //alert(id);
+
         }
     </script>
 

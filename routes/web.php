@@ -140,3 +140,4 @@ Route::get('/My-Profile', 'EmployerController@showProfile')->name('employer.prof
 Route::get('/My-Company', 'EmployerController@showMyCompany')->name('employer.companyInfo');
 
 Route::post('/My-Company-Edit', 'EmployerController@showMyCompanyInfo')->name('employer.editEmployerCompany');
+Route::post('/My-Company-Update/{branch}', 'EmployerController@employerCompanyInfoUpdate')->name('employer.updateEmployerCompanyInfo');

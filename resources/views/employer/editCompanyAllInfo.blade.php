@@ -1,6 +1,6 @@
 
 @foreach($employerCompaniesWithBranch as $company)
-<form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
+<form method="post" action="{{route('employer.updateEmployerCompanyInfo',$companyBranchId)}}" enctype="multipart/form-data" class="form-horizontal">
     {{csrf_field()}}
     <div class="form-group">
         <div class="col-md-12">
@@ -18,6 +18,20 @@
             <input type="email" id="email" placeholder="Company email" name="email" value="{{$company->email}}" class="form-control col-md-4" required />
         </div>
     </div>
+
+
+
+    <div  class="form-group">
+        <div class="col-md-12">
+            <label >About<span style="color: red">*</span></label>
+            @if($company->about !=null)
+                <textarea class="form-control" id="address"name="about" rows="2"cols="5" placeholder="About">{{$company->about}}</textarea>
+            @else
+                <textarea class="form-control" id="address"name="about" rows="2"cols="5" placeholder="About"></textarea>
+            @endif
+        </div>
+    </div>
+
     <div align="center" class="form-group">
         <label style="text-align: center">Address</label>
     </div>
