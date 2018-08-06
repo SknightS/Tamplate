@@ -61,7 +61,7 @@ class CandidateController extends Controller
             ->leftJoin('master_skill', 'master_skill.id', '=', 'skill.skillId')
         ->get();
 
-        $allCandidates=$allCandidates->paginate(10);
+        $allCandidates=$allCandidates->paginate(1);
 
 
 
