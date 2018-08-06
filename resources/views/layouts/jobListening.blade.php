@@ -1,4 +1,43 @@
 @extends('main')
+@section('head')
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            /*background: #d3d3d3;*/
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .ul{
+            list-unstyled: flex no-column items-center pagination
+        }
+
+    </style>
+    @endsection
 @section('content')
 <!-- Breadcrumb Bar -->
 <div class="section breadcrumb-bar solid-blue-bg">
@@ -45,45 +84,7 @@
 
                 </div> <!-- end .statistics-widget-wrapper -->
 
-                <!--						<div class="divider"></div>-->
-                <!---->
-                <!--						<div class="featured-jobs-widget-wrapper jobs-widget">-->
-                <!--							<h6>Featured Jobs</h6>-->
-                <!--							<div class="featured-jobs-widget">-->
-                <!---->
-                <!--								<div class="featured-job flex items-center no-column no-wrap">-->
-                <!--									<div class="left-side-inner">-->
-                <!--										<img src="images/company-logo16.jpg" alt="company-logo" class="img-responsive">-->
-                <!--									</div-->
-                <!--									<div class="right-side-inner">-->
-                <!--										<h5 class="dark">Fullstack web developer needed</h5>-->
-                <!--										<h5>Caap inc.</h5>-->
-                <!--									</div> -->
-                <!--								</div> -->
-                <!---->
-                <!--								<div class="featured-job flex items-center no-column no-wrap">-->
-                <!--									<div class="left-side-inner">-->
-                <!--										<img src="images/company-logo15.jpg" alt="company-logo" class="img-responsive">-->
-                <!--									</div>-->
-                <!--									<div class="right-side-inner">-->
-                <!--										<h5 class="dark">Fullstack web developer needed</h5>-->
-                <!--										<h5>Caap inc.</h5>-->
-                <!--									</div> -->
-                <!--								</div> -->
-                <!---->
-                <!--								<div class="featured-job flex items-center no-column no-wrap">-->
-                <!--									<div class="left-side-inner">-->
-                <!--										<img src="images/company-logo17.jpg" alt="company-logo" class="img-responsive">-->
-                <!--									</div> -->
-                <!--									<div class="right-side-inner">-->
-                <!--										<h5 class="dark">Fullstack web developer needed</h5>-->
-                <!--										<h5>Caap inc.</h5>-->
-                <!--									</div> -->
-                <!--								</div> -->
-                <!---->
-                <!--							</div> -->
-                <!---->
-                <!--						</div> -->
+
 
                 <div class="divider"></div>
 
@@ -199,21 +200,23 @@
                         </div> <!-- end .bookmarked-job -->
                     </div> <!-- end .bookmarked-job-wrapper -->
 
-
                 </div> <!-- end .bookmarked-jobs-list-wrapper -->
                 @endforeach
 
-                <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">
-                    <a href="#0" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>
-                    <ul class="list-unstyled flex no-column items-center">
-                        <li><a href="#0">1</a></li>
-                        <li><a href="#0">2</a></li>
-                        <li><a href="#0">3</a></li>
-                        <li><a href="#0">4</a></li>
-                        <li><a href="#0">5</a></li>
-                    </ul>
-                    <a href="#0" class="button">Next<i class="ion-ios-arrow-right"></i></a>
-                </div> <!-- end .jobpress-custom-pager -->
+                <div align="center" class="jobpress-custom-pager list-unstyled flex space-center no-column items-center list-unstyled flex no-column items-center pagination ">
+                {{ $alljob->links() }}
+                </div>
+                {{--<div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">--}}
+                    {{--<a href="#0" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>--}}
+                    {{--<ul class="list-unstyled flex no-column items-center">--}}
+                        {{--<li><a href="#0">1</a></li>--}}
+                        {{--<li><a href="#0">2</a></li>--}}
+                        {{--<li><a href="#0">3</a></li>--}}
+                        {{--<li><a href="#0">4</a></li>--}}
+                        {{--<li><a href="#0">5</a></li>--}}
+                    {{--</ul>--}}
+                    {{--<a href="#0" class="button">Next<i class="ion-ios-arrow-right"></i></a>--}}
+                {{--</div> <!-- end .jobpress-custom-pager -->--}}
 
             </div> <!-- end .center-content -->
 
@@ -383,3 +386,7 @@
 </div> <!-- end .section -->
 
 @endsection
+@section('foot-js')
+
+
+    @endsection
