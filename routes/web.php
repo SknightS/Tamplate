@@ -129,4 +129,14 @@ Route::get('/job-listening', 'JobController@index')->name('jobListening');
 
 //Employer
 
-//Route::get('/employer-dashboard', 'Employer@showDashboard')->name('employer.dashboard');
+//Route::get('/employer-dashboard', 'EmployerController@showDashboard')->name('employer.dashboard');
+Route::post('/employer-Info-edit', 'EmployerController@showInforForEdit')->name('employer.showInfo');
+Route::post('/employer-getAllCity}', 'EmployerController@getAllCityByState')->name('employer.getAllAddressCity');
+Route::post('/employer-Info-update/{employer}', 'EmployerController@EmployerInfoUpdate')->name('employer.updateEmployerInfo');
+
+Route::get('/My-Profile', 'EmployerController@showProfile')->name('employer.profile');
+
+
+Route::get('/My-Company', 'EmployerController@showMyCompany')->name('employer.companyInfo');
+
+Route::post('/My-Company-Edit', 'EmployerController@showMyCompanyInfo')->name('employer.editEmployerCompany');
