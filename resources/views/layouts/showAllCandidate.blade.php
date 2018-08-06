@@ -1,11 +1,13 @@
 @extends('main')
 @section('head')
+    <link href="{{url('public/css/typeahead.css')}}"  rel="stylesheet" />
+    <link href="{{url('public/css/bootstrap-tagsinput.css')}}"  rel="stylesheet" />
+
     {{--<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">--}}
     <style>
         .slidecontainer {
             width: 100%;
         }
-
         .slider {
             -webkit-appearance: none;
             width: 100%;
@@ -17,7 +19,6 @@
             -webkit-transition: .2s;
             transition: opacity .2s;
         }
-
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -27,7 +28,6 @@
             background: #4CAF50;
             cursor: pointer;
         }
-
         .slider::-moz-range-thumb {
             width: 25px;
             height: 25px;
@@ -36,7 +36,7 @@
             cursor: pointer;
         }
     </style>
-    @endsection
+@endsection
 @section('content')
     <!-- Breadcrumb Bar -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -110,108 +110,92 @@
 
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
-
+    <script src="{{url('public/js/typehead.js')}}"></script>
+    <script src="{{url('public/js/bootstrap-tagsinput.js')}}"></script>
     {{--<script>--}}
-        {{--$( function() {--}}
-            {{--var availableTags = [--}}
-                {{--"Altstadt",--}}
-                {{--"Altstadt",--}}
-                {{--"Bahnhofsviertel",--}}
-                {{--"Bergen-Enkheim",--}}
-                {{--"Bergen-Enkheim",--}}
-                {{--"Berkersheim",--}}
-                {{--"Bockenheim",--}}
-                {{--"Bockenheim",--}}
-                {{--"Bockenheim",--}}
-                {{--"Bockenheim",--}}
-                {{--"Bockenheim",--}}
-                {{--"Bonames",--}}
-                {{--"Bonames",--}}
-                {{--"Bornheim",--}}
-                {{--"Bornheim",--}}
-                {{--"Bornheim",--}}
-                {{--"Bornheim",--}}
-                {{--"Dornbusch",--}}
-                {{--"Dornbusch",--}}
+    {{--$( function() {--}}
+    {{--var availableTags = [--}}
+    {{--"Altstadt",--}}
+    {{--"Altstadt",--}}
+    {{--"Bahnhofsviertel",--}}
+    {{--"Bergen-Enkheim",--}}
+    {{--"Bergen-Enkheim",--}}
+    {{--"Berkersheim",--}}
+    {{--"Bockenheim",--}}
+    {{--"Bockenheim",--}}
+    {{--"Bockenheim",--}}
+    {{--"Bockenheim",--}}
+    {{--"Bockenheim",--}}
+    {{--"Bonames",--}}
+    {{--"Bonames",--}}
+    {{--"Bornheim",--}}
+    {{--"Bornheim",--}}
+    {{--"Bornheim",--}}
+    {{--"Bornheim",--}}
+    {{--"Dornbusch",--}}
+    {{--"Dornbusch",--}}
 
 
-            {{--];--}}
-{{--//            $( "#filterSkill" ).autocomplete({--}}
-{{--//                source: availableTags--}}
-{{--//            });--}}
-            {{--$("#filterSkill").tagsinput({--}}
-                {{--'defaultText':'add...',--}}
-                {{--'autocomplete_url': '',--}}
-                {{--'autocomplete' :{--}}
-                    {{--'source': availableTags--}}
-                {{--}--}}
-            {{--});--}}
+    {{--];--}}
+    {{--//            $( "#filterSkill" ).autocomplete({--}}
+    {{--//                source: availableTags--}}
+    {{--//            });--}}
+    {{--$("#filterSkill").tagsinput({--}}
+    {{--'defaultText':'add...',--}}
+    {{--'autocomplete_url': '',--}}
+    {{--'autocomplete' :{--}}
+    {{--'source': availableTags--}}
+    {{--}--}}
+    {{--});--}}
 
-        {{--} );--}}
+    {{--} );--}}
     {{--</script>--}}
 
     <script>
-    var countries = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-    url: "{{route('getskilljson')}}",
-    filter: function(list) {
-    return $.map(list, function(name) {
-    return { name: name }; });
-    }
-    }
-    });
-    countries.initialize();
-
-    $('#filterSkill').tagsinput({
-    typeaheadjs: {
-    name: 'countries',
-    displayKey: 'name',
-    valueKey: 'name',
-    source: countries.ttAdapter()
-    }
-    });
+        var countries = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: "{{route('getskilljson')}}",
+                filter: function(list) {
+                    return $.map(list, function(name) {
+                        return { name: name }; });
+                }
+            }
+        });
+        countries.initialize();
+        $('#filterSkill').tagsinput({
+            typeaheadjs: {
+                name: 'countries',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: countries.ttAdapter()
+            }
+        });
     </script>
     <script>
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         function candidateInfo() {
-
             var filterSkills=$("#filterSkill").tagsinput('items');
             var filterLocation=$("#filterLocation").tagsinput('items');
-
             $.ajax({
                 type: 'POST',
                 url: "{!! route('candidate.candidateParameter') !!}",
                 cache: false,
                 data: {skills:filterSkills,location:filterLocation},
                 success: function (data) {
-
                     $("#CandidateInfo").html(data);
-                   // console.log(data);
-
-
-
+                    // console.log(data);
                 }
-
             });
-
         }
-
-
         $(document).ready(function() {
             candidateInfo();
-
-
         });
-
         $("#filterSkill").on('itemAdded', function(event) {
             candidateInfo();
         });
@@ -224,27 +208,20 @@
         $('#filterLocation').on('itemRemoved', function(event) {
             candidateInfo();
         });
-
-
-
-
-
-
-
     </script>
 
 
     <script>
-//        $(window).on('hashchange', function() {
-//            if (window.location.hash) {
-//                var page = window.location.hash.replace('#', '');
-//                if (page == Number.NaN || page <= 0) {
-//                    return false;
-//                }else{
-//                    getData(page);
-//                }
-//            }
-//        });
+        //        $(window).on('hashchange', function() {
+        //            if (window.location.hash) {
+        //                var page = window.location.hash.replace('#', '');
+        //                if (page == Number.NaN || page <= 0) {
+        //                    return false;
+        //                }else{
+        //                    getData(page);
+        //                }
+        //            }
+        //        });
         $(document).ready(function()
         {
             $(document).on('click', '.pagination a',function(event)
@@ -256,40 +233,33 @@
                 var page=$(this).attr('href').split('page=')[1];
                 getData(page);
             });
-
         });
         function getData(page){
-
             var filterSkills=$("#filterSkill").tagsinput('items');
             var filterLocation=$("#filterLocation").tagsinput('items');
-
             $.ajax(
-                {
-                    url: '?page=' + page,
-                    type: "get",
-                    data: {skills:filterSkills,location:filterLocation},
-                    datatype: "html",
-                    // beforeSend: function()
-                    // {
-                    //     you can show your loader
-                    // }
-                })
-                .done(function(data)
-                {
-
-
-                    $("#CandidateInfo").html(data);
-
-
-                    location.hash = page;
-                })
-                .fail(function(jqXHR, ajaxOptions, thrownError)
-                {
-                    alert('No response from server');
-                });
+                    {
+                        url: '?page=' + page,
+                        type: "get",
+                        data: {skills:filterSkills,location:filterLocation},
+                        datatype: "html",
+                        // beforeSend: function()
+                        // {
+                        //     you can show your loader
+                        // }
+                    })
+                    .done(function(data)
+                    {
+                        $("#CandidateInfo").html(data);
+                        location.hash = page;
+                    })
+                    .fail(function(jqXHR, ajaxOptions, thrownError)
+                    {
+                        alert('No response from server');
+                    });
         }
     </script>
 
 
 
-@endsection
+@endsection 
