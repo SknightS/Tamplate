@@ -464,7 +464,7 @@ textarea {
 }
 .checkbox label {
 	display: inline-block;
-	position: inherit;
+	position: relative;
 	padding-left: 5px;
 	color: #627199;
 	font-size: 13px;

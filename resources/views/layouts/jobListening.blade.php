@@ -245,9 +245,9 @@
                     <h6>Categories</h6>
                     <ul class="job-categories list-unstyled">
                         @foreach($jobtypename as $jpn)
-                        <li class="job-category checkbox flex space-between items-center no-column no-wrap">
+                        <li class="job-status checkbox flex space-between items-center no-column no-wrap">
                             <input id="{{$jpn->id}}" type="checkbox">
-                            <label for="checkbox1">{{$jpn->typeName}}
+                            <label for="{{$jpn->id}}">{{$jpn->typeName}}
                                 @foreach($jobcountt as $jc)
                                     @if($jc->fkjobTypeId == $jpn->id)
                                     <span> @if(empty($jc->total_post)){
