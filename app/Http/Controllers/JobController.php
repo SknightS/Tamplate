@@ -29,9 +29,7 @@ class JobController extends Controller
             ->leftjoin('address','address.addressId','job.address_addressId')
             ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
-            ->get();
-
-
+            ->paginate(1);
 
         $jobpost= Post::select('fkjobTypeId' ,DB::raw('COUNT(fkjobId) as total_post'))
             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')

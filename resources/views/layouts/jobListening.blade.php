@@ -1,4 +1,43 @@
 @extends('main')
+@section('head')
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            /*background: #d3d3d3;*/
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .ul{
+            list-unstyled: flex no-column items-center pagination
+        }
+
+    </style>
+    @endsection
 @section('content')
 <!-- Breadcrumb Bar -->
 <div class="section breadcrumb-bar solid-blue-bg">
@@ -45,45 +84,7 @@
 
                 </div> <!-- end .statistics-widget-wrapper -->
 
-                <!--						<div class="divider"></div>-->
-                <!---->
-                <!--						<div class="featured-jobs-widget-wrapper jobs-widget">-->
-                <!--							<h6>Featured Jobs</h6>-->
-                <!--							<div class="featured-jobs-widget">-->
-                <!---->
-                <!--								<div class="featured-job flex items-center no-column no-wrap">-->
-                <!--									<div class="left-side-inner">-->
-                <!--										<img src="images/company-logo16.jpg" alt="company-logo" class="img-responsive">-->
-                <!--									</div-->
-                <!--									<div class="right-side-inner">-->
-                <!--										<h5 class="dark">Fullstack web developer needed</h5>-->
-                <!--										<h5>Caap inc.</h5>-->
-                <!--									</div> -->
-                <!--								</div> -->
-                <!---->
-                <!--								<div class="featured-job flex items-center no-column no-wrap">-->
-                <!--									<div class="left-side-inner">-->
-                <!--										<img src="images/company-logo15.jpg" alt="company-logo" class="img-responsive">-->
-                <!--									</div>-->
-                <!--									<div class="right-side-inner">-->
-                <!--										<h5 class="dark">Fullstack web developer needed</h5>-->
-                <!--										<h5>Caap inc.</h5>-->
-                <!--									</div> -->
-                <!--								</div> -->
-                <!---->
-                <!--								<div class="featured-job flex items-center no-column no-wrap">-->
-                <!--									<div class="left-side-inner">-->
-                <!--										<img src="images/company-logo17.jpg" alt="company-logo" class="img-responsive">-->
-                <!--									</div> -->
-                <!--									<div class="right-side-inner">-->
-                <!--										<h5 class="dark">Fullstack web developer needed</h5>-->
-                <!--										<h5>Caap inc.</h5>-->
-                <!--									</div> -->
-                <!--								</div> -->
-                <!---->
-                <!--							</div> -->
-                <!---->
-                <!--						</div> -->
+
 
                 <div class="divider"></div>
 
@@ -147,7 +148,11 @@
 
                 <div class="sort-by-wrapper on-listing-page flex space-between items-center no-wrap">
                     <div class="left-side-inner">
-                        <h6>Showing <span>1-5</span>or<span>748</span>job in<a href="#0">Art/design</a>and<a href="#0">Technologies</a>in<a href="#0">San Francisco</a></h6>
+                        <h6>showing
+                            <span>{{($alljob->currentpage()-1)*$alljob->perpage()+1}}
+                                - {{(($alljob->currentpage()-1)*$alljob->perpage())+$alljob->count()}}
+                                </span>of
+                            <span>{{$alljob->total()}}</span>Jobs</h6>
                     </div> <!-- end .left-side -->
                     <div class="right-side-inner">
                         <div class="sort-by dropdown flex no-wrap no-column items-center">
@@ -199,21 +204,38 @@
                         </div> <!-- end .bookmarked-job -->
                     </div> <!-- end .bookmarked-job-wrapper -->
 
-
                 </div> <!-- end .bookmarked-jobs-list-wrapper -->
                 @endforeach
 
-                <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">
-                    <a href="#0" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>
-                    <ul class="list-unstyled flex no-column items-center">
-                        <li><a href="#0">1</a></li>
-                        <li><a href="#0">2</a></li>
-                        <li><a href="#0">3</a></li>
-                        <li><a href="#0">4</a></li>
-                        <li><a href="#0">5</a></li>
+                <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center pagination">
+                    @if($alljob->currentPage()!= 1)
+                        <a data-id="{{$alljob->previousPageUrl()}}" href="{{$alljob->previousPageUrl()}}" class="button pagiNextPrevBtn"><i class="ion-ios-arrow-left"></i>Prev</a>
+                    @endif
+                    <ul class="list-unstyled flex no-column items-center pagination">
+                        @for($i=$alljob->perPage(); $i <= $alljob->total();$i=($i+$alljob->perPage()))
+                            <li ><a href="{{$alljob->url($i)}}">{{$i}}</a></li>
+                        @endfor
                     </ul>
-                    <a href="#0" class="button">Next<i class="ion-ios-arrow-right"></i></a>
-                </div> <!-- end .jobpress-custom-pager -->
+                    @if($alljob->lastPage()!=$alljob->currentPage())
+                        <a data-id="{{$alljob->nextPageUrl()}}"href="{{$alljob->nextPageUrl()}}"  class="button pagiNextPrevBtn">Next<i class="ion-ios-arrow-right"></i></a>
+                    @endif
+
+                </div>
+
+                {{--<div align="center" class="jjobpress-custom-pager list-unstyled flex space-center no-column items-center ">--}}
+                {{--{{ $alljob->links() }}--}}
+                {{--</div>--}}
+                {{--<div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">--}}
+                    {{--<a href="#0" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>--}}
+                    {{--<ul class="list-unstyled flex no-column items-center">--}}
+                        {{--<li><a href="#0">1</a></li>--}}
+                        {{--<li><a href="#0">2</a></li>--}}
+                        {{--<li><a href="#0">3</a></li>--}}
+                        {{--<li><a href="#0">4</a></li>--}}
+                        {{--<li><a href="#0">5</a></li>--}}
+                    {{--</ul>--}}
+                    {{--<a href="#0" class="button">Next<i class="ion-ios-arrow-right"></i></a>--}}
+                {{--</div> <!-- end .jobpress-custom-pager -->--}}
 
             </div> <!-- end .center-content -->
 
@@ -243,59 +265,7 @@
                         </li>
                         @endforeach
 
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox2" type="checkbox">--}}
-                            {{--<label for="checkbox2">Constructions<span>452 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
 
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox3" type="checkbox">--}}
-                            {{--<label for="checkbox3">Logistics<span>1,867 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox4" type="checkbox" checked="">--}}
-                            {{--<label for="checkbox4">Art/Design<span>3,094 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox5" type="checkbox">--}}
-                            {{--<label for="checkbox5">Sales/Marketing<span>2,955 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox6" type="checkbox">--}}
-                            {{--<label for="checkbox6">Science<span>470 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox7" type="checkbox" checked="">--}}
-                            {{--<label for="checkbox7">Technologies<span>4,536 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox8" type="checkbox">--}}
-                            {{--<label for="checkbox8">Healthcare<span>2,619 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox9" type="checkbox">--}}
-                            {{--<label for="checkbox9">Education Training<span>1,132 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
-
-                        {{--<li class="checkbox flex space-between items-center no-column no-wrap">--}}
-                            {{--<input id="checkbox10" type="checkbox">--}}
-                            {{--<label for="checkbox10">Food Services<span>757 Jobs</span></label>--}}
-                            {{--<span><i class="ion-android-add"></i></span>--}}
-                        {{--</li>--}}
                     </ul> <!-- end .job-categories -->
                 </div> <!-- end .job-categories-widget -->
 
@@ -383,3 +353,7 @@
 </div> <!-- end .section -->
 
 @endsection
+@section('foot-js')
+
+
+    @endsection

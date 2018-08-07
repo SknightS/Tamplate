@@ -37,6 +37,22 @@
                 <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                     {{ csrf_field() }}
 
+                    <div class="form-group{{ $errors->has('userType') ? ' has-error' : '' }}">
+
+                        <label for="userType" class="control-label">Register As</label>
+                        <select id="userType" name="userType" required class="form-control">
+                            <option value="">Select</option>
+                            @foreach(UserType as $type)
+                                <option value="{{$type['code']}}">{{$type['name']}}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('userType'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('userType') }}</strong>
+                                    </span>
+                        @endif
+                    </div>
+
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 
                             <label for="name" class="control-label">Name</label>
@@ -48,46 +64,6 @@
                                     </span>
                             @endif
                     </div>
-                    <div class="form-group{{ $errors->has('userType') ? ' has-error' : '' }}">
-
-                            <label for="userType" class="control-label">Register As</label>
-                        <select id="userType" name="userType" required class="form-control">
-                            <option value="">Select</option>
-                            @foreach(UserType as $type)
-                                <option value="{{$type['code']}}">{{$type['name']}}</option>
-                            @endforeach
-                        </select>
-                            @if ($errors->has('userType'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('userType') }}</strong>
-                                    </span>
-                            @endif
-                    </div>
-
-                        {{--<div class="form-group">--}}
-                            {{--<div class="col-md-12">--}}
-                            {{--<label for="callCodeByCountry" class="control-label">Mobile Number</label>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-6">--}}
-                                {{--<select id="callCodeByCountry" name="callCodeByCountry" class="">--}}
-                                    {{--<option value="volvo">Select</option>--}}
-                                    {{--@foreach(countryArray as $callCode)--}}
-                                        {{--<option value="{{$callCode['code']}}">{{$callCode['name']."(".$callCode['code'].")"}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-6">--}}
-                            {{--<input id="mobile" type="text" class="form-control" name="mobile" value="{{ old('mobile') }}" required autofocus>--}}
-
-                            {{--@if ($errors->has('mobile'))--}}
-                                {{--<span class="help-block">--}}
-                                        {{--<strong>{{ $errors->first('mobile') }}</strong>--}}
-                                    {{--</span>--}}
-                            {{--@endif--}}
-                            {{--</div>--}}
-
-
-                        {{--</div>--}}
 
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email" class="control-label">E-Mail Address</label>

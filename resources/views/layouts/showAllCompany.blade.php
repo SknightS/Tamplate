@@ -66,9 +66,9 @@
                             <div class="thumbnail">
 
                                 @if($allCompany->image != null)
-                                    <img style="height:100px;"  src="{{url('public/employerImages/thumb/'.$allCompany->image)}}" alt="company-logo" class=" group list-group-image">
+                                    <img style="height:100px;"  src="{{url('public/companyImages/thumb/'.$allCompany->image)}}" alt="company-logo" class=" group list-group-image">
                                 @else
-                                    <img style="height:100px;" src="{{url('public/employeeImages/dummy.jpg')}}" alt="company-logo" class="img-responsive group list-group-image">
+                                    <img style="height:100px;" src="{{url('public/companyImages/dummy.jpg')}}" alt="company-logo" class="img-responsive group list-group-image">
                                 @endif
 
 

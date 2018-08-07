@@ -18,7 +18,7 @@ class CompanyController extends Controller
 
     public function showAllCompany() //return all companies with branch
     {
-        $allCompaniesWithBranch= Companybranch::select('company.companyId','company.image','company_branch.name as branchName','company_branch.address_addressId',
+        $allCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.image','company_branch.name as branchName','company_branch.address_addressId',
                                 'company_branch.phone','company_branch.email','address.addresscol','master_subarb.name as city',
                                 'master_state.name as state')
                         ->leftJoin('company', 'company_branch.company_companyId', '=', 'company.companyId')
