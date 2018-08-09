@@ -4,7 +4,9 @@
 
     <div class="profile-badge"><h6>My Companies</h6></div>
     <div class="profile-wrapper">
-
+        <div class="col-12">
+            <button onclick="addNewCompany()" class="btn btn-sm"style="float: left; height: 26px; margin-top: 3px; background-color: #00A8FF;color: whitesmoke;"><b>New Company</b></button>
+        </div>
 
 
         <div id="products" class="row list-group">
@@ -86,6 +88,22 @@
                 success: function(data){
                     $('.modal-body').html(data);
                     $('#myModalLabel').html("Edit-Employer Company");
+                    $('#myModal').modal({show:true});
+
+                    //console.log(data)
+                },
+            });
+
+        }
+        function addNewCompany() {
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employer.addEmployerNewCompany')}}',
+                data: {},
+                success: function(data){
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Add-Employer Company");
                     $('#myModal').modal({show:true});
 
                     //console.log(data)

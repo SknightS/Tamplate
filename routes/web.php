@@ -141,3 +141,5 @@ Route::get('/My-Company', 'EmployerController@showMyCompany')->name('employer.co
 
 Route::post('/My-Company-Edit', 'EmployerController@showMyCompanyInfo')->name('employer.editEmployerCompany');
 Route::post('/My-Company-Update/{branch}', 'EmployerController@employerCompanyInfoUpdate')->name('employer.updateEmployerCompanyInfo');
+Route::post('/My-Company-AddNew', 'EmployerController@employerCompanyInfoaddNew')->name('employer.addEmployerNewCompany');
+Route::post('/My-Company-Insert', 'EmployerController@saveNewEmployerCompanyInfo')->name('employer.insertEmployerNewCompany');
