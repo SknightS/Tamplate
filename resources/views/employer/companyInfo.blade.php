@@ -13,7 +13,7 @@
 
             @foreach($employerCompaniesWithBranch as $allCompany)
                 <div class="item  col-xs-4 col-lg-4">
-                    <span><a style="cursor: pointer" data-panel-id="{{$allCompany->branchId}}" onclick="editEmployerCompany(this)"><i class="ion-edit"></i></a></span>
+                    <span><a style="cursor: pointer" data-panel-id="{{$allCompany->branchId}}" onclick="editEmployerCompany(this)"><i class="ion-edit"></i></a><a  style="cursor: pointer;" data-panel-id="{{$allCompany->branchId}}" onclick="deleteBranch(this)"><i class="ion-android-delete"></i></a></span>
                     <a href="{{route('Companydetails',$allCompany->companyId)}}">
                         <div class="thumbnail">
 
@@ -110,6 +110,49 @@
                 },
             });
 
+        }
+
+        function deleteBranch(x) {
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure To delete this Company?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            var id = $(x).data('panel-id');
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employer.deleteEmployerCompany')}}',
+                                data: {id: id},
+                                success: function (data) {
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Company Deleted successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+                                                   // console.log(data);
+                                                }
+                                            }
+                                        }
+                                    });
+                                },
+                            });
+                        }
+                    },
+                    No: function () {
+                    },
+                }
+            });
         }
     </script>
 
