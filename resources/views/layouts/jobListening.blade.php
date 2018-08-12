@@ -197,7 +197,7 @@
                                     </div> <!-- end .bookmarked-job-meta -->
                                     <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
                                         {{--<i class="ion-ios-heart wishlist-icon"></i>--}}
-                                        <a href="#0" class="button">more detail</a>
+                                        <a href="{{route('layouts.jobdetails', $aj->postid)}}" class="button">more detail</a>
                                     </div> <!-- end .right-side-bookmarked-job-meta -->
                                 </div> <!-- end .bookmarked-job-info-bottom -->
                             </div> <!-- end .bookmarked-job-info -->

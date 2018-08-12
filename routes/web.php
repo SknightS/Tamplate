@@ -125,13 +125,14 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 //job
 Route::get('/job-listening', 'JobController@index')->name('jobListening');
+Route::get('/job-details/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
 
 
 //Employer
 
 //Route::get('/employer-dashboard', 'EmployerController@showDashboard')->name('employer.dashboard');
 Route::post('/employer-Info-edit', 'EmployerController@showInforForEdit')->name('employer.showInfo');
-Route::post('/employer-getAllCity}', 'EmployerController@getAllCityByState')->name('employer.getAllAddressCity');
+Route::post('/employer-getAllCity', 'EmployerController@getAllCityByState')->name('employer.getAllAddressCity');
 Route::post('/employer-Info-update/{employer}', 'EmployerController@EmployerInfoUpdate')->name('employer.updateEmployerInfo');
 
 Route::get('/My-Profile', 'EmployerController@showProfile')->name('employer.profile');

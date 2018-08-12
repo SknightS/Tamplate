@@ -22,7 +22,7 @@ class JobController extends Controller
         $jobtype = jobtype::select('id', 'typeName')
             ->get();
 
-        $alljob = Post::select('*','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
+        $alljob = Post::select('*','job.id as jobid','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
             ->leftJoin('job', 'job.id', 'post.fkjobId')
             ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
             ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
@@ -42,5 +42,21 @@ class JobController extends Controller
             ->with('jobcountt', $jobpost)
             ->with('jobtypename',$jobtype)
             ->with('alljob', $alljob);
+    }
+
+    public function jobdetails($postid){
+
+
+        $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
+            ->leftJoin('job', 'job.id', 'post.fkjobId')
+            ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
+            ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
+            ->leftjoin('address','address.addressId','job.address_addressId')
+            ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
+            ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
+            ->where ('post.id', $postid)
+            ->get();
+        return view('layouts.job-details', $jobdetails);
+
     }
 }

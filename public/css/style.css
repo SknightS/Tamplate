@@ -1210,7 +1210,7 @@ select::-ms-expand {
 .table-cells .job-title-cell {
 	-webkit-box-flex: 0;
 	-ms-flex: 0 39%;
-	flex: 0 39%;
+	flex: 1 2%;
 }
 .table-cells .location-cell {
 	-webkit-box-flex: 0;
@@ -1223,7 +1223,7 @@ select::-ms-expand {
 	flex: 0 19.5%;
 }
 .table-cells .job-type-cell, .table-cells .location-cell, .table-cells .expired-date-cell, .table-cells .salary-cell {
-	padding-left: 20px;
+	padding-left: 72px;
 }
 .jobs-table .table-row {
 	background: #fff;
@@ -1236,7 +1236,8 @@ select::-ms-expand {
 	align-items: center;
 }
 .jobs-table .table-cells .cell {
-	padding: 10px 0 10px 20px;
+	/*padding: 10px 0 10px 20px;*/
+	padding: 12px 2px 9px 63px;
 	-webkit-align-self: stretch;
 	-ms-flex-item-align: stretch;
 	-ms-grid-row-align: stretch;
