@@ -4,14 +4,16 @@
 
     <div class="profile-badge"><h6>My Companies</h6></div>
     <div class="profile-wrapper">
-
+        <div class="col-12">
+            <button onclick="addNewCompany()" class="btn btn-sm"style="float: left; height: 26px; margin-top: 3px; background-color: #00A8FF;color: whitesmoke;"><b>New Company</b></button>
+        </div>
 
 
         <div id="products" class="row list-group">
 
             @foreach($employerCompaniesWithBranch as $allCompany)
                 <div class="item  col-xs-4 col-lg-4">
-                    <span><a style="cursor: pointer" data-panel-id="{{$allCompany->branchId}}" onclick="editEmployerCompany(this)"><i class="ion-edit"></i></a></span>
+                    <span><a style="cursor: pointer" data-panel-id="{{$allCompany->branchId}}" onclick="editEmployerCompany(this)"><i class="ion-edit"></i></a><a  style="cursor: pointer;" data-panel-id="{{$allCompany->branchId}}" onclick="deleteBranch(this)"><i class="ion-android-delete"></i></a></span>
                     <a href="{{route('Companydetails',$allCompany->companyId)}}">
                         <div class="thumbnail">
 
@@ -92,6 +94,65 @@
                 },
             });
 
+        }
+        function addNewCompany() {
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('employer.addEmployerNewCompany')}}',
+                data: {},
+                success: function(data){
+                    $('.modal-body').html(data);
+                    $('#myModalLabel').html("Add-Employer Company");
+                    $('#myModal').modal({show:true});
+
+                    //console.log(data)
+                },
+            });
+
+        }
+
+        function deleteBranch(x) {
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure To delete this Company?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            var id = $(x).data('panel-id');
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employer.deleteEmployerCompany')}}',
+                                data: {id: id},
+                                success: function (data) {
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Company Deleted successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+                                                   // console.log(data);
+                                                }
+                                            }
+                                        }
+                                    });
+                                },
+                            });
+                        }
+                    },
+                    No: function () {
+                    },
+                }
+            });
         }
     </script>
 

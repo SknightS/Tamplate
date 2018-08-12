@@ -276,5 +276,65 @@ class EmployerController extends Controller
         return redirect()->route('employer.companyInfo');
 
     }
+    public function employerCompanyInfoaddNew(Request $r) // employer company info update
+    {
+
+        $addressStates = DB::table('master_state')->get();
+
+        return view('employer.addCompanyNewInfo',compact('addressStates'));
+
+
+    }
+    public function saveNewEmployerCompanyInfo(Request $r) // employer company info update
+    {
+
+        $company=Company::where('fkuserId', '=',Auth::user()->id)->first()->companyId;
+
+
+        $branchAddress= new Address();
+        $branchAddress->addresscol=$r->address;
+        $branchAddress->master_subarb_id=$r->cities;
+        $branchAddress->save();
+
+
+
+        $branchInfo=new Companybranch();
+        $branchInfo->name=$r->name;
+        $branchInfo->phone=$r->phone;
+        $branchInfo->email=$r->email;
+        $branchInfo->about=$r->about;
+        $branchInfo->address_addressId=$branchAddress->addressId;
+
+        $branchInfo->company_companyId=$company;
+
+        $branchInfo->save();
+
+        if($r->hasFile('image')){
+            $img = $r->file('image');
+            $filename= $branchInfo->id.'profileImage'.'.'.$img->getClientOriginalExtension();
+            $branchInfo->image=$filename;
+            $location = public_path('companyImages/'.$filename);
+            Image::make($img)->save($location);
+            $location2 = public_path('companyImages/thumb/'.$filename);
+            Image::make($img)->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location2);
+        }
+
+
+        Session::flash('success_msg', 'Your Company Added Successfully!');
+
+        return redirect()->route('employer.companyInfo');
+
+    }
+
+    public function deleteEmployerCompany(Request $r) // delete employer Company
+    {
+        $company=Companybranch::findOrFail($r->id);
+        $company->status=STATUS['deleted']['code'];
+
+        $company->save();
+
+    }
 }
 
