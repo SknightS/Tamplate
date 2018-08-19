@@ -125,7 +125,7 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 //job
 Route::get('/job-listening', 'JobController@index')->name('jobListening');
-Route::get('/job-details/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
+Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
 
 
 //Employer
