@@ -103,11 +103,11 @@ Route::get('/getskilljson', 'CandidateController@getskilljson')->name('getskillj
 
 //employer
 
-Route::get('/employer-dashboard', 'Employer@myprofile')->name('employer');
-Route::get('/employer/favoriteEmployee', 'Employer@favoriteEmployee')->name('favoriteEmployee');
-Route::get('/employer/myprofile', 'Employer@myprofile')->name('myprofile');
-Route::get('/employer/manage-job', 'Employer@manageJob')->name('managejob');
-Route::get('/employer/manage-application', 'Employer@manageApplication')->name('manageapplication');
+Route::get('/employer-dashboard', 'EmployerController@myprofile')->name('employer');
+Route::get('/employer/favoriteEmployee', 'EmployerController@favoriteEmployee')->name('favoriteEmployee');
+Route::get('/employer/myprofile', 'EmployerController@myprofile')->name('myprofile');
+Route::get('/employer/manage-job', 'EmployerController@manageJob')->name('managejob');
+Route::get('/employer/manage-application', 'EmployerController@manageApplication')->name('manageapplication');
 
 
 
@@ -143,3 +143,5 @@ Route::post('/My-Company-Edit', 'EmployerController@showMyCompanyInfo')->name('e
 Route::post('/My-Company-Update/{branch}', 'EmployerController@employerCompanyInfoUpdate')->name('employer.updateEmployerCompanyInfo');
 Route::post('/My-Company-AddNew', 'EmployerController@employerCompanyInfoaddNew')->name('employer.addEmployerNewCompany');
 Route::post('/My-Company-Insert', 'EmployerController@saveNewEmployerCompanyInfo')->name('employer.insertEmployerNewCompany');
+
+Route::get('/employer/manage-All-Job', 'EmployerController@manageAllJob')->name('employer.manageAllJob');

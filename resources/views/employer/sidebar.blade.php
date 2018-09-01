@@ -9,7 +9,8 @@
         <li ><a href="{{route('employer.companyInfo')}}">Company Info</a></li>
         <li class="nav-divider"></li>
         <li class="heading">Manage job</li>
-        <li><a  href="{{route('managejob')}}">Manage Jobs</a></li>
+        {{--<li><a  href="{{route('managejob')}}">Manage Jobs</a></li>--}}
+        <li><a  href="{{route('employer.manageAllJob')}}">Manage Jobs</a></li>
         <li><a  href="{{route('manageapplication')}}">Manage Applications</a></li>
         <li class="nav-divider"></li>
         <li><a  href="#change-password-employer">Change Password</a></li>

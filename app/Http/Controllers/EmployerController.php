@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Address;
 use App\Companybranch;
+use App\job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,8 +56,13 @@ class EmployerController extends Controller
 
     public function manageJob()
     {
-        return view('employer/manage-job');
+        $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+
+        return view('employer/manage-job',compact('employerInfo'));
     }
+
 
     public function manageApplication()
     {
@@ -333,6 +339,20 @@ class EmployerController extends Controller
 
         return redirect()->route('employer.companyInfo');
 
+    }
+
+    // job
+    public function manageAllJob()
+    {
+        $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+        $employerAllJobs=job::select('job.jobName','job.no_of_vacancy as vacancy','jobtype.typeName as jobType','company_branch.name as companyName')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->get();
+
+        return view('employer/manage-All-Job',compact('employerInfo','employerAllJobs'));
     }
 }
 
