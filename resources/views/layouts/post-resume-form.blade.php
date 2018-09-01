@@ -48,7 +48,7 @@
                                     <li><a href="candidates-listing.php">Browse Candidates</a></li>
                                     <li><a href="companies-listing.php">Browse Companies</a></li>
                                     <li><a href="jobs-listing.php">Jobs Listing</a></li>
-                                    <li><a href="job-details.php">Job Details</a></li>
+                                    <li><a href="job-details.blade.php">Job Details</a></li>
                                     <li><a href="categories.php">Job Categories</a></li>
                                     <li><a href="post-resume-form.php">Post a Resume</a></li>
                                     <li><a href="candidate-dashboard.php">Candidate Dashboard</a></li>

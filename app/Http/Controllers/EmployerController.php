@@ -296,11 +296,20 @@ class EmployerController extends Controller
 
         $company=Company::where('fkuserId', '=',Auth::user()->id)->first()->companyId;
 
+
+        $branchAddress= new Address();
+        $branchAddress->addresscol=$r->address;
+        $branchAddress->master_subarb_id=$r->cities;
+        $branchAddress->save();
+
+
+
         $branchInfo=new Companybranch();
         $branchInfo->name=$r->name;
         $branchInfo->phone=$r->phone;
         $branchInfo->email=$r->email;
         $branchInfo->about=$r->about;
+        $branchInfo->address_addressId=$branchAddress->addressId;
 
         $branchInfo->company_companyId=$company;
 
@@ -319,25 +328,18 @@ class EmployerController extends Controller
         }
 
 
-
-        if ($branchInfo->address_addressId != null) {
-            $branchAddress = Address::findOrFail($branchInfo->address_addressId);
-        }else{
-            $branchAddress= new Address();
-        }
-        $branchAddress->addresscol=$r->address;
-        $branchAddress->master_subarb_id=$r->cities;
-
-        $branchAddress->save();
-
-        $branchInfo->address_addressId=$branchAddress->addressId;
-        $branchInfo->save();
-
-
-
         Session::flash('success_msg', 'Your Company Added Successfully!');
 
         return redirect()->route('employer.companyInfo');
+
+    }
+
+    public function deleteEmployerCompany(Request $r) // delete employer Company
+    {
+        $company=Companybranch::findOrFail($r->id);
+        $company->status=STATUS['deleted']['code'];
+
+        $company->save();
 
     }
 

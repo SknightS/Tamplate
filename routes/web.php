@@ -125,18 +125,19 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 //job
 Route::get('/job-listening', 'JobController@index')->name('jobListening');
+Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
 
 
 //Employer
 
 //Route::get('/employer-dashboard', 'EmployerController@showDashboard')->name('employer.dashboard');
 Route::post('/employer-Info-edit', 'EmployerController@showInforForEdit')->name('employer.showInfo');
-Route::post('/employer-getAllCity}', 'EmployerController@getAllCityByState')->name('employer.getAllAddressCity');
+Route::post('/employer-getAllCity', 'EmployerController@getAllCityByState')->name('employer.getAllAddressCity');
 Route::post('/employer-Info-update/{employer}', 'EmployerController@EmployerInfoUpdate')->name('employer.updateEmployerInfo');
 
 Route::get('/My-Profile', 'EmployerController@showProfile')->name('employer.profile');
 
-
+//employer company
 Route::get('/My-Company', 'EmployerController@showMyCompany')->name('employer.companyInfo');
 
 Route::post('/My-Company-Edit', 'EmployerController@showMyCompanyInfo')->name('employer.editEmployerCompany');
@@ -144,4 +145,8 @@ Route::post('/My-Company-Update/{branch}', 'EmployerController@employerCompanyIn
 Route::post('/My-Company-AddNew', 'EmployerController@employerCompanyInfoaddNew')->name('employer.addEmployerNewCompany');
 Route::post('/My-Company-Insert', 'EmployerController@saveNewEmployerCompanyInfo')->name('employer.insertEmployerNewCompany');
 
+
 Route::get('/employer/manage-All-Job', 'EmployerController@manageAllJob')->name('employer.manageAllJob');
+
+Route::post('/My-Company-Delete', 'EmployerController@deleteEmployerCompany')->name('employer.deleteEmployerCompany');
+

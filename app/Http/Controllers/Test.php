@@ -17,13 +17,13 @@ class Test extends Controller
     }
     public function showpost(){
 
-        $user=User::select('usertype.id as typeid')
-            ->leftJoin('usertype','usertype.id','=','user.fkuserTypeId')
-            ->get();
+//        $user=User::select('usertype.id as typeid')
+//            ->leftJoin('usertype','usertype.id','=','user.fkuserTypeId')
+//            ->get();
+//
+//        $leads=(new post())->leasetpost();
 
-        $leads=(new post())->leasetpost();
-
-
-        return $leads;
+return view('layouts.job-details');
+     //   return $leads;
     }
 }
