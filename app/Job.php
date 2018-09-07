@@ -9,6 +9,9 @@ class job extends Model
     //
     protected $table = 'job';
 
+    public $timestamps = false;
+    public $primaryKey = 'id';
+
 
     public function jobfees(){
 

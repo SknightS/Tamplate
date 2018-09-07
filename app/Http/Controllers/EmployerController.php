@@ -6,6 +6,8 @@ use App\Company;
 use App\Address;
 use App\Companybranch;
 use App\job;
+use App\jobtype;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -349,12 +351,147 @@ class EmployerController extends Controller
         $userId=Auth::user()->id;
 
         $employerInfo = Company::where('fkuserId', $userId)->first();
-        $employerAllJobs=job::select('job.jobName','job.no_of_vacancy as vacancy','jobtype.typeName as jobType','company_branch.name as companyName')
+        $employerAllJobs=job::select('job.id as jobId','job.jobName','job.status','job.deadline','job.no_of_vacancy as vacancy','jobtype.typeName as jobType','company_branch.name as companyName')
             ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
             ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->where('job.status','!=',JOB_STATUS['delete']['code'])
             ->get();
 
         return view('employer/manage-All-Job',compact('employerInfo','employerAllJobs'));
+    }
+    public function jobDelete(Request $r)
+    {
+        $job=Job::findOrFail($r->id);
+        $job->status=JOB_STATUS['delete']['code'];
+        $job->save();
+
+        Session::flash('success_msg', 'Job Deleted Successfully!');
+        return redirect()->route('employer.manageAllJob');
+    }
+    public function DeactivatePostedJob(Request $r)
+    {
+        DB::table('post')->where('fkjobId',$r->id)->delete();
+
+        $job=Job::findOrFail($r->id);
+        $job->status=JOB_STATUS['inactive']['code'];
+        $job->save();
+
+    }
+    public function viewNewJobForm(Request $r)
+    {
+        $jobType=Jobtype::get();
+        $companyId = Company::where('fkuserId', Auth::user()->id)->first()->companyId;
+        $companyBrach=Companybranch::select('id','name')->where('company_companyId',$companyId)->get();
+        return view('employer.newJobForm',compact('jobType','companyBrach'));
+    }
+    public function jobPostForm(Request $r)
+    {
+        $jobId=$r->id;
+
+        return view('employer.ExistingPostJobForm',compact('jobId'));
+    }
+    public function viewEditJobForm(Request $r)
+    {
+        $jobId=$r->id;
+        $jobType=Jobtype::get();
+        $companyId = Company::where('fkuserId', Auth::user()->id)->first()->companyId;
+        $companyBrach=Companybranch::select('id','name')->where('company_companyId',$companyId)->get();
+        $jobInfo=job::findOrFail($jobId);
+
+        $post=DB::table('post')->where('fkjobId',$jobId)->first();
+
+
+        return view('employer.editJobForm',compact('jobId','jobType','companyBrach','jobInfo','post'));
+    }
+    public function saveJobPost(Request $r)
+    {
+        $post=new Post();
+        $post->fkjobId=$r->jobId;
+        $post->description=$r->postDescription;
+        $post->save();
+
+        $job=Job::findOrFail($r->jobId);
+        $job->status=JOB_STATUS['post']['code'];
+        $job->save();
+
+
+        Session::flash('success_msg', 'Job Posted Successfully!');
+        return redirect()->route('employer.manageAllJob');
+
+    }
+    public function saveNewJob(Request $r)
+    {
+        $job=new Job();
+        $job->jobName=$r->jobName;
+        $job->description=$r->description;
+        $job->no_of_vacancy=$r->vacancy;
+        $job->job_amount=$r->jobAmount;
+        $job->fkjobTypeId=$r->jobType;
+        $job->company_branch_id=$r->companyId;
+        $job->deadline=$r->deadLine;
+        $job->status=$r->jobStatus;
+        $job->createDate=date('Y-m-d');
+        $job->save();
+
+
+
+        if ($r->jobStatus==JOB_STATUS['post']['code']){
+
+            $post=new Post();
+            $post->fkjobId=$job->id;
+            $post->description=$r->postDescription;
+            $post->save();
+
+        }
+
+        Session::flash('success_msg', 'Job Added Successfully!');
+        return redirect()->route('employer.manageAllJob');
+
+    }
+    public function updateJob(Request $r)
+    {
+        $job=Job::findOrFail($r->jobId);
+        $job->jobName=$r->jobName;
+        $job->description=$r->description;
+        $job->no_of_vacancy=$r->vacancy;
+        $job->job_amount=$r->jobAmount;
+        $job->fkjobTypeId=$r->jobType;
+        $job->company_branch_id=$r->companyId;
+        $job->deadline=$r->deadLine;
+        $job->status=$r->jobStatus;
+
+        $job->save();
+
+
+        if ($r->jobStatus==JOB_STATUS['post']['code']){
+            if ($r->postId != ""){
+
+                $post=Post::findOrFail($r->postId);
+
+                $post->description=$r->postDescription;
+                $post->save();
+
+            }else{
+
+                $post=new Post();
+                $post->fkjobId=$job->id;
+                $post->description=$r->postDescription;
+                $post->save();
+
+            }
+
+
+        }else{
+            if ($r->postId != ""){
+
+                $post=Post::destroy($r->postId);
+            }
+
+        }
+
+        Session::flash('success_msg', 'Job Added Successfully!');
+        return redirect()->route('employer.manageAllJob');
+
     }
 }
 

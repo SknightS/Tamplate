@@ -147,6 +147,15 @@ Route::post('/My-Company-Insert', 'EmployerController@saveNewEmployerCompanyInfo
 
 
 Route::get('/employer/manage-All-Job', 'EmployerController@manageAllJob')->name('employer.manageAllJob');
+Route::post('/employer/job-Delete', 'EmployerController@jobDelete')->name('employer.jobDelete');
+Route::post('/employer/job-Post', 'EmployerController@jobPostForm')->name('employer.postJobForm');
+Route::post('/employer/job-Post-Save', 'EmployerController@saveJobPost')->name('employer.jobPost');
+Route::post('/employer/job-Deactive', 'EmployerController@DeactivatePostedJob')->name('employer.jobDeactive');
+Route::post('/employer/job-Edit', 'EmployerController@viewEditJobForm')->name('employer.editJobForm');
+
+Route::post('/employer/Add-New-JobForm', 'EmployerController@viewNewJobForm')->name('employer.addNewJobForm');
+Route::post('/employer/Add-New-Job', 'EmployerController@saveNewJob')->name('employer.insertNewJob');
+Route::post('/employer/Update-Job', 'EmployerController@updateJob')->name('employer.updateJob');
 
 Route::post('/My-Company-Delete', 'EmployerController@deleteEmployerCompany')->name('employer.deleteEmployerCompany');
 
