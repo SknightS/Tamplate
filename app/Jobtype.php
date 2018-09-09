@@ -8,4 +8,6 @@ class jobtype extends Model
 {
     //
     protected $table = 'jobtype';
+    public $timestamps = false;
+    public $primaryKey = 'id';
 }

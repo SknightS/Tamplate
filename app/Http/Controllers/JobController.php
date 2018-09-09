@@ -65,6 +65,7 @@ class JobController extends Controller
             ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
             ->where('typeName',$typename)
+            ->where('post.id','!=',$postid)
             ->get();
 
 

@@ -62,7 +62,7 @@
 
                     @foreach($allCompaniesWithBranch as $allCompany)
                     <div class="item  col-xs-4 col-lg-4">
-                        <a href="{{route('Companydetails',$allCompany->companyId)}}">
+                        <a href="{{route('Companydetails',$allCompany->id)}}">
                             <div class="thumbnail">
 
                                 @if($allCompany->image != null)

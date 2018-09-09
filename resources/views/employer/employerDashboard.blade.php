@@ -28,6 +28,12 @@
 			</div> <!-- end .inner -->
 		</div> <!-- end .section -->
 
+@if (Session::has('success_msg'))
+    <div class="alert alert-success">
+        <strong >{{Session::get('success_msg')}}</strong>
+    </div>
+@endif
+
 
 		<!-- Employer Dashboard -->
         <div class="section candidate-dashboard-content solid-light-grey-bg">
@@ -71,7 +77,7 @@
 </div>
 
 
-		<!-- Footer -->
+<!-- Footer -->
 
 
 @include('employer.footer')

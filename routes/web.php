@@ -103,11 +103,11 @@ Route::get('/getskilljson', 'CandidateController@getskilljson')->name('getskillj
 
 //employer
 
-Route::get('/employer-dashboard', 'Employer@myprofile')->name('employer');
-Route::get('/employer/favoriteEmployee', 'Employer@favoriteEmployee')->name('favoriteEmployee');
-Route::get('/employer/myprofile', 'Employer@myprofile')->name('myprofile');
-Route::get('/employer/manage-job', 'Employer@manageJob')->name('managejob');
-Route::get('/employer/manage-application', 'Employer@manageApplication')->name('manageapplication');
+Route::get('/employer-dashboard', 'EmployerController@myprofile')->name('employer');
+Route::get('/employer/favoriteEmployee', 'EmployerController@favoriteEmployee')->name('favoriteEmployee');
+Route::get('/employer/myprofile', 'EmployerController@myprofile')->name('myprofile');
+Route::get('/employer/manage-job', 'EmployerController@manageJob')->name('managejob');
+Route::get('/employer/manage-application', 'EmployerController@manageApplication')->name('manageapplication');
 
 
 
@@ -145,4 +145,17 @@ Route::post('/My-Company-Update/{branch}', 'EmployerController@employerCompanyIn
 Route::post('/My-Company-AddNew', 'EmployerController@employerCompanyInfoaddNew')->name('employer.addEmployerNewCompany');
 Route::post('/My-Company-Insert', 'EmployerController@saveNewEmployerCompanyInfo')->name('employer.insertEmployerNewCompany');
 
+
+Route::get('/employer/manage-All-Job', 'EmployerController@manageAllJob')->name('employer.manageAllJob');
+Route::post('/employer/job-Delete', 'EmployerController@jobDelete')->name('employer.jobDelete');
+Route::post('/employer/job-Post', 'EmployerController@jobPostForm')->name('employer.postJobForm');
+Route::post('/employer/job-Post-Save', 'EmployerController@saveJobPost')->name('employer.jobPost');
+Route::post('/employer/job-Deactive', 'EmployerController@DeactivatePostedJob')->name('employer.jobDeactive');
+Route::post('/employer/job-Edit', 'EmployerController@viewEditJobForm')->name('employer.editJobForm');
+
+Route::post('/employer/Add-New-JobForm', 'EmployerController@viewNewJobForm')->name('employer.addNewJobForm');
+Route::post('/employer/Add-New-Job', 'EmployerController@saveNewJob')->name('employer.insertNewJob');
+Route::post('/employer/Update-Job', 'EmployerController@updateJob')->name('employer.updateJob');
+
 Route::post('/My-Company-Delete', 'EmployerController@deleteEmployerCompany')->name('employer.deleteEmployerCompany');
+

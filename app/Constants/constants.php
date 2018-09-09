@@ -241,10 +241,17 @@ define('UserType',array(
     'empr'=>array('name'=>'Employer','code'=>'empr'),
 
 ));
+
 define('STATUS',array(
     'active'=>array('name'=>'active','code'=>'1'),
     'inactive'=>array('name'=>'inactive','code'=>'0'),
     'deleted'=>array('name'=>'deleted','code'=>'2'),
+
+));
+define('JOB_STATUS',array(
+    'post'=>array('name'=>'posted','code'=>'1'),
+    'inactive'=>array('name'=>'inactive','code'=>'2'),
+    'delete'=>array('name'=>'deleted','code'=>'0'),
 
 ));
 
