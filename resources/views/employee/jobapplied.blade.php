@@ -54,7 +54,7 @@
         {{--@endif--}}
     {{--</div> <!-- end .jobpress-custom-pager -->--}}
 
-    <!--laravel pagination -->
+    {{--<!--laravel pagination -->--}}
     {{--<div class="list-unstyled flex space-center no-column items-center">--}}
         {{--{{$candidateAllAppliedJob->render()}}--}}
         {{--{{$candidateAllAppliedJob->lastPage()}}--}}

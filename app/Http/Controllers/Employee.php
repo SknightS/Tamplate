@@ -13,6 +13,7 @@ use App\Workexperience;
 use App\Skill;
 use App\Freetime;
 use App\Requestjob;
+use App\Job;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -548,6 +549,72 @@ class Employee extends Controller
 
 
         return view('employee.jobapplied',compact('candidateInfo','candidateAllAppliedJob'));
+    }
+    public function showAllJob(Request $r) // show all  job that are posted for employee to apply
+    {
+
+        $userId=Auth::user()->id;
+        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+
+        $allJobs=Job::select('job.id as jobId','job.jobName','job.no_of_vacancy','job.job_amount','job.deadline','jobtype.typeName',
+            'company_branch.name as companyName','post.description','post.id as postId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('post', 'post.fkjobId', '=', 'job.id')
+            ->where('post.status',STATUS['active']['code']);
+
+        if($r->search !=""){
+            $allJobs=$allJobs->where('job.jobName', 'like', '%' . $r->search . '%');
+        }
+
+        $allJobs=$allJobs->paginate(1);
+
+        $applyjob = Requestjob::select('post_id')
+            ->where('fkcandidateId' , $candidateInfo->candidateId)
+            ->get();
+
+        if ($r->ajax()) {
+            return view('employee.showAllJobData',compact('candidateInfo','allJobs','applyjob'));
+        }
+
+
+
+
+        return view('employee.showAllJob',compact('candidateInfo'));
+//        return view('employee.showAllJob',compact('candidateInfo','allJobs','applyjob'));
+
+
+    }
+    public function showAllJobData(Request $r) // show all  job that are posted for employee to apply
+    {
+
+        $userId=Auth::user()->id;
+        $candidateInfo = Candidate::where('fkuserId', $userId)->first();
+
+        $allJobs=Job::select('job.id as jobId','job.jobName','job.no_of_vacancy','job.job_amount','job.deadline','jobtype.typeName',
+            'company_branch.name as companyName','post.description','post.id as postId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('post', 'post.fkjobId', '=', 'job.id')
+            ->where('post.status',STATUS['active']['code']);
+
+        if($r->search !=""){
+            $allJobs=$allJobs->where('job.jobName', 'like', '%' . $r->search . '%');
+        }
+
+        $allJobs=$allJobs->paginate(1);
+
+        $applyjob = Requestjob::select('post_id')
+            ->where('fkcandidateId' , $candidateInfo->candidateId)
+            ->get();
+
+
+
+
+        return view('employee.showAllJobData',compact('candidateInfo','allJobs','applyjob'));
+//        return view('employee.showAllJob',compact('candidateInfo','allJobs','applyjob'));
+
+
     }
 
 }

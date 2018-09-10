@@ -5,6 +5,7 @@
         <li class="notification-link flex space-between items-center no-column no-wrap"><a data-toggle="pill" href="#notifications">Notifications</a> <span class="notification-count">2</span></li>
         <li class="nav-divider"></li>
         <li class="heading">Manage job</li>
+        <li><a href="{{route('employee.showAllJob')}}">Job Bank</a></li>
         <li><a href="{{route('jobapplied')}}">Manage Applications</a></li>
         <li class="nav-divider"></li>
         <li><a  href="{{route('changepassword')}}">Change Password</a></li>
