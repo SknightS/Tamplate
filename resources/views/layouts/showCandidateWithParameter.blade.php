@@ -80,6 +80,7 @@
 
 
 <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">
+
     @if($allCandidates->currentPage()!= 1)
         <a data-id="{{$allCandidates->previousPageUrl()}}" href="javascript:void(0)" class="button pagiNextPrevBtn"><i class="ion-ios-arrow-left"></i>Prev</a>
     @endif

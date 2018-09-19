@@ -50,9 +50,12 @@ Auth::routes();
 
 //employee
 
-
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
+
 Route::post('/employee-Info-edit', 'Employee@showInforForEdit')->name('employee.showInfo');
+
+
+
 Route::post('/employee-Info-update/{candidate}', 'Employee@CandidateInfoUpdate')->name('employee.updateCandidateInfo');
 
 Route::post('/employee-getAllCity}', 'Employee@getAllCityByState')->name('employee.getAllAddressCity');
@@ -102,6 +105,10 @@ Route::get('/getskilljson', 'CandidateController@getskilljson')->name('getskillj
 
 Route::get('employee-All-Jobs', 'Employee@showAllJob')->name('employee.showAllJob');
 Route::post('employee-All-Jobs-Info', 'Employee@showAllJobData')->name('employee.getAllJobData');
+
+/* job Apply Employee*/
+
+Route::post('employee-Job-Apply', 'Employee@applyForJob')->name('employee.jobApply');
 
 
 
@@ -162,4 +169,14 @@ Route::post('/employer/Add-New-Job', 'EmployerController@saveNewJob')->name('emp
 Route::post('/employer/Update-Job', 'EmployerController@updateJob')->name('employer.updateJob');
 
 Route::post('/My-Company-Delete', 'EmployerController@deleteEmployerCompany')->name('employer.deleteEmployerCompany');
+
+/* employer manage application */
+Route::get('Employer-Manage-All-Application', 'EmployerController@manageAllApplication')->name('employer.manageAllApplication');
+
+Route::post('Employer-Manage-All-Application-Data', 'EmployerController@manageAllApplicationwithData')->name('employer.manageAllApplicationData');
+
+Route::post('Employer-Start-A-Job', 'EmployerController@manageStartJob')->name('employer.startJob');
+Route::post('Employer-Complete-A-Job', 'EmployerController@manageCompleteJob')->name('employer.completeJob');
+Route::post('Employer-Approve-A-Job', 'EmployerController@manageApproveJob')->name('employer.approveJob');
+Route::post('Employer-Reject-A-Job', 'EmployerController@manageRejectJob')->name('employer.rejectJob');
 

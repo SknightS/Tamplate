@@ -255,4 +255,14 @@ define('JOB_STATUS',array(
 
 ));
 
+define('JOB_REQUEST_STATUS',array(
+    'reject'=>array('name'=>'rejected','code'=>'0'),
+    'inProgress'=>array('name'=>'InProgress','code'=>'1'),
+    'approve'=>array('name'=>'approved','code'=>'2'),
+    'cancel'=>array('name'=>'canceled','code'=>'3'),
+    'complete'=>array('name'=>'completed','code'=>'4'),
+    'pending'=>array('name'=>'Pending','code'=>'5'),
+
+));
+
 

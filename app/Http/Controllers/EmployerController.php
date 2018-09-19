@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Address;
+use App\Hirereport;
+use App\Requestjob;
 use App\Companybranch;
 use App\job;
 use App\jobtype;
@@ -491,6 +493,127 @@ class EmployerController extends Controller
 
         Session::flash('success_msg', 'Job Added Successfully!');
         return redirect()->route('employer.manageAllJob');
+
+    }
+
+    /* manage Application */
+    public function manageAllApplication(Request $r){
+
+        $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+        $companyId = Company::where('fkuserId', $userId)->first()->companyId;
+
+        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
+            ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
+            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
+            ->where('company_companyId',$companyId);
+
+
+
+
+        $allApplication=$allApplication->paginate(1);
+
+
+
+        if ($r->ajax()) {
+
+            return view('employer.manageAllApplicationWithData',compact('allApplication'));
+        }
+
+
+        return view('employer.manageAllApplication',compact('employerInfo'));
+
+
+    }
+    public function manageAllApplicationwithData(Request $r){
+
+        $userId=Auth::user()->id;
+
+//        $employerInfo = Company::where('fkuserId', $userId)->first();
+        $companyId = Company::where('fkuserId', $userId)->first()->companyId;
+
+        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
+            ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
+            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
+            ->where('company_companyId',$companyId);
+
+
+
+
+        $allApplication=$allApplication->paginate(1);
+
+
+        return view('employer.manageAllApplicationWithData',compact('allApplication'));
+
+
+    }
+    public function manageStartJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['inProgress']['code'];
+        $job->request_status=JOB_REQUEST_STATUS['inProgress']['code'];
+
+        $job->save();
+
+        $report=DB::table('hirereport')->where('fkrequestJobId',$r->id)->orderBy('hireReportId','desc')->limit(1)->update(['startTime' => now()]);
+
+        Session::flash('success_msg', 'Job Started Successfully!');
+
+
+
+    }
+    public function manageCompleteJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['complete']['code'];
+
+        $job->save();
+
+        $report=DB::table('hirereport')->where('fkrequestJobId',$r->id)->orderBy('hireReportId','desc')->limit(1)->update(['endTime' => now()]);
+
+        Session::flash('success_msg', 'Job Started Successfully!');
+
+
+
+    }
+    public function manageApproveJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['approve']['code'];
+
+        $job->save();
+
+        $report=new Hirereport();
+        $report->fkrequestJobId=$r->id;
+        $report->save();
+
+
+        Session::flash('success_msg', 'Job Approved Successfully!');
+
+
+
+    }
+    public function manageRejectJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['reject']['code'];
+
+        $job->save();
+
+        Session::flash('success_msg', 'Job Rejected Successfully!');
+
+
 
     }
 }
