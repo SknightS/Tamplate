@@ -1,42 +1,42 @@
 @extends('main')
 @section('head')
-    <style>
-        .slidecontainer {
-            width: 100%;
-        }
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 15px;
-            border-radius: 5px;
-            /*background: #d3d3d3;*/
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #4CAF50;
-            cursor: pointer;
-        }
-        .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #4CAF50;
-            cursor: pointer;
-        }
+    {{--<style>--}}
+        {{--.slidecontainer {--}}
+            {{--width: 100%;--}}
+        {{--}--}}
+        {{--.slider {--}}
+            {{---webkit-appearance: none;--}}
+            {{--width: 100%;--}}
+            {{--height: 15px;--}}
+            {{--border-radius: 5px;--}}
+            {{--/*background: #d3d3d3;*/--}}
+            {{--outline: none;--}}
+            {{--opacity: 0.7;--}}
+            {{---webkit-transition: .2s;--}}
+            {{--transition: opacity .2s;--}}
+        {{--}--}}
+        {{--.slider::-webkit-slider-thumb {--}}
+            {{---webkit-appearance: none;--}}
+            {{--appearance: none;--}}
+            {{--width: 25px;--}}
+            {{--height: 25px;--}}
+            {{--border-radius: 50%;--}}
+            {{--background: #4CAF50;--}}
+            {{--cursor: pointer;--}}
+        {{--}--}}
+        {{--.slider::-moz-range-thumb {--}}
+            {{--width: 25px;--}}
+            {{--height: 25px;--}}
+            {{--border-radius: 50%;--}}
+            {{--background: #4CAF50;--}}
+            {{--cursor: pointer;--}}
+        {{--}--}}
 
-        .ul{
-            list-unstyled: flex no-column items-center pagination
-        }
+        {{--.ul{--}}
+            {{--list-unstyled: flex no-column items-center pagination--}}
+        {{--}--}}
 
-    </style>
+    {{--</style>--}}
     @endsection
 @section('content')
 <!-- Breadcrumb Bar -->
@@ -85,7 +85,6 @@
                 </div> <!-- end .statistics-widget-wrapper -->
 
 
-
                 <div class="divider"></div>
 
 
@@ -93,96 +92,13 @@
 
             <div class="center-content-wrapper">
 
-                <div class="sort-by-wrapper on-listing-page flex space-between items-center no-wrap">
-                    <div class="left-side-inner">
-                        <h6>showing
-                            <span>{{($alljob->currentpage()-1)*$alljob->perpage()+1}}
-                                - {{(($alljob->currentpage()-1)*$alljob->perpage())+$alljob->count()}}
-                                </span>of
-                            <span>{{$alljob->total()}}</span>Jobs</h6>
-                    </div> <!-- end .left-side -->
-                    <div class="right-side-inner">
-                        <div class="sort-by dropdown flex no-wrap no-column items-center">
-                            <h6>sort by</h6>
-                            <button class="button dropdown-toggle" type="button" id="sort-by" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Default
-                                <i class="ion-ios-arrow-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="sort-by">
-                                <li><a href="#">Featured</a></li>
-                                <li><a href="#">Top candidates</a></li>
-                                <li><a href="#">Price, high to low</a></li>
-                                <li><a href="#">Alphabetically, A-Z</a></li>
-                                <li><a href="#">Alphabetically, Z-A</a></li>
-                                <li><a href="#">Best sellers</a></li>
-                            </ul> <!-- end .dropdown-menu -->
-                        </div> <!-- end .sort-by-drop-down -->
-                    </div> <!-- end .right-side -->
-                </div> <!-- end .sort-by-wrapper -->
-
-                @foreach($alljob as $aj)
-                <div class="bookmarked-jobs-list-wrapper on-listing-page">
-                    <div class="bookmarked-job-wrapper">
-                        <div class="bookmarked-job flex no-wrap no-column ">
-                            <div class="job-company-icon">
-                                <img src="images/company-logo-big01.jpg" alt="company-icon" class="img-responsive">
-                            </div> <!-- end .job-icon -->
-                            <div class="bookmarked-job-info">
-                                <h4 class="dark flex no-column">{{$aj->jobName}}</h4>
-                                <h5>{{$aj->cname}}</h5>
-                                <p>{{$aj->pdes}}</p>
-                                <div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
-                                    <div class="bookmarked-job-meta flex items-center no-wrap no-column">
-                                        {{--<ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">--}}
-                                            {{--<li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>--}}
-                                            {{--<li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>--}}
-                                            {{--<li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>--}}
-                                        {{--</ul> <!-- end .candidates-avatar -->--}}
-                                        <h6 class="bookmarked-job-category">{{$aj->typeName}}</h6>
-                                        <h6 class="candidate-location">{{$aj->address}}</h6>
-                                        <h6 class="hourly-rate">{{$aj->job_amount}}<span>/Hour</span></h6>
-                                    </div> <!-- end .bookmarked-job-meta -->
-                                    <div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-                                        {{--<i class="ion-ios-heart wishlist-icon"></i>--}}
-                                        <a href="{{route('layouts.jobdetails', [ $aj->typeName, $aj->postid] )}}" class="button">more detail</a>
-                                    </div> <!-- end .right-side-bookmarked-job-meta -->
-                                </div> <!-- end .bookmarked-job-info-bottom -->
-                            </div> <!-- end .bookmarked-job-info -->
-                        </div> <!-- end .bookmarked-job -->
-                    </div> <!-- end .bookmarked-job-wrapper -->
-
-                </div> <!-- end .bookmarked-jobs-list-wrapper -->
-                @endforeach
-
-                <div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center pagination">
-                    @if($alljob->currentPage()!= 1)
-                        <a data-id="{{$alljob->previousPageUrl()}}" href="{{$alljob->previousPageUrl()}}" class="button pagiNextPrevBtn"><i class="ion-ios-arrow-left"></i>Prev</a>
-                    @endif
-                    <ul class="list-unstyled flex no-column items-center pagination">
-                        @for($i=$alljob->perPage(); $i <= $alljob->total();$i=($i+$alljob->perPage()))
-                            <li ><a href="{{$alljob->url($i)}}">{{$i}}</a></li>
-                        @endfor
-                    </ul>
-                    @if($alljob->lastPage()!=$alljob->currentPage())
-                        <a data-id="{{$alljob->nextPageUrl()}}"href="{{$alljob->nextPageUrl()}}"  class="button pagiNextPrevBtn">Next<i class="ion-ios-arrow-right"></i></a>
-                    @endif
+                <div id="allJobInfoData">
 
                 </div>
 
-                {{--<div align="center" class="jjobpress-custom-pager list-unstyled flex space-center no-column items-center ">--}}
-                {{--{{ $alljob->links() }}--}}
-                {{--</div>--}}
-                {{--<div class="jobpress-custom-pager list-unstyled flex space-center no-column items-center">--}}
-                    {{--<a href="#0" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>--}}
-                    {{--<ul class="list-unstyled flex no-column items-center">--}}
-                        {{--<li><a href="#0">1</a></li>--}}
-                        {{--<li><a href="#0">2</a></li>--}}
-                        {{--<li><a href="#0">3</a></li>--}}
-                        {{--<li><a href="#0">4</a></li>--}}
-                        {{--<li><a href="#0">5</a></li>--}}
-                    {{--</ul>--}}
-                    {{--<a href="#0" class="button">Next<i class="ion-ios-arrow-right"></i></a>--}}
-                {{--</div> <!-- end .jobpress-custom-pager -->--}}
+
+
+
 
             </div> <!-- end .center-content -->
 
@@ -302,5 +218,79 @@
 @endsection
 @section('foot-js')
 
+    <script>
 
-    @endsection
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function allJobInfo() {
+            // var filterSkills=$("#filterSkill").tagsinput('items');
+            // var filterLocation=$("#filterLocation").tagsinput('items');
+            $.ajax({
+                type: 'POST',
+                url: "{!! route('jobListening.data') !!}",
+                cache: false,
+                data: {_token:"{{csrf_token()}}"},
+                success: function (data) {
+                    $("#allJobInfoData").html(data);
+
+                }
+            });
+        }
+
+               $(window).on('hashchange', function() {
+                   if (window.location.hash) {
+                       var page = window.location.hash.replace('#', '');
+                       if (page == Number.NaN || page <= 0) {
+                           return false;
+                       }else{
+                           getData(page);
+                       }
+                   }
+               });
+
+        $(document).ready(function()
+        {
+            allJobInfo();
+            $(document).on('click', '.pagination a',function(event)
+            {
+                $('li').removeClass('active');
+                $(this).parent('li').addClass('active');
+                event.preventDefault();
+                var myurl = $(this).attr('href');
+                var page=$(this).attr('href').split('page=')[1];
+                getData(page);
+            });
+        });
+        function getData(page){
+            // var filterSkills=$("#filterSkill").tagsinput('items');
+            // var filterLocation=$("#filterLocation").tagsinput('items');
+            $.ajax(
+                {
+                    url: '?page=' + page,
+                    type: "get",
+                    data: {},
+                    datatype: "html",
+                    // beforeSend: function()
+                    // {
+                    //     you can show your loader
+                    // }
+                })
+                .done(function(data)
+                {
+                    $("#allJobInfoData").html(data);
+                    location.hash = page;
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                    alert('No response from server');
+                });
+        }
+    </script>
+
+
+
+@endsection
