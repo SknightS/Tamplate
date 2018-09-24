@@ -86,11 +86,12 @@
                 url: '{{route('employer.editEmployerCompany')}}',
                 data: {id:id},
                 success: function(data){
+                    // console.log(data);
                     $('.modal-body').html(data);
                     $('#myModalLabel').html("Edit-Employer Company");
                     $('#myModal').modal({show:true});
 
-                    //console.log(data)
+
                 },
             });
 
@@ -128,7 +129,7 @@
                             $.ajax({
                                 type: "POST",
                                 url: '{{route('employer.deleteEmployerCompany')}}',
-                                data: {id: id},
+                                data: {_token:"{{csrf_token()}}",id: id},
                                 success: function (data) {
                                     $.alert({
                                         title: 'Success!',

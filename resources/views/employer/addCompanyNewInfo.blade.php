@@ -1,4 +1,9 @@
+<style>
+    .modal-dialog{
+        width:70%;
 
+    }
+</style>
     <form method="post" action="{{route('employer.insertEmployerNewCompany')}}" enctype="multipart/form-data" class="form-horizontal">
         {{csrf_field()}}
         <div class="form-group">
@@ -28,6 +33,32 @@
 
             </div>
         </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <label class="col-md-2">Image</label>
+                <input type="file" id="image" name="image" accept="image/*" placeholder="Candidate image" class="form-control col-md-4" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="col-md-4">Status<span style="color: red">*</span></label>
+                <select class="form-control col-md-4" id="branchStatus" name="branchStatus" required>
+                    <option selected value="">Select status</option>
+
+                    @foreach(STATUS as $key=>$value)
+
+                        @if($value['code'] !='2')
+                            <option value="{{$value['code']}}">{{$key}}</option>
+                        @endif
+                    @endforeach
+
+                </select>
+            </div>
+
+        </div>
+        <hr>
 
         <div align="center" class="form-group">
             <label style="text-align: center">Address</label>
@@ -66,15 +97,8 @@
 
 
 
-        <div class="row">
 
-            <div class="col-md-6">
 
-                <label class="col-md-2">Image</label>
-                <input type="file" id="image" name="image" accept="image/*" placeholder="Candidate image" class="form-control col-md-4" />
-            </div>
-
-        </div>
 
 
         <div style="padding: 20px;text-align: center" class="row">

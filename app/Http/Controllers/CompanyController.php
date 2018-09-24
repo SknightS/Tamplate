@@ -25,6 +25,7 @@ class CompanyController extends Controller
                         ->leftJoin('address', 'address.addressId', '=', 'company_branch.address_addressId')
                         ->leftJoin('master_subarb', 'master_subarb.id', '=', 'address.master_subarb_id')
                         ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id')
+                        ->where('company_branch.branchStatus','!=',STATUS['deleted']['code'])
                         ->get();
 
 
