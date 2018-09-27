@@ -27,7 +27,7 @@ class Test extends Controller
             ->paginate(1);
 
 return view('test')
-    ->with('', $alljob)
+    ->with('alljob', $alljob)
     ;
      //   return $leads;
     }

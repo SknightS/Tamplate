@@ -576,10 +576,7 @@ class Employee extends Controller
         if ($r->ajax()) {
             return view('employee.showAllJobData',compact('candidateInfo','allJobs','applyjob'));
         }
-
-
-
-
+        
         return view('employee.showAllJob',compact('candidateInfo'));
 //        return view('employee.showAllJob',compact('candidateInfo','allJobs','applyjob'));
 
