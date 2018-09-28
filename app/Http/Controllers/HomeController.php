@@ -32,7 +32,7 @@ class HomeController extends Controller
 
        // return $leasetpost;
 
-        $jobtype = jobtype::select('id', 'typeName', 'image')
+        $jobtype = Jobtype::select('id', 'typeName', 'image')
             ->get();
 
         $post= Post::select('fkjobTypeId' ,DB::raw('COUNT(fkjobId) as total_post'))
@@ -55,6 +55,5 @@ class HomeController extends Controller
             ->with('post', $post)
             ->with('latestjobs', $latestJobs);
 
-      //  ->with('leasetpost' , $leasetpost);
     }
 }

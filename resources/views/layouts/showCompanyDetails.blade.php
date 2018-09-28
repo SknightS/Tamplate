@@ -14,9 +14,9 @@
                 <div class="breadcrumb-menu flex items-center no-column">
 
                     @if($companyDetails->image != null)
-                        <img src="{{url('public/employerImages/thumb/'.$companyDetails->image)}}" alt="company-logo" class="img-responsive">
+                        <img src="{{url('public/companyImages/thumb/'.$companyDetails->image)}}" alt="company-logo" class="img-responsive">
                     @else
-                        <img src="{{url('public/employeeImages/dummy.jpg')}}" alt="company-logo" class="img-responsive">
+                        <img src="{{url('public/companyImages/dummy.jpg')}}" alt="company-logo" class="img-responsive">
                     @endif
 
                     <div class="breadcrumb-info-dashboard">

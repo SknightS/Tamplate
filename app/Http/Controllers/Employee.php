@@ -493,6 +493,7 @@ class Employee extends Controller
 
     }
 
+
     public function insertCandidateFreeTime($candidate,Request $r) // insert employee free time
     {
 
@@ -522,6 +523,7 @@ class Employee extends Controller
 
     }
 
+
     public function showJobApplied() // show all aplied job of the employee and related info
     {
 
@@ -537,19 +539,17 @@ class Employee extends Controller
         $candidateAllAppliedJob=Requestjob::select('requestjob.*','company_branch.name as companyName','job.jobName',
             'jobtype.typeName as jobType','hirereport.startTime as jobStartTime','hirereport.endTime as jobEndTime',
             'hirereport.start_code as jobStartCode','hirereport.finish_code as jobEndCode')
-            ->leftJoin('post', 'post.id', '=', 'requestjob.post_id')
-            ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
+//            ->leftJoin('post', 'post.id', '=', 'requestjob.post_id')
+            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
             ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
             ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
-            ->leftJoin('hirereport', 'hirereport.fkrequestJobId', '=', 'requestjob.requestJobId')
+            ->leftJoin('hirereport','hirereport.fkrequestJobId', '=','requestjob.requestJobId')
             ->where('requestjob.fkcandidateId', $candidateInfo->candidateId)
             ->get();
 
-
-
-
         return view('employee.jobapplied',compact('candidateInfo','candidateAllAppliedJob'));
     }
+
     public function showAllJob(Request $r) // show all  job that are posted for employee to apply
     {
 
@@ -606,10 +606,24 @@ class Employee extends Controller
             ->get();
 
 
-
-
         return view('employee.showAllJobData',compact('candidateInfo','allJobs','applyjob'));
 //        return view('employee.showAllJob',compact('candidateInfo','allJobs','applyjob'));
+
+
+    }
+
+    public function applyForJob(Request $r) //  employee job Apply
+    {
+        $requestJob=new Requestjob();
+        $requestJob->fkcandidateId=Auth::user()->id;
+        $requestJob->applyTime=now();
+        $requestJob->request_status=JOB_REQUEST_STATUS['pending']['code'];
+        $requestJob->job_id=$r->jobIdforApply;
+        $requestJob->save();
+
+        Session::flash('success_msg', 'Job Applied Successfully!');
+        return back();
+
 
 
     }

@@ -132,7 +132,30 @@
 
 									<div class="system-login text-center">
 										<p class="divider-text text-center"><span>Apply for this job</span></p><br>
-										<button type="submit" class="button">Submit your resume</button>
+										@if($candidate != null)
+
+											@if($candidate != $jobdetails->AppliedcandidateId )
+
+											@if (Auth::check())
+												@if($jobdetails->requestJobId != $jobdetails->jobid )
+													<form method="post" action="{{route('employee.jobApply')}}">
+														{{ csrf_field() }}
+														<input type="hidden" id="jobId" name="jobIdforApply" value="{{$jobdetails->jobid}}">
+														<button type="submit" class="button">Submit your resume</button>
+													</form>
+
+
+											@else
+												<button type="submit" disabled class="button btn-danger">Please Login First</button>
+											@endif
+												@else
+													<button type="submit" disabled class="button btn-danger">Allready applied</button>
+												@endif
+
+
+										@endif
+											@endif
+
 									</div> <!-- end .system-login -->
 
 								</div> <!-- end .right-side-inner -->

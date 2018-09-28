@@ -174,4 +174,6 @@ class CandidateController extends Controller
 
         return response()->json($newarray);
     }
+
+
 }

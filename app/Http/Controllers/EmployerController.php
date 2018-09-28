@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Address;
+use App\Hirereport;
+use App\Requestjob;
 use App\Companybranch;
 use App\job;
 use App\jobtype;
@@ -210,6 +212,7 @@ class EmployerController extends Controller
             ->leftJoin('master_subarb', 'master_subarb.id', '=', 'address.master_subarb_id')
             ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id')
             ->where('company.fkuserId',$employerInfo->fkuserId)
+            ->where('company_branch.branchStatus','!=',STATUS['deleted']['code'])
             ->get();
 
         //return $employerCompaniesWithBranch;
@@ -226,7 +229,7 @@ class EmployerController extends Controller
 
         $addressStates = DB::table('master_state')->get();
 
-        $employerCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.image','company_branch.about','company_branch.name as branchName','company_branch.address_addressId',
+        $employerCompaniesWithBranch= Companybranch::select('company.companyId','company_branch.image','company_branch.about','company_branch.branchStatus','company_branch.name as branchName','company_branch.address_addressId',
             'company_branch.phone','company_branch.email','address.addresscol','master_subarb.id as cityId','master_subarb.name as cityName',
             'master_state.id as state')
             ->leftJoin('company', 'company_branch.company_companyId', '=', 'company.companyId')
@@ -235,9 +238,10 @@ class EmployerController extends Controller
             ->leftJoin('master_state', 'master_state.id', '=', 'master_subarb.master_state_id')
             ->where('company_branch.id',$companyBranchId)
             ->get();
+        $activePost=job::where('status',JOB_STATUS['post']['code'])->where('company_branch_id',1)->count('id');
 
 
-        return view('employer.editCompanyAllInfo',compact('companyBranchId','employerCompaniesWithBranch','addressStates'));
+        return view('employer.editCompanyAllInfo',compact('companyBranchId','employerCompaniesWithBranch','addressStates','activePost'));
 
 
     }
@@ -250,6 +254,7 @@ class EmployerController extends Controller
         $branchInfo->phone=$r->phone;
         $branchInfo->email=$r->email;
         $branchInfo->about=$r->about;
+        $branchInfo->branchStatus=$r->branchStatus;
 
         if($r->hasFile('image')){
             $img = $r->file('image');
@@ -293,7 +298,7 @@ class EmployerController extends Controller
 
 
     }
-    public function saveNewEmployerCompanyInfo(Request $r) // employer company info update
+    public function saveNewEmployerCompanyInfo(Request $r) // employer company info insert
     {
 
         $company=Company::where('fkuserId', '=',Auth::user()->id)->first()->companyId;
@@ -314,6 +319,7 @@ class EmployerController extends Controller
         $branchInfo->address_addressId=$branchAddress->addressId;
 
         $branchInfo->company_companyId=$company;
+        $branchInfo->branchStatus=$r->branchStatus;
 
         $branchInfo->save();
 
@@ -339,13 +345,13 @@ class EmployerController extends Controller
     public function deleteEmployerCompany(Request $r) // delete employer Company
     {
         $company=Companybranch::findOrFail($r->id);
-        $company->status=STATUS['deleted']['code'];
-
+        $company->branchStatus=STATUS['deleted']['code'];
         $company->save();
+
 
     }
 
-    // job
+    /*----------------------------- job-------------------------------*/
     public function manageAllJob()
     {
         $userId=Auth::user()->id;
@@ -381,7 +387,13 @@ class EmployerController extends Controller
     {
         $jobType=Jobtype::get();
         $companyId = Company::where('fkuserId', Auth::user()->id)->first()->companyId;
-        $companyBrach=Companybranch::select('id','name')->where('company_companyId',$companyId)->get();
+        $companyBrach=Companybranch::select('id','name')
+            ->where('company_companyId',$companyId)
+            ->where(function($query){
+                $query->where('company_branch.branchStatus','!=',STATUS['deleted']['code']);
+                $query->Where('company_branch.branchStatus','!=',STATUS['inactive']['code']);
+            })
+            ->get();
         return view('employer.newJobForm',compact('jobType','companyBrach'));
     }
     public function jobPostForm(Request $r)
@@ -395,7 +407,14 @@ class EmployerController extends Controller
         $jobId=$r->id;
         $jobType=Jobtype::get();
         $companyId = Company::where('fkuserId', Auth::user()->id)->first()->companyId;
-        $companyBrach=Companybranch::select('id','name')->where('company_companyId',$companyId)->get();
+        $companyBrach=Companybranch::select('id','name')
+            ->where('company_companyId',$companyId)
+            ->where(function($query){
+                $query->where('company_branch.branchStatus','!=',STATUS['deleted']['code']);
+                $query->Where('company_branch.branchStatus','!=',STATUS['inactive']['code']);
+            })
+//            ->where('company_branch.branchStatus','!=',STATUS['deleted']['code'])
+            ->get();
         $jobInfo=job::findOrFail($jobId);
 
         $post=DB::table('post')->where('fkjobId',$jobId)->first();
@@ -491,6 +510,127 @@ class EmployerController extends Controller
 
         Session::flash('success_msg', 'Job Added Successfully!');
         return redirect()->route('employer.manageAllJob');
+
+    }
+
+    /* manage Application */
+    public function manageAllApplication(Request $r){
+
+        $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+        $companyId = Company::where('fkuserId', $userId)->first()->companyId;
+
+        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
+            ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
+            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
+            ->where('company_companyId',$companyId);
+
+
+
+
+        $allApplication=$allApplication->paginate(1);
+
+
+
+        if ($r->ajax()) {
+
+            return view('employer.manageAllApplicationWithData',compact('allApplication'));
+        }
+
+
+        return view('employer.manageAllApplication',compact('employerInfo'));
+
+
+    }
+    public function manageAllApplicationwithData(Request $r){
+
+        $userId=Auth::user()->id;
+
+//        $employerInfo = Company::where('fkuserId', $userId)->first();
+        $companyId = Company::where('fkuserId', $userId)->first()->companyId;
+
+        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
+            ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
+            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
+            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+            ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
+            ->where('company_companyId',$companyId);
+
+
+
+
+        $allApplication=$allApplication->paginate(1);
+
+
+        return view('employer.manageAllApplicationWithData',compact('allApplication'));
+
+
+    }
+    public function manageStartJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['inProgress']['code'];
+        $job->request_status=JOB_REQUEST_STATUS['inProgress']['code'];
+
+        $job->save();
+
+        $report=DB::table('hirereport')->where('fkrequestJobId',$r->id)->orderBy('hireReportId','desc')->limit(1)->update(['startTime' => now()]);
+
+        Session::flash('success_msg', 'Job Started Successfully!');
+
+
+
+    }
+    public function manageCompleteJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['complete']['code'];
+
+        $job->save();
+
+        $report=DB::table('hirereport')->where('fkrequestJobId',$r->id)->orderBy('hireReportId','desc')->limit(1)->update(['endTime' => now()]);
+
+        Session::flash('success_msg', 'Job Started Successfully!');
+
+
+
+    }
+    public function manageApproveJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['approve']['code'];
+
+        $job->save();
+
+        $report=new Hirereport();
+        $report->fkrequestJobId=$r->id;
+        $report->save();
+
+
+        Session::flash('success_msg', 'Job Approved Successfully!');
+
+
+
+    }
+    public function manageRejectJob(Request $r){
+
+        $job=Requestjob::findOrFail($r->id);
+
+        $job->request_status=JOB_REQUEST_STATUS['reject']['code'];
+
+        $job->save();
+
+        Session::flash('success_msg', 'Job Rejected Successfully!');
+
+
 
     }
 }
