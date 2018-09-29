@@ -66,7 +66,13 @@
 								<div class="job-post-wrapper">
 									<div class="job-post-top flex no-column no-wrap">
 										<div class="job-post-top-left">
-											<img src="images/{{$jobdetails->image}}" alt="company-logo" class="img-responsive">
+
+											@if($jobdetails->cimage != null)
+												<img style="width: 100px;height: 100px" src="{{url('public/companyImages/thumb/'.$jobdetails->cimage)}}" alt="company-icon" class="img-responsive">
+											@else
+												<img style="width: 100px;height: 100px" src="{{url('public/companyImages/dummy.jpg')}}" alt="company-icon" class="img-responsive">
+											@endif
+
 										</div> <!-- end .left-side-inner -->
 										<div class="job-post-top-right">
 											<h4 class="dark">{{$jobdetails->jobName}}</h4>
@@ -162,102 +168,11 @@
 
 							</div> <!-- end .left-side-top -->
 
-							<div class="right-side-bottom-wrapper">
-							
-						        <div class="bookmarked-jobs-list-wrapper on-listing-page on-job-detals-page">
-									<h3>Similar jobs </h3>
+							<div id="similarJobData" class="right-side-bottom-wrapper">
 
-									@foreach($similarjob as $sj)
-										<div class="bookmarked-jobs-list-wrapper on-listing-page">
-											<div class="bookmarked-job-wrapper">
-												<div class="bookmarked-job flex no-wrap no-column ">
-													<div class="job-company-icon">
-														<img src="images/company-logo-big01.jpg" alt="company-icon" class="img-responsive">
-													</div> <!-- end .job-icon -->
-													<div class="bookmarked-job-info">
-														<h4 class="dark flex no-column">{{$sj->jobName}}</h4>
-														<h5>{{$sj->cname}}</h5>
-														<p>{{$sj->pdes}}</p>
-														<div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">
-															<div class="bookmarked-job-meta flex items-center no-wrap no-column">
-																{{--<ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">--}}
-																{{--<li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>--}}
-																{{--<li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>--}}
-																{{--<li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>--}}
-																{{--</ul> <!-- end .candidates-avatar -->--}}
-																<h6 class="bookmarked-job-category">{{$sj->typeName}}</h6>
-																<h6 class="candidate-location">{{$sj->address}}</h6>
-																<h6 class="hourly-rate">{{$sj->job_amount}}<span>/Hour</span></h6>
-															</div> <!-- end .bookmarked-job-meta -->
-															<div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">
-																{{--<i class="ion-ios-heart wishlist-icon"></i>--}}
-																<a href="{{route('layouts.jobdetails', [ $sj->typeName, $sj->postid] )}}" class="button">more detail</a>
-															</div> <!-- end .right-side-bookmarked-job-meta -->
-														</div> <!-- end .bookmarked-job-info-bottom -->
-													</div> <!-- end .bookmarked-job-info -->
-												</div> <!-- end .bookmarked-job -->
-											</div> <!-- end .bookmarked-job-wrapper -->
 
-										</div> <!-- end .bookmarked-jobs-list-wrapper -->
-									@endforeach
-						        	{{--<div class="bookmarked-job-wrapper">--}}
-						        		{{--<div class="bookmarked-job flex no-wrap no-column ">--}}
-							        		{{--<div class="job-company-icon">--}}
-							        			{{--<img src="images/company-logo-big01.jpg" alt="company-icon" class="img-responsive">--}}
-							        		{{--</div> <!-- end .job-icon -->--}}
-							        		{{--<div class="bookmarked-job-info">--}}
-							        			{{--<h4 class="dark flex no-column">We're looking for a designer<a href="#0" class="button full-time">full time</a></h4>--}}
-							        			{{--<h5>Banana inc.</h5>--}}
-							        			{{--<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>--}}
-							        			{{--<div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">--}}
-							        				{{--<div class="bookmarked-job-meta flex items-center no-wrap no-column">--}}
-								        				{{--<ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">--}}
-							        						{{--<li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>--}}
-							        						{{--<li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>--}}
-							        						{{--<li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>--}}
-							        					{{--</ul> <!-- end .candidates-avatar -->--}}
-														{{--<h6 class="bookmarked-job-category">Art/Design</h6>--}}
-							        					{{--<h6 class="candidate-location">Cupertino,<span>CA, USA</span></h6>--}}
-														{{--<h6 class="hourly-rate">$45<span>/Hour</span></h6>--}}
-							        				{{--</div> <!-- end .bookmarked-job-meta -->--}}
-							        				{{--<div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">--}}
-							        					{{--<i class="ion-ios-heart wishlist-icon"></i>--}}
-							        					{{--<a href="#0" class="button">more detail</a>--}}
-							        				{{--</div> <!-- end .right-side-bookmarked-job-meta -->--}}
-							        			{{--</div> <!-- end .bookmarked-job-info-bottom -->--}}
-							        		{{--</div> <!-- end .bookmarked-job-info -->--}}
-						        		{{--</div> <!-- end .bookmarked-job -->--}}
-						        	{{--</div> <!-- end .bookmarked-job-wrapper --> --}}
 
-						        	{{--<div class="bookmarked-job-wrapper">--}}
-						        		{{--<div class="bookmarked-job flex no-wrap no-column ">--}}
-							        		{{--<div class="job-company-icon">--}}
-							        			{{--<img src="images/company-logo-big01.jpg" alt="company-icon" class="img-responsive">--}}
-							        		{{--</div> <!-- end .job-icon -->--}}
-							        		{{--<div class="bookmarked-job-info">--}}
-							        			{{--<h4 class="dark flex no-column">We need a web designer<a href="#0" class="button part-time">Part time</a></h4>--}}
-							        			{{--<h5>Banana inc.</h5>--}}
-							        			{{--<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>--}}
-							        			{{--<div class="bookmarked-job-info-bottom flex space-between items-center no-column no-wrap">--}}
-							        				{{--<div class="bookmarked-job-meta flex items-center no-wrap no-column">--}}
-								        				{{--<ul class="list-unstyled candidates-avatar flex items-center no-wrap no-column">--}}
-							        						{{--<li><img src="images/avatar02.jpg" alt="avatar" class="img-responsive"></li>--}}
-							        						{{--<li><img src="images/avatar03.jpg" alt="avatar" class="img-responsive"></li>--}}
-							        						{{--<li class="candidates-total-count"><img src="images/avatar04.jpg" alt="avatar" class="img-responsive"><span>54+</span></li>--}}
-							        					{{--</ul> <!-- end .candidates-avatar -->--}}
-														{{--<h6 class="bookmarked-job-category">Art/Design</h6>--}}
-							        					{{--<h6 class="candidate-location">Cupertino,<span>CA, USA</span></h6>--}}
-														{{--<h6 class="hourly-rate">$45<span>/Hour</span></h6>--}}
-							        				{{--</div> <!-- end .bookmarked-job-meta -->--}}
-							        				{{--<div class="right-side-bookmarked-job-meta flex items-center no-column no-wrap">--}}
-							        					{{--<i class="ion-ios-heart wishlist-icon"></i>--}}
-							        					{{--<a href="#0" class="button">more detail</a>--}}
-							        				{{--</div> <!-- end .right-side-bookmarked-job-meta -->--}}
-							        			{{--</div> <!-- end .bookmarked-job-info-bottom -->--}}
-							        		{{--</div> <!-- end .bookmarked-job-info -->--}}
-						        		{{--</div> <!-- end .bookmarked-job -->--}}
-						        	{{--</div> <!-- end .bookmarked-job-wrapper -->	--}}
-					        	</div> <!-- end .bookmarked-jobs-list-wrapper -->
+
 							</div> <!-- end .right-side-bottom-wrapper -->
 							</div> <!-- end .right-side-top-inner -->
 						</div> <!-- end .right-side-top -->
@@ -270,3 +185,84 @@
 		<!-- Footer -->
 
 	@endsection
+
+@section('foot-js')
+
+	<script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function allJobInfo() {
+
+
+            $.ajax({
+                type: 'POST',
+                url: "{{route('layouts.jobdetailsWithSimilarData')}}",
+                cache: false,
+                data: {_token:"{{csrf_token()}}",type:"{{$type}}",postId:"{{$postId}}"},
+                success: function (data) {
+                    $("#similarJobData").html(data);
+
+                }
+            });
+        }
+
+        // $(window).on('hashchange', function() {
+        //     if (window.location.hash) {
+        //         var page = window.location.hash.replace('#', '');
+        //         if (page == Number.NaN || page <= 0) {
+        //             return false;
+        //         }else{
+        //             getData(page);
+        //         }
+        //     }
+        // });
+
+        $(document).ready(function()
+        {
+             allJobInfo();
+
+
+            $(document).on('click', '.pagination a',function(event)
+            {
+                $('li').removeClass('active');
+                $(this).parent('li').addClass('active');
+                event.preventDefault();
+                var myurl = $(this).attr('href');
+                var page=$(this).attr('href').split('page=')[1];
+                getData(page);
+            });
+        });
+        function getData(page){
+            // var filterSkills=$("#filterSkill").tagsinput('items');
+            // var filterLocation=$("#filterLocation").tagsinput('items');
+            $.ajax(
+                {
+                    url: '?page=' + page,
+                    type: "get",
+                    data: {},
+                    datatype: "html",
+                    // beforeSend: function()
+                    // {
+                    //     you can show your loader
+                    // }
+                })
+                .done(function(data)
+                {
+                    $("#similarJobData").html(data);
+                    location.hash = page;
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                    alert('No response from server');
+                });
+        }
+	</script>
+
+
+
+@endsection
