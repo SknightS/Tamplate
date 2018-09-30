@@ -79,14 +79,14 @@ class JobController extends Controller
     }
 
 
-    public function jobdetails($typename, $postid){
+    public function jobdetails($typename,$postid,Request $r){
 
 
         if(Auth::check()){
 
             $candidateId=Candidate::where('fkuserId',Auth::user()->id)->first()->candidateId;
 
-            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as image ',
+            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
                 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
                 'requestjob.job_id as requestedJobId','requestjob.fkcandidateId as AppliedcandidateId')
                 ->leftJoin('job','job.id', 'post.fkjobId')
@@ -102,7 +102,7 @@ class JobController extends Controller
 
         }else{
             $candidateId=null;
-            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as image ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname')
+            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname')
                 ->leftJoin('job','job.id', 'post.fkjobId')
                 ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
                 ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
@@ -117,7 +117,7 @@ class JobController extends Controller
 //        return $jobdetails;
 
 
-        $similarjob  = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
+        $similarjob  = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
             ->leftJoin('job', 'job.id', 'post.fkjobId')
             ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
             ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
@@ -126,16 +126,43 @@ class JobController extends Controller
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
             ->where('typeName',$typename)
             ->where('post.id','!=',$postid)
-            ->get();
+            ->paginate(1);
 
+        if ($r->ajax()) {
 
+            return view('layouts.similar-job-details')
+                ->with('similarjob', $similarjob);
+        }
 
 
         return view('layouts.job-details')
 
             ->with('jobdetails', $jobdetails)
             ->with('similarjob', $similarjob)
+            ->with('type', $typename)
+            ->with('postId', $postid)
             ->with('candidate', $candidateId);
+
+    }
+    public function jobdetailsWithSimilarJobData(Request $r){
+
+
+        $similarjob  = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
+            ->leftJoin('job', 'job.id', 'post.fkjobId')
+            ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
+            ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
+            ->leftjoin('address','address.addressId','job.address_addressId')
+            ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
+            ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
+            ->where('typeName',$r->type)
+            ->where('post.id','!=',$r->postId)
+            ->paginate(1);
+
+
+
+
+        return view('layouts.similar-job-details')
+            ->with('similarjob', $similarjob);
 
     }
 }
