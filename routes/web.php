@@ -48,6 +48,13 @@ Route::get('/showpost', 'Test@showpost')->name('showpost');
 Auth::routes();
 
 
+//job
+Route::get('/job-listening', 'JobController@index')->name('jobListening');
+Route::post('/job-listening-All', 'JobController@showAllJobWithPerameter')->name('jobListening.data');
+
+Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
+
+
 //employee
 
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
@@ -134,11 +141,7 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-//job
-Route::get('/job-listening', 'JobController@index')->name('jobListening');
-Route::post('/job-listening-All', 'JobController@showAllJobWithPerameter')->name('jobListening.data');
 
-Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
 
 
 //Employer

@@ -40,7 +40,7 @@ class HomeController extends Controller
             ->groupBy('fkjobTypeId')
             ->get();
 
-        $latestJobs = Post::select('*','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname','deadline')
+        $latestJobs = Post::select('*','post.id as postId','jobName', 'company_branch.name as cname', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname','deadline')
             ->leftJoin('job', 'job.id', 'post.fkjobId')
             ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
             ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')

@@ -86,7 +86,10 @@
                                 </div> <!-- end .cell-label -->
                                 <img src="{{url('public/images/company-logo01.jpg')}}" alt="company-logo" class="img-responsive">
                                 <div class="content">
-                                    <h4><a href="job-details.php">{{$lj->jobName}}</a></h4>
+                                    <h4>
+                                        {{--<a href="job-details.php">{{$lj->jobName}}</a>--}}
+                                        <a href="{{route('layouts.jobdetails', [$lj->typeName,$lj->postId] )}}">{{$lj->jobName}}</a>
+                                    </h4>
                                     <p class="small">{{$lj->cname}}</p>
                                 </div> <!-- end .content -->
                             </div> <!-- end .job-title-cell -->
