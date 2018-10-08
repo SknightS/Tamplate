@@ -56,6 +56,7 @@ Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name(
 
 
 Route::post('/job-detailsWithSimilarJob', 'JobController@jobdetailsWithSimilarJobData')->name('layouts.jobdetailsWithSimilarData');
+Route::post('Home/Latest-Job', 'HomeController@showAllLatestJobWithPerameter')->name('homeLatestJobs');
 
 
 //employee
