@@ -55,6 +55,9 @@ Route::post('/job-listening-All', 'JobController@showAllJobWithPerameter')->name
 Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
 
 
+Route::post('/job-detailsWithSimilarJob', 'JobController@jobdetailsWithSimilarJobData')->name('layouts.jobdetailsWithSimilarData');
+
+
 //employee
 
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
@@ -140,6 +143,9 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 
 //Route::get('/home', 'HomeController@index')->name('home');
+
+
+
 
 
 

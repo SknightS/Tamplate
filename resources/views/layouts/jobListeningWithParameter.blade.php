@@ -69,14 +69,16 @@
     @if($alljob->currentPage()!= 1)
         <a data-id="{{$alljob->previousPageUrl()}}" href="{{$alljob->previousPageUrl()}}" class="button pagiNextPrevBtn"><i class="ion-ios-arrow-left"></i>Prev</a>
     @endif
+
     <ul class="list-unstyled flex no-column items-center pagination">
         @for($i=$alljob->perPage(); $i <= $alljob->total();$i=($i+$alljob->perPage()))
-            <li ><a href="{{$alljob->url($i)}}">{{$i}}</a></li>
+            <li  ><a href="{{$alljob->url($i)}}">{{$i}}</a></li>
         @endfor
     </ul>
     @if($alljob->lastPage()!=$alljob->currentPage())
         <a data-id="{{$alljob->nextPageUrl()}}"href="{{$alljob->nextPageUrl()}}"  class="button pagiNextPrevBtn">Next<i class="ion-ios-arrow-right"></i></a>
     @endif
+
 </div>
 
 <script>
