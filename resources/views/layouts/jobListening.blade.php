@@ -1,43 +1,7 @@
 @extends('main')
 @section('head')
-    {{--<style>--}}
-        {{--.slidecontainer {--}}
-            {{--width: 100%;--}}
-        {{--}--}}
-        {{--.slider {--}}
-            {{---webkit-appearance: none;--}}
-            {{--width: 100%;--}}
-            {{--height: 15px;--}}
-            {{--border-radius: 5px;--}}
-            {{--/*background: #d3d3d3;*/--}}
-            {{--outline: none;--}}
-            {{--opacity: 0.7;--}}
-            {{---webkit-transition: .2s;--}}
-            {{--transition: opacity .2s;--}}
-        {{--}--}}
-        {{--.slider::-webkit-slider-thumb {--}}
-            {{---webkit-appearance: none;--}}
-            {{--appearance: none;--}}
-            {{--width: 25px;--}}
-            {{--height: 25px;--}}
-            {{--border-radius: 50%;--}}
-            {{--background: #4CAF50;--}}
-            {{--cursor: pointer;--}}
-        {{--}--}}
-        {{--.slider::-moz-range-thumb {--}}
-            {{--width: 25px;--}}
-            {{--height: 25px;--}}
-            {{--border-radius: 50%;--}}
-            {{--background: #4CAF50;--}}
-            {{--cursor: pointer;--}}
-        {{--}--}}
 
-        {{--.ul{--}}
-            {{--list-unstyled: flex no-column items-center pagination--}}
-        {{--}--}}
-
-    {{--</style>--}}
-    @endsection
+@endsection
 @section('content')
 <!-- Breadcrumb Bar -->
 <div class="section breadcrumb-bar solid-blue-bg">
@@ -96,10 +60,6 @@
 
                 </div>
 
-
-
-
-
             </div> <!-- end .center-content -->
 
             <div class="right-side">
@@ -109,7 +69,7 @@
                     <ul class="job-categories list-unstyled">
                         @foreach($jobtypename as $jpn)
                         <li class="job-status checkbox flex space-between items-center no-column no-wrap">
-                            <input id="{{$jpn->id}}" type="checkbox">
+                            <input id="{{$jpn->id}}" name="jobCategory" type="checkbox">
                             <label for="{{$jpn->id}}">{{$jpn->typeName}}
                                 @foreach($jobcountt as $jc)
                                     @if($jc->fkjobTypeId == $jpn->id)
@@ -227,33 +187,24 @@
         });
 
         function allJobInfo() {
-            // var filterSkills=$("#filterSkill").tagsinput('items');
-            // var filterLocation=$("#filterLocation").tagsinput('items');
-            $.ajax({
-                type: 'POST',
-                url: "{!! route('jobListening.data') !!}",
-                cache: false,
-                data: {_token:"{{csrf_token()}}"},
-                success: function (data) {
-                    $("#allJobInfoData").html(data);
+            var jobType=selecteds;
+                $.ajax({
+                    type: 'POST',
+                    url: "{!! route('jobListening.data') !!}",
+                    cache: false,
+                    data: {_token: "{{csrf_token()}}",typeId:jobType},
+                    success: function (data) {
+                        $("#allJobInfoData").html(data);
 
-                }
-            });
+                    }
+                });
+
+
         }
-
-               // $(window).on('hashchange', function() {
-               //     if (window.location.hash) {
-               //         var page = window.location.hash.replace('#', '');
-               //         if (page == Number.NaN || page <= 0) {
-               //             return false;
-               //         }else{
-               //             getData(page);
-               //         }
-               //     }
-               // });
 
         $(document).ready(function()
         {
+            $(':checkbox:checked').prop('checked',false);
             allJobInfo();
             $(document).on('click', '.pagination a',function(event)
             {
@@ -266,13 +217,12 @@
             });
         });
         function getData(page){
-            // var filterSkills=$("#filterSkill").tagsinput('items');
-            // var filterLocation=$("#filterLocation").tagsinput('items');
+            var jobType=selecteds;
             $.ajax(
                 {
                     url: '?page=' + page,
                     type: "get",
-                    data: {},
+                    data: {typeId:jobType},
                     datatype: "html",
                     // beforeSend: function()
                     // {
@@ -289,6 +239,20 @@
                     alert('No response from server');
                 });
         }
+        selecteds=[];
+
+        $( "input[name=jobCategory]" ).click(function() {
+            btn=$(this).attr('id');
+
+            var index = selecteds.indexOf(btn.toString());
+            if (index == -1){
+                selecteds.push(btn);
+            }else {
+                selecteds.splice(index, 1);
+            }
+            allJobInfo();
+        });
+
     </script>
 
 
