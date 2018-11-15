@@ -65,7 +65,7 @@
             <div class="right-side">
 
                 <div class="job-categories-widget jobs-widget">
-                    <h6>Categories</h6>
+                    <h6>Job Type</h6>
                     <ul class="job-categories list-unstyled">
                         @foreach($jobtypename as $jpn)
                         <li class="job-status checkbox flex space-between items-center no-column no-wrap">
