@@ -118,23 +118,43 @@ class JobController extends Controller
     public function jobdetails($typename,$postid,Request $r){
 
 
+
+
         if(Auth::check()){
 
-            $candidateId=Candidate::where('fkuserId',Auth::user()->id)->first()->candidateId;
+            if (auth()->user()->fkuserTypeId=='emp'){
 
-            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
-                'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
-                'requestjob.job_id as requestedJobId','requestjob.fkcandidateId as AppliedcandidateId')
-                ->leftJoin('job','job.id', 'post.fkjobId')
-                ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
-                ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
-                ->leftjoin('address','address.addressId','job.address_addressId')
-                ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
-                ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
-                ->leftjoin('requestjob','requestjob.job_id','job.id')
-                ->where ('post.id', $postid)
+                $candidateId=Candidate::where('fkuserId',Auth::user()->id)->first()->candidateId;
+
+                $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
+                    'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
+                    'requestjob.job_id as requestedJobId','requestjob.fkcandidateId as AppliedcandidateId')
+                    ->leftJoin('job','job.id', 'post.fkjobId')
+                    ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
+                    ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
+                    ->leftjoin('address','address.addressId','job.address_addressId')
+                    ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
+                    ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
+                    ->leftjoin('requestjob','requestjob.job_id','job.id')
+                    ->where ('post.id', $postid)
 //                ->where ('requestjob.fkcandidateId',Auth::user()->id)
-                ->first();
+                    ->first();
+
+            }else{
+                $candidateId=null;
+                $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname')
+                    ->leftJoin('job','job.id', 'post.fkjobId')
+                    ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
+                    ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
+                    ->leftjoin('address','address.addressId','job.address_addressId')
+                    ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
+                    ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
+                    ->where ('post.id', $postid)
+                    ->first();
+
+            }
+
+
 
         }else{
             $candidateId=null;
