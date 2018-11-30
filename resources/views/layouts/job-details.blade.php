@@ -150,13 +150,15 @@
 														<button type="submit" class="button">Submit your resume</button>
 													</form>
 
+													@else
+														<button type="submit" disabled class="button btn-danger">Allready applied</button>
+													@endif
+
 
 											@else
 												<button type="submit" disabled class="button btn-danger">Please Login First</button>
 											@endif
-												@else
-													<button type="submit" disabled class="button btn-danger">Allready applied</button>
-												@endif
+
 
 
 										@endif

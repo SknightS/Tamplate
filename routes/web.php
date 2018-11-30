@@ -48,6 +48,17 @@ Route::get('/showpost', 'Test@showpost')->name('showpost');
 Auth::routes();
 
 
+//job
+Route::get('/job-listening', 'JobController@index')->name('jobListening');
+Route::post('/job-listening-All', 'JobController@showAllJobWithPerameter')->name('jobListening.data');
+
+Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
+
+
+Route::post('/job-detailsWithSimilarJob', 'JobController@jobdetailsWithSimilarJobData')->name('layouts.jobdetailsWithSimilarData');
+Route::post('Home/Latest-Job', 'HomeController@showAllLatestJobWithPerameter')->name('homeLatestJobs');
+
+
 //employee
 
 Route::get('/employee-dashboard', 'Employee@showResume')->name('employee');
@@ -134,12 +145,10 @@ Route::post('/Account-Active', 'Auth\RegisterController@AccountActive')->name('a
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-//job
-Route::get('/job-listening', 'JobController@index')->name('jobListening');
-Route::post('/job-listening-All', 'JobController@showAllJobWithPerameter')->name('jobListening.data');
 
-Route::get('/job-details/{jobType}/{postid}', 'JobController@jobdetails')->name('layouts.jobdetails');
-Route::post('/job-detailsWithSimilarJob', 'JobController@jobdetailsWithSimilarJobData')->name('layouts.jobdetailsWithSimilarData');
+
+
+
 
 
 //Employer
