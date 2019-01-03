@@ -40,11 +40,11 @@
     <div class="form-group">
         <div class="col-md-6">
             <label class="col-md-2">Vacancy<span style="color: red">*</span></label>
-            <input type="number" id="vacancy" placeholder="Vacancy" name="vacancy"  class="form-control col-md-4" required />
+            <input type="number" id="vacancy" placeholder="Vacancy" name="vacancy" min="1" class="form-control col-md-4" required />
         </div>
         <div class="col-md-6">
             <label class="col-md-4">job Amount<span style="color: red">*</span></label>
-            <input type="number" id="jobAmount" placeholder="Amount" name="jobAmount"  class="form-control col-md-4" required />
+            <input type="number" id="jobAmount" placeholder="Amount" name="jobAmount" min="1" class="form-control col-md-4" required />
         </div>
     </div>
 
@@ -72,7 +72,7 @@
 
     <div id="postDesc" class="form-group">
         <div class="col-md-12">
-            <label >Post Description</label>
+            <label >Post Description<span style="color: red">*</span></label>
             <textarea class="form-control" id="postDescription"name="postDescription" rows="3"cols="5" placeholder="Post Description"></textarea>
 
         </div>
@@ -114,6 +114,8 @@
 
         $(".dateTime").datetimepicker({
             format: "YYYY-MM-DD",
+            useCurrent: false,
+            minDate: moment(),
 
         });
 

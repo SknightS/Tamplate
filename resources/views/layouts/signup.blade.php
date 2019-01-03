@@ -43,7 +43,9 @@
                         <select id="userType" name="userType" required class="form-control">
                             <option value="">Select</option>
                             @foreach(UserType as $type)
+                                @if($type['code']=='emp' || $type['code']=='empr' )
                                 <option value="{{$type['code']}}">{{$type['name']}}</option>
+                                @endif
                             @endforeach
                         </select>
                         @if ($errors->has('userType'))

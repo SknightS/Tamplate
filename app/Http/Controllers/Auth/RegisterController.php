@@ -147,6 +147,7 @@ class RegisterController extends Controller
             $company=new Company();
 
             $company->cp_email=$ActiveInfo->email;
+            $company->companyLoginId=$ActiveInfo->email;
             $company->contact_person_name=$r->name;
             $company->fkuserId=$ActiveInfo->id;
 
