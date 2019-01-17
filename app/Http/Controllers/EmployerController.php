@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Address;
 use App\Hirereport;
+use App\Jobtime;
 use App\Requestjob;
 use App\Companybranch;
 use App\job;
 use App\jobtype;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Image;
 
@@ -416,7 +419,7 @@ class EmployerController extends Controller
             })
 //            ->where('company_branch.branchStatus','!=',STATUS['deleted']['code'])
             ->get();
-        $jobInfo=job::findOrFail($jobId);
+        $jobInfo=job::leftJoin('jobtime', 'jobtime.fkjobId', '=', 'job.id')->findOrFail($jobId);
 
         $post=DB::table('post')->where('fkjobId',$jobId)->first();
 
@@ -452,6 +455,14 @@ class EmployerController extends Controller
         $job->status=$r->jobStatus;
         $job->createDate=date('Y-m-d');
         $job->save();
+
+        $jobTime=new Jobtime();
+        $jobTime->startTime=$r->startTime;
+        $jobTime->endTime=$r->endTime;
+        $jobTime->fkjobId=$job->id;
+        $jobTime->save();
+
+
 
 
 
@@ -533,7 +544,7 @@ class EmployerController extends Controller
 
 
 
-        $allApplication=$allApplication->paginate(1);
+        $allApplication=$allApplication->paginate(10);
 
 
 
@@ -565,7 +576,7 @@ class EmployerController extends Controller
 
 
 
-        $allApplication=$allApplication->paginate(1);
+        $allApplication=$allApplication->paginate(10);
 
 
         return view('employer.manageAllApplicationWithData',compact('allApplication'));
@@ -587,6 +598,26 @@ class EmployerController extends Controller
 
 
 
+    }
+    public function showChangepassword() // show change password page
+    {
+        $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+        return view('employer.changepassword',compact('employerInfo'));
+    }
+    public function changePassword(Request $r){
+        $old=$r->oldPass;
+        $new=$r->password;
+        $user=User::findOrFail(Auth::user()->id);
+        if (Hash::check($old, $user->password)) {
+            $user->password=Hash::make($r->password);
+            $user->save();
+            Session::flash('success_msg', 'Password Changed Successfully!');
+            return back();
+        }
+        Session::flash('success_msg', 'Password Did not Match!');
+        return back();
     }
     public function manageCompleteJob(Request $r){
 

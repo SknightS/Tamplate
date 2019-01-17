@@ -51,6 +51,17 @@
 
     <div class="form-group">
         <div class="col-md-6">
+            <label class="col-md-4">Start Time<span style="color: red">*</span></label>
+            <input type="text" id="startTime" name="startTime" value="{{$jobInfo->startTime}}" class="form-control col-md-4 Time" />
+        </div>
+        <div class="col-md-6">
+            <label class="col-md-4">End Time</label>
+            <input type="text" id="endTime" name="endTime" value="{{$jobInfo->endTime}}" class="form-control col-md-4 Time"  />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6">
             <label class="col-md-4">job Status<span style="color: red">*</span></label>
             <select class="form-control col-md-4" id="jobStatus" name="jobStatus" onchange="checkPost()" required>
                 <option selected value="">Select status</option>

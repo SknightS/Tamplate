@@ -47,6 +47,9 @@ Route::get('/showpost', 'Test@showpost')->name('showpost');
 
 Auth::routes();
 
+Route::post('Emp-password','Employee@changePassword')->name('employee.password.change');
+Route::post('Employer-password','EmployerController@changePassword')->name('employer.password.change');
+
 
 //job
 Route::get('/job-listening', 'JobController@index')->name('jobListening');
@@ -111,6 +114,8 @@ Route::get('/Resume', 'Employee@showResume')->name('resume');
 
 Route::get('/JobMaintain', 'Employee@showJobApplied')->name('jobapplied');
 Route::get('/ChangePassword', 'Employee@showChangepassword')->name('changepassword');
+
+Route::get('/Employer-ChangePassword', 'EmployerController@showChangepassword')->name('employer.changepassword');
 
 Route::get('/getskilljson', 'CandidateController@getskilljson')->name('getskilljson');
 

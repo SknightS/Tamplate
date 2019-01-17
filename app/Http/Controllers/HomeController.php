@@ -47,7 +47,7 @@ class HomeController extends Controller
             ->leftjoin('address','address.addressId','job.address_addressId')
             ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
-            ->paginate(1);
+            ->paginate(10);
 
         if ($r->ajax()) {
 
@@ -74,7 +74,7 @@ class HomeController extends Controller
             ->leftjoin('address','address.addressId','job.address_addressId')
             ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
-            ->paginate(1);
+            ->paginate(10);
 
 
 
@@ -82,4 +82,6 @@ class HomeController extends Controller
                 ->with('latestjobs', $latestJobs);
 
     }
+
+
 }

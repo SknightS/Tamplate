@@ -56,7 +56,7 @@ class JobController extends Controller
 
                 $alljob=$alljob->whereIn('job.fkjobTypeId',$jobfilterType);
             }
-        $alljob=$alljob->paginate(1);
+        $alljob=$alljob->paginate(10);
 
         $jobpost= Post::select('fkjobTypeId',DB::raw('COUNT(fkjobId) as total_post'))
             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
@@ -107,7 +107,7 @@ class JobController extends Controller
 
             $alljob=$alljob->whereIn('job.fkjobTypeId',$jobfilterType);
         }
-        $alljob=$alljob->paginate(1);
+        $alljob=$alljob->paginate(10);
 
         return view('layouts.jobListeningWithParameter')
 
@@ -182,7 +182,7 @@ class JobController extends Controller
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
             ->where('typeName',$typename)
             ->where('post.id','!=',$postid)
-            ->paginate(1);
+            ->paginate(10);
 
         if ($r->ajax()) {
 
@@ -212,7 +212,7 @@ class JobController extends Controller
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
             ->where('typeName',$r->type)
             ->where('post.id','!=',$r->postId)
-            ->paginate(1);
+            ->paginate(10);
 
         return view('layouts.similar-job-details')
             ->with('similarjob', $similarjob);
