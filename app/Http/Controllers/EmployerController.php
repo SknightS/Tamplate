@@ -361,6 +361,7 @@ class EmployerController extends Controller
             ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
             ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
             ->where('job.status','!=',JOB_STATUS['delete']['code'])
+            ->where('company_branch.company_companyId','=',$employerInfo->companyId)
             ->get();
 
         return view('employer/manage-All-Job',compact('employerInfo','employerAllJobs'));

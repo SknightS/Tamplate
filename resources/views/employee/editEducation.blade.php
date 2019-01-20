@@ -3,16 +3,16 @@
     <div class="form-group">
         {{csrf_field()}}
         <div class="col-md-12">
-            <label>Name of Institution</label>
-            <input type="text" id="schoolName" name="schoolName" placeholder="Name of Institution" value="{{$education->schoolName}}" class="form-control" required />
+            <label>Name of Institution<span style="color: red">*</span></label>
+            <input type="text" id="schoolName" name="schoolName" maxlength="100"placeholder="Name of Institution" value="{{$education->schoolName}}" class="form-control" required />
         </div>
         <div class="col-md-12">
-            <label>Degree Name</label>
-            <input type="text" id="degreeName" name="degreeName" placeholder="Degree Name" value="{{$education->degreeName}}" class="form-control col-md-4" required />
+            <label>Degree Name<span style="color: red">*</span></label>
+            <input type="text" id="degreeName" name="degreeName" maxlength="100" placeholder="Degree Name" value="{{$education->degreeName}}" class="form-control col-md-4" required />
         </div>
         <div class="col-md-12">
             <div class="col-md-6">
-                <label>Start Date</label>
+                <label>Start Date<span style="color: red">*</span></label>
                 <input type="text" id="startDate" name="startDate" placeholder="Start From" value="{{$education->startDate}}" class="form-control col-md-4 date" required />
             </div>
             <div class="col-md-6">
@@ -44,7 +44,9 @@
 
         });
         $( "#endDate" ).datetimepicker({
-            format: "Y"
+            format: "Y",
+            useCurrent: false,
+            minDate: $( "#startDate" ).val(),
         });
 
         if($('#currentlyRunning').is(":checked")) {

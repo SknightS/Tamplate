@@ -256,18 +256,40 @@ class Employee extends Controller
     public function insertCandidateEducation($candidate,Request $r) //employee education insert
     {
 
+       // return $r;
+
 
 
         $education=new Education();
 
         $education->schoolName=$r->schoolName;
         $education->degreeName=$r->degreeName;
-        $education->startDate=date('Y',strtotime($r->startDate));
-        if ($r->currentlyRunning){
-            $education->currentlyRunning=$r->currentlyRunning;
+        $education->startDate=$r->startDate;
+        if ($r->endDate != null){
+
+            if ($r->currentlyRunning){
+                $education->currentlyRunning=$r->currentlyRunning;
+                $education->endDate=null;
+            }else{
+                $education->currentlyRunning=0;
+                $education->endDate=$r->endDate;
+            }
         }else{
-            $education->endDate=date('Y',strtotime($r->endDate));
+            if ($r->currentlyRunning){
+                $education->currentlyRunning=$r->currentlyRunning;
+                $education->endDate=null;
+            }else{
+                $education->currentlyRunning=0;
+                $education->endDate=$r->endDate;
+            }
+
+
         }
+//        if ($r->currentlyRunning){
+//            $education->currentlyRunning=$r->currentlyRunning;
+//        }else{
+//            $education->endDate=date('Y',strtotime($r->endDate));
+//        }
         $education->fkcandidateId=$candidate;
 
         $education->save();
@@ -296,18 +318,41 @@ class Employee extends Controller
     public function CandidateEducationUpdate($educationId,Request $r) //employee selected education update
     {
 
+
         $EducationInfo = Education::findOrFail($educationId);
 
         $EducationInfo->schoolName=$r->schoolName;
         $EducationInfo->degreeName=$r->degreeName;
         $EducationInfo->startDate=date('Y',strtotime($r->startDate));
-        if ($r->currentlyRunning){
-            $EducationInfo->currentlyRunning=$r->currentlyRunning;
-            $EducationInfo->endDate=null;
+
+        if ($r->endDate != null){
+
+            if ($r->currentlyRunning){
+                $EducationInfo->currentlyRunning=$r->currentlyRunning;
+                $EducationInfo->endDate=null;
+            }else{
+                $EducationInfo->currentlyRunning=0;
+                $EducationInfo->endDate=$r->endDate;
+            }
         }else{
-            $EducationInfo->endDate=date('Y',strtotime($r->endDate));
-            $EducationInfo->currentlyRunning='0';
+            if ($r->currentlyRunning){
+                $EducationInfo->currentlyRunning=$r->currentlyRunning;
+                $EducationInfo->endDate=null;
+            }else{
+                $EducationInfo->currentlyRunning=0;
+                $EducationInfo->endDate=$r->endDate;
+            }
+
+
         }
+
+//        if ($r->currentlyRunning){
+//            $EducationInfo->currentlyRunning=$r->currentlyRunning;
+//            $EducationInfo->endDate=null;
+//        }else{
+//            $EducationInfo->endDate=date('Y',strtotime($r->endDate));
+//            $EducationInfo->currentlyRunning='0';
+//        }
 
         $EducationInfo->save();
 

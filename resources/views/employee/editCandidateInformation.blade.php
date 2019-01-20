@@ -150,68 +150,68 @@
         });
     }
 
-    $(document).ready(function(){
-        var counter = 2;
+    {{--$(document).ready(function(){--}}
+        {{--var counter = 2;--}}
 
-        $("#add").click(function () {
-            var i='{{$count}}';
-            if(counter == '2')
-            {
-                var name=document.getElementById("SocialName"+(i-1)).value;
-                if(name==""){alert("Please Type a SocialName");
-                    return false;
-                }
+        {{--$("#add").click(function () {--}}
+            {{--var i='{{$count}}';--}}
+            {{--if(counter == '2')--}}
+            {{--{--}}
+                {{--var name=document.getElementById("SocialName"+(i-1)).value;--}}
+                {{--if(name==""){alert("Please Type a SocialName");--}}
+                    {{--return false;--}}
+                {{--}--}}
 
-            }
-            else{
+            {{--}--}}
+            {{--else{--}}
 
-                var name=document.getElementById("SocialName"+(counter-1)).value;
-                if(name=="") {
-                    alert("Please Type a SocialName");
-                    return false;
-                }
+                {{--var name=document.getElementById("SocialName"+(counter-1)).value;--}}
+                {{--if(name=="") {--}}
+                    {{--alert("Please Type a SocialName");--}}
+                    {{--return false;--}}
+                {{--}--}}
 
 
-            }
-            var newTextBoxDiv = $(document.createElement('div'))
-                .attr("id",'TextBoxDiv' + counter);
-            newTextBoxDiv.after().html(
-            '<div  class="form-group">'+
-                '<div class="col-md-6">'+
-                '<label class="col-md-2">name#'+counter+'<span style="color: red">*</span></label>'+
-            '<select id="SocialName'+counter+'" name="SocialName[]" class="form-control col-md-4" required>'+
-            '<option value="">Select Social Media</option>'+
-            @foreach($allSocialMedia as $media)
-            '<option value="{{$media->id}}">{{$media->name}}</option>'+
-            @endforeach
-            '</select>'+
-            '</div>'+
-            '<div class="col-md-6">'+
-                '<label class="col-md-2">Link<span style="color: red">*</span></label>'+
-               ' <input type="text" id="SocialLink" name="SocialLink" placeholder="Candidate Social Id Link"  class="form-control col-md-4" required />'+
-            '</div>'+
+            {{--}--}}
+            {{--var newTextBoxDiv = $(document.createElement('div'))--}}
+                {{--.attr("id",'TextBoxDiv' + counter);--}}
+            {{--newTextBoxDiv.after().html(--}}
+            {{--'<div  class="form-group">'+--}}
+                {{--'<div class="col-md-6">'+--}}
+                {{--'<label class="col-md-2">name#'+counter+'<span style="color: red">*</span></label>'+--}}
+            {{--'<select id="SocialName'+counter+'" name="SocialName[]" class="form-control col-md-4" required>'+--}}
+            {{--'<option value="">Select Social Media</option>'+--}}
+            {{--@foreach($allSocialMedia as $media)--}}
+            {{--'<option value="{{$media->id}}">{{$media->name}}</option>'+--}}
+            {{--@endforeach--}}
+            {{--'</select>'+--}}
+            {{--'</div>'+--}}
+            {{--'<div class="col-md-6">'+--}}
+                {{--'<label class="col-md-2">Link<span style="color: red">*</span></label>'+--}}
+               {{--' <input type="text" id="SocialLink" name="SocialLink" placeholder="Candidate Social Id Link"  class="form-control col-md-4" required />'+--}}
+            {{--'</div>'+--}}
 
-            '</div>'+
-                '</div>'+
+            {{--'</div>'+--}}
+                {{--'</div>'+--}}
 
-                '<br>'
-            );
-            newTextBoxDiv.appendTo("#socialMedia");
-             counter++;
+                {{--'<br>'--}}
+            {{--);--}}
+            {{--newTextBoxDiv.appendTo("#socialMedia");--}}
+             {{--counter++;--}}
 
-        });
-        $("#remove").click(function () {
-            if(counter==2){
+        {{--});--}}
+        {{--$("#remove").click(function () {--}}
+            {{--if(counter==2){--}}
 
-                alert("No more socialMedia to remove");
+                {{--alert("No more socialMedia to remove");--}}
 
-                return false;
-            }
+                {{--return false;--}}
+            {{--}--}}
 
-            counter--;
-            $("#TextBoxDiv" + counter).remove();
-        });
-    });
+            {{--counter--;--}}
+            {{--$("#TextBoxDiv" + counter).remove();--}}
+        {{--});--}}
+    {{--});--}}
 </script>
 
 

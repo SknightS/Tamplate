@@ -42,9 +42,9 @@
     {{csrf_field()}}
 
         <div class="col-md-12">
-        <label>Skill Name</label>
+        <label>Skill Name<span style="color: red">*</span></label>
 
-            <input type="text" id="skillName" name="skillName[]" class="form-control" required />
+            <input type="text" id="skillName" name="skillName[]" maxlength="50" class="form-control" required />
             <?php $test=array();foreach($skills as $skill){?>
 
 
@@ -62,9 +62,9 @@
             </div>
     <div class="col-md-12">
 
-        <label>Percentage of Skill (out of 100)</label>
+        <label>Percentage of Skill (out of 100)<span style="color: red">*</span></label>
         <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="01" class="slider" id="myRange">
+            <input type="range" min="1" max="100" value="00" class="slider" id="myRange">
             <p>Value: <span id="demo"></span> %</p>
             <input type="hidden" id="skillPercentage" name="skillPercentage[]" class="form-control" required />
         </div>
