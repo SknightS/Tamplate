@@ -4,7 +4,7 @@
         {{csrf_field()}}
 
         <div class="col-md-12">
-            <label>Day Name</label>
+            <label>Day Name<span style="color: red">*</span></label>
 
             <select id="dayName" name="dayName" class="form-control" required>
 
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-12">
             <div class="col-md-6">
-                <label>Start Date</label>
+                <label>Start Date<span style="color: red">*</span></label>
                 <input type="text" id="startTime" name="startTime" value="{{$Time->startTime}}" placeholder="Start From" class="form-control col-md-4 time" required />
             </div>
             <div class="col-md-6">
@@ -50,6 +50,7 @@
             format: 'hh:mm A'
 
         });
+
         });
 
 </script>
