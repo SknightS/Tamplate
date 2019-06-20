@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Candidate;
 use App\Requestjob;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +57,9 @@ class JobController extends Controller
 
                 $alljob=$alljob->whereIn('job.fkjobTypeId',$jobfilterType);
             }
-        $alljob=$alljob->paginate(10);
+            $alljob=$alljob->where('job.deadline','>=',Carbon::today()->format("Y-m-d"));
+            $alljob=$alljob->orderBy('post.created_at','DESC');
+            $alljob=$alljob->paginate(10);
 
         $jobpost= Post::select('fkjobTypeId',DB::raw('COUNT(fkjobId) as total_post'))
             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
@@ -107,6 +110,8 @@ class JobController extends Controller
 
             $alljob=$alljob->whereIn('job.fkjobTypeId',$jobfilterType);
         }
+//        $alljob=$alljob->where('job.deadline','>=',Carbon::today()->format("Y-m-d"));
+        $alljob=$alljob->orderBy('post.created_at','DESC');
         $alljob=$alljob->paginate(10);
 
         return view('layouts.jobListeningWithParameter')

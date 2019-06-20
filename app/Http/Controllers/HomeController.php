@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Post;
 use App\Job;
 use App\Jobtype;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -18,6 +20,7 @@ class HomeController extends Controller
     public function __construct()
     {
         //$this->middleware('auth');
+
     }
 
     /**
@@ -28,9 +31,11 @@ class HomeController extends Controller
     public function index(Request $r)
     {
 
+
+
        // $leasetpost=(new Post())->leasetpost();
 
-       // return $leasetpost;
+
 
         $jobtype = Jobtype::select('id', 'typeName', 'image')
             ->get();
@@ -47,7 +52,10 @@ class HomeController extends Controller
             ->leftjoin('address','address.addressId','job.address_addressId')
             ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
-            ->paginate(10);
+            ->where('job.deadline','>=',Carbon::today()->format("Y-m-d"))
+            ->orderBy('post.created_at','DESC')
+
+            ->paginate(5);
 
         if ($r->ajax()) {
 
@@ -74,7 +82,10 @@ class HomeController extends Controller
             ->leftjoin('address','address.addressId','job.address_addressId')
             ->leftjoin('master_subarb','address.master_subarb_id','master_subarb.id')
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
-            ->paginate(10);
+            ->where('job.deadline','>=',Carbon::today()->format("Y-m-d"))
+            ->orderBy('post.created_at','DESC')
+
+            ->paginate(5);
 
 
 

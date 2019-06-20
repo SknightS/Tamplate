@@ -24,8 +24,8 @@
                 <input type="text" id="startTime" name="startTime[]" placeholder="Start From" class="form-control col-md-4 time" required />
             </div>
             <div class="col-md-6">
-                <label>End Date</label>
-                <input type="text" id="endTime"name="endTime[]" placeholder="End Date" class="form-control col-md-4 time"/>
+                <label>End Date<span style="color: red">*</span></label>
+                <input type="text" id="endTime"name="endTime[]" placeholder="End Date" class="form-control col-md-4 time" required/>
             </div>
         </div>
         <div  id="newFreeTime">
@@ -62,6 +62,8 @@
             format: 'hh:mm A'
 
         });
+
+
 
 
         var counter = 2;
@@ -105,9 +107,9 @@
             '<input type="text" id="startTime'+counter+'" name="startTime[]" placeholder="Start From" class="form-control col-md-4 time" required />'+
             '</div>'+
             '<div class="col-md-6">'+
-                '<label>End Time</label>'+
+                '<label>End Time<span style="color: red">*</span></label>'+
 
-            '<input type="text" id="endTime'+counter+'"name="endTime[]" placeholder="End Date" class="form-control col-md-4 time"/>'+
+            '<input type="text" id="endTime'+counter+'"name="endTime[]" placeholder="End Date" class="form-control col-md-4 time" required/>'+
 
 
                 '</div>'+

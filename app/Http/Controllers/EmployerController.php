@@ -12,6 +12,7 @@ use App\job;
 use App\jobtype;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,7 +49,9 @@ class EmployerController extends Controller
     public function index()
     {
 
+
         return view('employer/employerDashboard');
+
     }
 
     public function favoriteEmployee()
@@ -80,6 +83,7 @@ class EmployerController extends Controller
     // show employer Dashboard
     public function showProfile()
     {
+
 
          $userId=Auth::user()->id;
 
@@ -398,6 +402,7 @@ class EmployerController extends Controller
                 $query->Where('company_branch.branchStatus','!=',STATUS['inactive']['code']);
             })
             ->get();
+
         return view('employer.newJobForm',compact('jobType','companyBrach'));
     }
     public function jobPostForm(Request $r)
@@ -431,6 +436,7 @@ class EmployerController extends Controller
         $post=new Post();
         $post->fkjobId=$r->jobId;
         $post->description=$r->postDescription;
+        $post->created_at=Carbon::now();
         $post->save();
 
         $job=Job::findOrFail($r->jobId);
@@ -457,8 +463,8 @@ class EmployerController extends Controller
         $job->save();
 
         $jobTime=new Jobtime();
-        $jobTime->startTime=$r->startTime;
-        $jobTime->endTime=$r->endTime;
+        $jobTime->startTime=date('Y-m-d h:m:t',strtotime($r->startTime));
+        $jobTime->endTime=date('Y-m-d h:m:t',strtotime($r->endTime));
         $jobTime->fkjobId=$job->id;
         $jobTime->save();
 
@@ -471,6 +477,7 @@ class EmployerController extends Controller
             $post=new Post();
             $post->fkjobId=$job->id;
             $post->description=$r->postDescription;
+            $post->created_at=Carbon::now();
             $post->save();
 
         }
@@ -500,6 +507,7 @@ class EmployerController extends Controller
                 $post=Post::findOrFail($r->postId);
 
                 $post->description=$r->postDescription;
+
                 $post->save();
 
             }else{
@@ -507,6 +515,7 @@ class EmployerController extends Controller
                 $post=new Post();
                 $post->fkjobId=$job->id;
                 $post->description=$r->postDescription;
+                $post->created_at=Carbon::now();
                 $post->save();
 
             }

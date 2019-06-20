@@ -1,4 +1,4 @@
-
+{{$jobInfo}}
 <form method="post" action="{{route('employer.updateJob')}}"  class="form-horizontal">
     {{csrf_field()}}
     <input type="hidden" id="jobId" name="jobId" value="{{$jobId}}">
@@ -56,7 +56,7 @@
         </div>
         <div class="col-md-6">
             <label class="col-md-4">End Time</label>
-            <input type="text" id="endTime" name="endTime" value="{{$jobInfo->endTime}}" class="form-control col-md-4 Time"  />
+            <input type="text" id="endTime" name="endTime" value="{{$jobInfo->endTime}}" class="form-control col-md-4 Time"/>
         </div>
     </div>
 
@@ -148,6 +148,13 @@
             format: "YYYY-MM-DD",
 
         });
+//        $(".Time").datetimepicker({
+////            format: "hh:mm A",
+//            useCurrent: true,
+//            minDate: moment(),
+//            date: '1/11/2016 12:23:12',
+//
+//        });
 
     });
     function checkPost() {

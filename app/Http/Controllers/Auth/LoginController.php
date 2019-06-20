@@ -56,6 +56,7 @@ class LoginController extends Controller
     }
 
     public function login(\Illuminate\Http\Request $request) {
+
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -70,12 +71,12 @@ class LoginController extends Controller
         if ($this->guard()->validate($this->credentials($request))) {
             $user = $this->guard()->getLastAttempted();
 
-
+            $remember_me = $request->has('remember') ? true : false;
 
             // Make sure the user is active
-            if ($user->active=='1' && $this->attemptLogin($request)) {
+            if ($user->active=='1' && $this->attemptLogin($request,$remember_me)) {
                 // Send the normal successful login response
-                return $this->sendLoginResponse($request);
+                return $this->sendLoginResponse($request,$remember_me);
             }
             else {
                 // Increment the failed login attempts and redirect back to the

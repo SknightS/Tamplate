@@ -145,9 +145,9 @@
 //            });
 //        }
 
-        $("#startTime").datetimepicker({
-//            format: "YYYY-MM-DD",
-            useCurrent: false,
+        $(".Time").datetimepicker({
+//            format: "hh:mm A",
+            useCurrent: true,
             minDate: moment(),
 
         });
