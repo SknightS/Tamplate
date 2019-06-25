@@ -149,8 +149,7 @@
 											{{--@if($candidate != $jobdetails->AppliedcandidateId )--}}
 
 											@if (Auth::check())
-												{{$jobdetails->requestedJobId}}
-												{{$jobdetails->jobid}}
+												
 												@if($jobdetails->requestedJobId != $jobdetails->jobid )
 													<form method="post" action="{{route('employee.jobApply')}}">
 														{{ csrf_field() }}
