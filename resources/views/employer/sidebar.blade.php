@@ -12,7 +12,7 @@
         <li><a  href="{{route('employer.manageAllJob')}}">Manage Jobs</a></li>
         {{--<li><a  href="{{route('manageapplication')}}">Manage Applications</a></li>--}}
         <li class="nav-divider"></li>
-        {{--<li><a  href="{{route('changepassword')}}">Change Password</a></li>--}}
+        <li><a  href="{{route('employer.changepassword')}}">Change Password</a></li>
         <li> <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 Logout
             </a></li>

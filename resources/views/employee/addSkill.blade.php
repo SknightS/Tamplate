@@ -44,7 +44,7 @@
         <div class="col-md-12">
         <label>Skill Name<span style="color: red">*</span></label>
 
-            <input type="text" id="skillName" name="skillName[]" maxlength="50" class="form-control" required />
+            <input type="text" id="skillName" name="skillName[]" maxlength="100" class="form-control" required />
             <?php $test=array();foreach($skills as $skill){?>
 
 
@@ -145,7 +145,7 @@
             var newTextBoxDiv = $(document.createElement('div'))
                 .attr("id",'TextBoxDiv' + counter);
             newTextBoxDiv.after().html('<div class="col-md-12">'+'<label>Skill Name#'+counter+':</label>' +
-                '<input type="text" id="skillName'+counter+'" name="skillName[]" class="form-control" required />'+
+                '<input type="text" id="skillName'+counter+'" maxlength="100" name="skillName[]" class="form-control" required />'+
                     '</div>'+
                 '<div class="col-md-12">'+
 

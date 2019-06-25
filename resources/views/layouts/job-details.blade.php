@@ -96,7 +96,12 @@
 										<div class="divider"></div>
                                         <div class="job-post-bottom">
                                         <h4 class="dark">Job Time</h4>
-										{{--<div class="job-post-share flex space-between items-center no-wrap">--}}
+
+
+											From :@if ($jobdetails->jobStartTime){{Carbon\Carbon::parse($jobdetails->jobStartTime)->format('Y-m-d h:m A')}} @endif<br>
+											To :  @if ($jobdetails->jobendTime){{Carbon\Carbon::parse($jobdetails->jobendTime)->format('Y-m-d h:m A')}} @endif
+
+											{{--<div class="job-post-share flex space-between items-center no-wrap">--}}
 											{{--<div class="job-post-share-left flex items-center no-wrap">--}}
 												{{--<h6>Share this job:</h6>--}}
 												{{--<ul class="social-share flex no-wrap no-column list-unstyled">--}}
@@ -111,6 +116,7 @@
 											{{--</div> <!-- end .job-post-share-right -->--}}
 											{{----}}
 										{{--</div> <!-- end .job-post-share -->--}}
+
                                         </div>
 									</div> <!-- end .job-post-bottom -->
 

@@ -99,8 +99,16 @@ class RegisterController extends Controller
         $user->active='0';
         $user->save();
 
+        $user->setRememberToken(bcrypt($r->password));
+        $timestamps = $user->timestamps;
+        $user->timestamps = false;
+        $user->save();
+        $user->timestamps = $timestamps;
 
-        $data = array('name'=>$r->name,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password);
+        $remember_me = $r->has('remember') ? true : false;
+
+
+        $data = array('name'=>$r->name,'email'=>$r->email,'userId'=>$user->id,'pass'=>$r->password,'rememberMe'=>$remember_me);
         try {
             Mail::send('mail.AccountCreate', $data, function ($message) use ($data) {
                 $message->to($data['email'], 'STAFF NETWORK')->subject('New - Account');
@@ -136,7 +144,13 @@ class RegisterController extends Controller
             $candidate->fkuserId = $ActiveInfo->id;
 
             $candidate->save();
-            Auth::loginUsingId($r->userId);
+
+            if ($r->remember==1){
+                Auth::loginUsingId($r->userId,true);
+            }else{
+                Auth::loginUsingId($r->userId);
+            }
+
 
             return redirect()->route('employee');
         }
@@ -152,7 +166,12 @@ class RegisterController extends Controller
             $company->fkuserId=$ActiveInfo->id;
 
             $company->save();
-            Auth::loginUsingId($r->userId);
+
+            if ($r->remember==1) {
+                Auth::loginUsingId($r->userId, true);
+            }else{
+                Auth::loginUsingId($r->userId);
+            }
 
             return redirect()->route('employer.profile');
         }
