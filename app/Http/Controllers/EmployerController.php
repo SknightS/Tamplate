@@ -500,6 +500,14 @@ class EmployerController extends Controller
 
         $job->save();
 
+        $jobTime=Jobtime::where('fkjobId',$r->jobId)->first();
+
+        $jobTime->startTime=date('Y-m-d h:m:t',strtotime($r->startTime));
+        $jobTime->endTime=date('Y-m-d h:m:t',strtotime($r->endTime));
+//        $jobTime->fkjobId=$job->id;
+
+        $jobTime->save();
+
 
         if ($r->jobStatus==JOB_STATUS['post']['code']){
             if ($r->postId != ""){

@@ -1,4 +1,4 @@
-{{$jobInfo}}
+
 <form method="post" action="{{route('employer.updateJob')}}"  class="form-horizontal">
     {{csrf_field()}}
     <input type="hidden" id="jobId" name="jobId" value="{{$jobId}}">
@@ -148,13 +148,13 @@
             format: "YYYY-MM-DD",
 
         });
-//        $(".Time").datetimepicker({
-////            format: "hh:mm A",
+        $(".Time").datetimepicker({
+            format: "YYYY-MM-DD hh:mm A",
 //            useCurrent: true,
 //            minDate: moment(),
 //            date: '1/11/2016 12:23:12',
-//
-//        });
+
+        });
 
     });
     function checkPost() {
