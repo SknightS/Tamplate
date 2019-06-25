@@ -134,7 +134,7 @@ class JobController extends Controller
                 $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
                     'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
                     'requestjob.job_id as requestedJobId','requestjob.fkcandidateId as AppliedcandidateId',
-                    'jobtime.startTime','jobtime.endTime')
+                    'jobtime.startTime as jobStartTime','jobtime.endTime as jobendTime')
                     ->leftJoin('job','job.id', 'post.fkjobId')
                     ->leftJoin('jobtime','job.id', 'jobtime.fkjobId')
                     ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
@@ -151,7 +151,7 @@ class JobController extends Controller
                 $candidateId=null;
                 $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
                     'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
-                    'jobtime.startTime','jobtime.endTime')
+                    'jobtime.startTime as jobStartTime','jobtime.endTime as jobendTime')
                     ->leftJoin('job','job.id', 'post.fkjobId')
                     ->leftJoin('jobtime','job.id', 'jobtime.fkjobId')
                     ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
@@ -171,7 +171,7 @@ class JobController extends Controller
             $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails',
                 'company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address',
                 'job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
-                'jobtime.startTime','jobtime.endTime')
+                'jobtime.startTime as jobStartTime','jobtime.endTime as jobendTime')
                 ->leftJoin('job','job.id', 'post.fkjobId')
                 ->leftJoin('jobtime','job.id', 'jobtime.fkjobId')
                 ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
@@ -184,7 +184,7 @@ class JobController extends Controller
 
         }
 
-//        return $jobdetails;
+       // return $jobdetails;
 
 
         $similarjob  = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
