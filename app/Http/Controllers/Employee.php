@@ -659,6 +659,7 @@ class Employee extends Controller
 
     public function applyForJob(Request $r) //  employee job Apply
     {
+
         $candidateInfo = Candidate::where('fkuserId', Auth::user()->id)->first();
         $requestJob=new Requestjob();
         $requestJob->fkcandidateId=$candidateInfo->candidateId;

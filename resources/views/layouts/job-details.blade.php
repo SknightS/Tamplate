@@ -138,12 +138,14 @@
 
 									<div class="system-login text-center">
 										<p class="divider-text text-center"><span>Apply for this job</span></p><br>
-										@if($candidate != null)
+										{{--@if($candidate != null)--}}
 
-											@if($candidate != $jobdetails->AppliedcandidateId )
+											{{--@if($candidate != $jobdetails->AppliedcandidateId )--}}
 
 											@if (Auth::check())
-												@if($jobdetails->requestJobId != $jobdetails->jobid )
+												{{$jobdetails->requestedJobId}}
+												{{$jobdetails->jobid}}
+												@if($jobdetails->requestedJobId != $jobdetails->jobid )
 													<form method="post" action="{{route('employee.jobApply')}}">
 														{{ csrf_field() }}
 														<input type="hidden" id="jobId" name="jobIdforApply" value="{{$jobdetails->jobid}}">
@@ -151,18 +153,18 @@
 													</form>
 
 													@else
-														<button type="submit" disabled class="button btn-danger">Allready applied</button>
+														<button type="" disabled class="button btn-danger">Allready applied</button>
 													@endif
 
 
 											@else
-												<button type="submit" disabled class="button btn-danger">Please Login First</button>
+												<button type="" disabled class="button btn-danger">Please Login First</button>
 											@endif
 
 
 
-										@endif
-											@endif
+										{{--@endif--}}
+											{{--@endif--}}
 
 									</div> <!-- end .system-login -->
 
