@@ -191,7 +191,7 @@ Route::post('/My-Company-Delete', 'EmployerController@deleteEmployerCompany')->n
 /* employer manage application */
 Route::get('Employer-Manage-All-Application', 'EmployerController@manageAllApplication')->name('employer.manageAllApplication');
 
-Route::post('Employer-Manage-All-Application-Data', 'EmployerController@manageAllApplicationwithData')->name('employer.manageAllApplicationData');
+//Route::post('Employer-Manage-All-Application-Data', 'EmployerController@manageAllApplicationwithData')->name('employer.manageAllApplicationData');
 
 Route::post('Employer-Start-A-Job', 'EmployerController@manageStartJob')->name('employer.startJob');
 Route::post('Employer-Complete-A-Job', 'EmployerController@manageCompleteJob')->name('employer.completeJob');
