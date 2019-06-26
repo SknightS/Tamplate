@@ -134,6 +134,7 @@ Route::get('/employer/manage-application', 'EmployerController@manageApplication
 
 
 //login
+
 Route::view('/Login', 'layouts.login')->name('loginshow');
 
 
