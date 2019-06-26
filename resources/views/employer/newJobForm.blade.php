@@ -47,6 +47,16 @@
             <input type="number" id="jobAmount" placeholder="Amount" name="jobAmount" min="1" class="form-control col-md-4" required />
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <label class="col-md-4">Start Time<span style="color: red">*</span></label>
+            <input type="text" id="startTime" name="startTime" class="form-control col-md-4 Time" />
+        </div>
+        <div class="col-md-6">
+            <label class="col-md-4">End Time</label>
+            <input type="text" id="endTime" name="endTime" class="form-control col-md-4 Time"  />
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-6">
@@ -115,6 +125,29 @@
         $(".dateTime").datetimepicker({
             format: "YYYY-MM-DD",
             useCurrent: false,
+            minDate: moment(),
+
+        });
+//        if ($("#startTime").val() == ''){
+//            $("#endTime").datetimepicker({
+//            format: "YYYY-MM-DD",
+//
+//                useCurrent: false,
+//                minDate: moment(),
+//
+//            });
+//        }else {
+//            $("#endTime").datetimepicker({
+////            format: "YYYY-MM-DD",
+//                useCurrent: false,
+//                minDate: $("#startTime").val(),
+//
+//            });
+//        }
+
+        $(".Time").datetimepicker({
+//            format: "hh:mm A",
+            useCurrent: true,
             minDate: moment(),
 
         });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Candidate;
 use App\Requestjob;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +57,9 @@ class JobController extends Controller
 
                 $alljob=$alljob->whereIn('job.fkjobTypeId',$jobfilterType);
             }
-        $alljob=$alljob->paginate(1);
+            $alljob=$alljob->where('job.deadline','>=',Carbon::today()->format("Y-m-d"));
+            $alljob=$alljob->orderBy('post.created_at','DESC');
+            $alljob=$alljob->paginate(10);
 
         $jobpost= Post::select('fkjobTypeId',DB::raw('COUNT(fkjobId) as total_post'))
             ->leftJoin('job', 'job.id', '=', 'post.fkjobId')
@@ -107,7 +110,9 @@ class JobController extends Controller
 
             $alljob=$alljob->whereIn('job.fkjobTypeId',$jobfilterType);
         }
-        $alljob=$alljob->paginate(1);
+//        $alljob=$alljob->where('job.deadline','>=',Carbon::today()->format("Y-m-d"));
+        $alljob=$alljob->orderBy('post.created_at','DESC');
+        $alljob=$alljob->paginate(10);
 
         return view('layouts.jobListeningWithParameter')
 
@@ -128,8 +133,10 @@ class JobController extends Controller
 
                 $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
                     'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
-                    'requestjob.job_id as requestedJobId','requestjob.fkcandidateId as AppliedcandidateId')
+                    'requestjob.job_id as requestedJobId','requestjob.fkcandidateId as AppliedcandidateId',
+                    'jobtime.startTime as jobStartTime','jobtime.endTime as jobendTime')
                     ->leftJoin('job','job.id', 'post.fkjobId')
+                    ->leftJoin('jobtime','job.id', 'jobtime.fkjobId')
                     ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
                     ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
                     ->leftjoin('address','address.addressId','job.address_addressId')
@@ -142,8 +149,11 @@ class JobController extends Controller
 
             }else{
                 $candidateId=null;
-                $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname')
+                $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ',
+                    'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
+                    'jobtime.startTime as jobStartTime','jobtime.endTime as jobendTime')
                     ->leftJoin('job','job.id', 'post.fkjobId')
+                    ->leftJoin('jobtime','job.id', 'jobtime.fkjobId')
                     ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
                     ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
                     ->leftjoin('address','address.addressId','job.address_addressId')
@@ -158,8 +168,12 @@ class JobController extends Controller
 
         }else{
             $candidateId=null;
-            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname')
+            $jobdetails = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','job.description as jdetails',
+                'company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address',
+                'job.job_amount as job_amount', 'master_state.name as statename','master_subarb.name as cityname',
+                'jobtime.startTime as jobStartTime','jobtime.endTime as jobendTime')
                 ->leftJoin('job','job.id', 'post.fkjobId')
+                ->leftJoin('jobtime','job.id', 'jobtime.fkjobId')
                 ->leftjoin ('company_branch','job.company_branch_id','company_branch.id')
                 ->leftjoin('jobtype','job.fkjobTypeId','jobtype.id')
                 ->leftjoin('address','address.addressId','job.address_addressId')
@@ -170,7 +184,7 @@ class JobController extends Controller
 
         }
 
-//        return $jobdetails;
+       // return $jobdetails;
 
 
         $similarjob  = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
@@ -182,7 +196,7 @@ class JobController extends Controller
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
             ->where('typeName',$typename)
             ->where('post.id','!=',$postid)
-            ->paginate(1);
+            ->paginate(10);
 
         if ($r->ajax()) {
 
@@ -212,7 +226,7 @@ class JobController extends Controller
             ->leftjoin('master_state','master_subarb.master_state_id','master_state.id')
             ->where('typeName',$r->type)
             ->where('post.id','!=',$r->postId)
-            ->paginate(1);
+            ->paginate(10);
 
         return view('layouts.similar-job-details')
             ->with('similarjob', $similarjob);

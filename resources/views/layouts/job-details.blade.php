@@ -96,7 +96,12 @@
 										<div class="divider"></div>
                                         <div class="job-post-bottom">
                                         <h4 class="dark">Job Time</h4>
-										{{--<div class="job-post-share flex space-between items-center no-wrap">--}}
+
+
+											From :@if ($jobdetails->jobStartTime){{Carbon\Carbon::parse($jobdetails->jobStartTime)->format('Y-m-d h:m A')}} @endif<br>
+											To :  @if ($jobdetails->jobendTime){{Carbon\Carbon::parse($jobdetails->jobendTime)->format('Y-m-d h:m A')}} @endif
+
+											{{--<div class="job-post-share flex space-between items-center no-wrap">--}}
 											{{--<div class="job-post-share-left flex items-center no-wrap">--}}
 												{{--<h6>Share this job:</h6>--}}
 												{{--<ul class="social-share flex no-wrap no-column list-unstyled">--}}
@@ -111,6 +116,7 @@
 											{{--</div> <!-- end .job-post-share-right -->--}}
 											{{----}}
 										{{--</div> <!-- end .job-post-share -->--}}
+
                                         </div>
 									</div> <!-- end .job-post-bottom -->
 
@@ -138,12 +144,13 @@
 
 									<div class="system-login text-center">
 										<p class="divider-text text-center"><span>Apply for this job</span></p><br>
-										@if($candidate != null)
+										{{--@if($candidate != null)--}}
 
-											@if($candidate != $jobdetails->AppliedcandidateId )
+											{{--@if($candidate != $jobdetails->AppliedcandidateId )--}}
 
 											@if (Auth::check())
-												@if($jobdetails->requestJobId != $jobdetails->jobid )
+												
+												@if($jobdetails->requestedJobId != $jobdetails->jobid )
 													<form method="post" action="{{route('employee.jobApply')}}">
 														{{ csrf_field() }}
 														<input type="hidden" id="jobId" name="jobIdforApply" value="{{$jobdetails->jobid}}">
@@ -151,18 +158,18 @@
 													</form>
 
 													@else
-														<button type="submit" disabled class="button btn-danger">Allready applied</button>
+														<button type="" disabled class="button btn-danger">Allready applied</button>
 													@endif
 
 
 											@else
-												<button type="submit" disabled class="button btn-danger">Please Login First</button>
+												<button type="" disabled class="button btn-danger">Please Login First</button>
 											@endif
 
 
 
-										@endif
-											@endif
+										{{--@endif--}}
+											{{--@endif--}}
 
 									</div> <!-- end .system-login -->
 

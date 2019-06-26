@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Socialmedia;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Candidate;
@@ -14,6 +15,7 @@ use App\Skill;
 use App\Freetime;
 use App\Requestjob;
 use App\Job;
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Image;
 use Illuminate\Support\Facades\DB;
@@ -476,6 +478,21 @@ class Employee extends Controller
         $candidateInfo = Candidate::where('fkuserId', $userId)->first();
         return view('employee.changepassword',compact('candidateInfo'));
     }
+
+    public function changePassword(Request $r){
+        $old=$r->oldPass;
+        $new=$r->password;
+        $user=User::findOrFail(Auth::user()->id);
+        if (Hash::check($old, $user->password)) {
+            $user->password=Hash::make($r->password);
+            $user->save();
+            Session::flash('success_msg', 'Password Changed Successfully!');
+            return back();
+        }
+        Session::flash('success_msg', 'Password Did not Match!');
+        return back();
+    }
+
     public function getAllCityByState(Request $r) // show all cities of selected state
     {
 
@@ -621,10 +638,7 @@ class Employee extends Controller
         if ($r->ajax()) {
             return view('employee.showAllJobData',compact('candidateInfo','allJobs','applyjob'));
         }
-
-
-
-
+        
         return view('employee.showAllJob',compact('candidateInfo'));
 //        return view('employee.showAllJob',compact('candidateInfo','allJobs','applyjob'));
 
@@ -662,8 +676,10 @@ class Employee extends Controller
 
     public function applyForJob(Request $r) //  employee job Apply
     {
+
+        $candidateInfo = Candidate::where('fkuserId', Auth::user()->id)->first();
         $requestJob=new Requestjob();
-        $requestJob->fkcandidateId=Auth::user()->id;
+        $requestJob->fkcandidateId=$candidateInfo->candidateId;
         $requestJob->applyTime=now();
         $requestJob->request_status=JOB_REQUEST_STATUS['pending']['code'];
         $requestJob->job_id=$r->jobIdforApply;

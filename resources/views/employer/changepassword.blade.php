@@ -1,9 +1,9 @@
-@extends('employee.employeDashboard')
-@section('emp-contant')
+@extends('employer.employerDashboard')
+@section('empr-contant')
 
     <div class="password-form-wrapper">
         <h3 class="dark">Change Password</h3>
-        <form id="myform"  method="post" action="{{route('employee.password.change')}}"  class="password-form">
+        <form id="myform"  method="post" action="{{route('employer.password.change')}}"  class="password-form">
             {{csrf_field()}}
             <div class="form-group">
                 <label for="InputEmail1">Old password<sup>*</sup></label>

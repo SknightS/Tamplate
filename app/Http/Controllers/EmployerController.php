@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Address;
 use App\Hirereport;
+use App\Jobtime;
 use App\Requestjob;
 use App\Companybranch;
 use App\job;
 use App\jobtype;
 use App\Post;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Image;
 
@@ -45,7 +49,9 @@ class EmployerController extends Controller
     public function index()
     {
 
+
         return view('employer/employerDashboard');
+
     }
 
     public function favoriteEmployee()
@@ -77,6 +83,7 @@ class EmployerController extends Controller
     // show employer Dashboard
     public function showProfile()
     {
+
 
          $userId=Auth::user()->id;
 
@@ -395,6 +402,7 @@ class EmployerController extends Controller
                 $query->Where('company_branch.branchStatus','!=',STATUS['inactive']['code']);
             })
             ->get();
+
         return view('employer.newJobForm',compact('jobType','companyBrach'));
     }
     public function jobPostForm(Request $r)
@@ -416,7 +424,7 @@ class EmployerController extends Controller
             })
 //            ->where('company_branch.branchStatus','!=',STATUS['deleted']['code'])
             ->get();
-        $jobInfo=job::findOrFail($jobId);
+        $jobInfo=job::leftJoin('jobtime', 'jobtime.fkjobId', '=', 'job.id')->findOrFail($jobId);
 
         $post=DB::table('post')->where('fkjobId',$jobId)->first();
 
@@ -428,6 +436,7 @@ class EmployerController extends Controller
         $post=new Post();
         $post->fkjobId=$r->jobId;
         $post->description=$r->postDescription;
+        $post->created_at=Carbon::now();
         $post->save();
 
         $job=Job::findOrFail($r->jobId);
@@ -453,6 +462,14 @@ class EmployerController extends Controller
         $job->createDate=date('Y-m-d');
         $job->save();
 
+        $jobTime=new Jobtime();
+        $jobTime->startTime=date('Y-m-d h:m:t',strtotime($r->startTime));
+        $jobTime->endTime=date('Y-m-d h:m:t',strtotime($r->endTime));
+        $jobTime->fkjobId=$job->id;
+        $jobTime->save();
+
+
+
 
 
         if ($r->jobStatus==JOB_STATUS['post']['code']){
@@ -460,6 +477,7 @@ class EmployerController extends Controller
             $post=new Post();
             $post->fkjobId=$job->id;
             $post->description=$r->postDescription;
+            $post->created_at=Carbon::now();
             $post->save();
 
         }
@@ -482,6 +500,14 @@ class EmployerController extends Controller
 
         $job->save();
 
+        $jobTime=Jobtime::where('fkjobId',$r->jobId)->first();
+
+        $jobTime->startTime=date('Y-m-d h:m:t',strtotime($r->startTime));
+        $jobTime->endTime=date('Y-m-d h:m:t',strtotime($r->endTime));
+//        $jobTime->fkjobId=$job->id;
+
+        $jobTime->save();
+
 
         if ($r->jobStatus==JOB_STATUS['post']['code']){
             if ($r->postId != ""){
@@ -489,6 +515,7 @@ class EmployerController extends Controller
                 $post=Post::findOrFail($r->postId);
 
                 $post->description=$r->postDescription;
+
                 $post->save();
 
             }else{
@@ -496,6 +523,7 @@ class EmployerController extends Controller
                 $post=new Post();
                 $post->fkjobId=$job->id;
                 $post->description=$r->postDescription;
+                $post->created_at=Carbon::now();
                 $post->save();
 
             }
@@ -533,7 +561,7 @@ class EmployerController extends Controller
 
 
 
-        $allApplication=$allApplication->paginate(1);
+        $allApplication=$allApplication->paginate(10);
 
 
 
@@ -565,7 +593,7 @@ class EmployerController extends Controller
 
 
 
-        $allApplication=$allApplication->paginate(1);
+        $allApplication=$allApplication->paginate(10);
 
 
         return view('employer.manageAllApplicationWithData',compact('allApplication'));
@@ -587,6 +615,26 @@ class EmployerController extends Controller
 
 
 
+    }
+    public function showChangepassword() // show change password page
+    {
+        $userId=Auth::user()->id;
+
+        $employerInfo = Company::where('fkuserId', $userId)->first();
+        return view('employer.changepassword',compact('employerInfo'));
+    }
+    public function changePassword(Request $r){
+        $old=$r->oldPass;
+        $new=$r->password;
+        $user=User::findOrFail(Auth::user()->id);
+        if (Hash::check($old, $user->password)) {
+            $user->password=Hash::make($r->password);
+            $user->save();
+            Session::flash('success_msg', 'Password Changed Successfully!');
+            return back();
+        }
+        Session::flash('success_msg', 'Password Did not Match!');
+        return back();
     }
     public function manageCompleteJob(Request $r){
 

@@ -19,6 +19,7 @@ Password: {{$pass}}<br>
 
                                 <input type="hidden"  class="form-control" id="userId" name="userId" value="{{$userId}}" placeholder="User Id" required />
                                 <input type="hidden"  class="form-control" id="name" name="name" value="{{$name}}" placeholder="name" required />
+                                <input type="text"  class="form-control" id="remember" name="remember" value="{{$rememberMe}}" placeholder="remember"  />
                             </div>
 
 
