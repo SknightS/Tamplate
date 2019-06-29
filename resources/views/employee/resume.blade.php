@@ -113,7 +113,7 @@
 
         <div class="profile-about profile-section">
             <h3 class="dark profile-title">About me<span><a style="cursor: pointer" onclick="editCandidateAboutMe()"><i class="ion-edit"></i></a></span></h3>
-            <p>{{$candidateInfo->aboutme}}</p>
+            <p>{{$candidateInfo->studentAboutMe}}</p>
         </div> <!-- end .profile-about -->
 
         <div class="divider"></div>

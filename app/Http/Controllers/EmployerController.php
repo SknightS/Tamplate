@@ -550,56 +550,56 @@ class EmployerController extends Controller
         $employerInfo = Company::where('fkuserId', $userId)->first();
         $companyId = Company::where('fkuserId', $userId)->first()->companyId;
 
-        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
+        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName','job.id as jobId')
             ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
             ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
             ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
             ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
             ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
-            ->where('company_companyId',$companyId);
+            ->where('company_companyId',$companyId)->get();
 
 
 
 
-        $allApplication=$allApplication->paginate(10);
+//        $allApplication=$allApplication->paginate(10);
 
 
 
-        if ($r->ajax()) {
-
-            return view('employer.manageAllApplicationWithData',compact('allApplication'));
-        }
-
-
-        return view('employer.manageAllApplication',compact('employerInfo'));
+//        if ($r->ajax()) {
+//
+//            return view('employer.manageAllApplicationWithData',compact('allApplication'));
+//        }
 
 
-    }
-    public function manageAllApplicationwithData(Request $r){
-
-        $userId=Auth::user()->id;
-
-//        $employerInfo = Company::where('fkuserId', $userId)->first();
-        $companyId = Company::where('fkuserId', $userId)->first()->companyId;
-
-        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
-            ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
-            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
-            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
-            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
-            ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
-            ->where('company_companyId',$companyId);
-
-
-
-
-        $allApplication=$allApplication->paginate(10);
-
-
-        return view('employer.manageAllApplicationWithData',compact('allApplication'));
+        return view('employer.manageAllApplication',compact('employerInfo','allApplication'));
 
 
     }
+//    public function manageAllApplicationwithData(Request $r){
+//
+//        $userId=Auth::user()->id;
+//
+////        $employerInfo = Company::where('fkuserId', $userId)->first();
+//        $companyId = Company::where('fkuserId', $userId)->first()->companyId;
+//
+//        $allApplication=Requestjob::select('requestjob.requestJobId','requestjob.request_status','candidate.name as candidateName','candidate.image','candidate.email as candidateEmail','job.jobName as jobTitle','jobtype.typeName','company_branch.name as companyName')
+//            ->leftJoin('candidate', 'candidate.candidateId', '=', 'requestjob.fkcandidateId')
+//            ->leftJoin('job', 'job.id', '=', 'requestjob.job_id')
+//            ->leftJoin('jobtype', 'jobtype.id', '=', 'job.fkjobTypeId')
+//            ->leftJoin('company_branch', 'company_branch.id', '=', 'job.company_branch_id')
+//            ->leftJoin('company', 'company.companyId', '=', 'company_branch.company_companyId')
+//            ->where('company_companyId',$companyId);
+//
+//
+//
+//
+//        $allApplication=$allApplication->paginate(10);
+//
+//
+//        return view('employer.manageAllApplicationWithData',compact('allApplication'));
+//
+//
+//    }
     public function manageStartJob(Request $r){
 
         $job=Requestjob::findOrFail($r->id);
