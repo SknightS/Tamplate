@@ -186,6 +186,7 @@ class JobController extends Controller
 
        // return $jobdetails;
 
+        $allrequestjob = Requestjob::get();
 
         $similarjob  = Post::select('*','job.id as jobid','post.id as postid','jobName', 'company_branch.name as cname','company_branch.image as cimage ', 'post.description as pdes','typeName','address.addresscol as address','job.job_amount as job_amount')
             ->leftJoin('job', 'job.id', 'post.fkjobId')
@@ -211,7 +212,8 @@ class JobController extends Controller
             ->with('similarjob', $similarjob)
             ->with('type', $typename)
             ->with('postId', $postid)
-            ->with('candidate', $candidateId);
+            ->with('candidate', $candidateId)
+            ->with('requestjob', $allrequestjob);
 
     }
     public function jobdetailsWithSimilarJobData(Request $r){

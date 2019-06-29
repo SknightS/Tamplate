@@ -149,8 +149,9 @@
 											{{--@if($candidate != $jobdetails->AppliedcandidateId )--}}
 
 											@if (Auth::check())
-
-												@if($jobdetails->requestedJobId != $jobdetails->jobid )
+												{{--@foreach($requestjob as $requestjob)--}}
+{{--												@if($requestjob->job_id != $jobdetails->jobid )--}}
+													@if(!$requestjob->contains('job_id', $jobdetails->jobid))
 													<form method="post" action="{{route('employee.jobApply')}}">
 														{{ csrf_field() }}
 														<input type="hidden" id="jobId" name="jobIdforApply" value="{{$jobdetails->jobid}}">

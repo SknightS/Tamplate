@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Socialmedia;
 
 use App\User;
@@ -678,11 +679,14 @@ class Employee extends Controller
     {
 
         $candidateInfo = Candidate::where('fkuserId', Auth::user()->id)->first();
+        $postid = Post::where('fkjobId',$r->jobIdforApply )->get();
+
         $requestJob=new Requestjob();
         $requestJob->fkcandidateId=$candidateInfo->candidateId;
         $requestJob->applyTime=now();
         $requestJob->request_status=JOB_REQUEST_STATUS['pending']['code'];
         $requestJob->job_id=$r->jobIdforApply;
+        $requestJob->post_id = $postid->first()->id;
         $requestJob->save();
 
         Session::flash('success_msg', 'Job Applied Successfully!');
