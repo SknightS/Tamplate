@@ -653,18 +653,26 @@ class EmployerController extends Controller
     }
     public function manageApproveJob(Request $r){
 
-        $job=Requestjob::findOrFail($r->id);
+        $job=Requestjob::select('requestjob.*','job.no_of_vacancy')->leftJoin('job','job.id','requestjob.job_id')->findOrFail($r->id);
 
-        $job->request_status=JOB_REQUEST_STATUS['approve']['code'];
+        $jobInfo=Hirereport::where('fkrequestJobId',$job->job_id)->count('hireReportId');
 
-        $job->save();
+        if ($job->no_of_vacancy>$jobInfo) {
+            $job->request_status = JOB_REQUEST_STATUS['approve']['code'];
 
-        $report=new Hirereport();
-        $report->fkrequestJobId=$r->id;
-        $report->save();
+            $job->save();
+
+            $report = new Hirereport();
+            $report->fkrequestJobId = $r->id;
+            $report->save();
 
 
-        Session::flash('success_msg', 'Job Approved Successfully!');
+            Session::flash('success_msg', 'Job Approved Successfully!');
+        }else{
+
+            Session::flash('success_msg', 'Job can not approved due to vacancy limit!');
+
+        }
 
 
 

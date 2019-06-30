@@ -220,6 +220,7 @@
                 data: {_token:"{{csrf_token()}}",id:id},
                 success: function(data){
                     location.reload();
+                    // console.log(data);
                 },
             });
 
