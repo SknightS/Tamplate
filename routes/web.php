@@ -126,7 +126,7 @@ Route::post('employee-All-Jobs-Info', 'Employee@showAllJobData')->name('employee
 
 Route::post('employee-Job-Apply', 'Employee@applyForJob')->name('employee.jobApply');
 
-
+Route::get('candidate-CV', 'CandidateController@viewcv')->name('candidate.viewcv');
 
 //employer
 

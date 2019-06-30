@@ -176,4 +176,8 @@ class CandidateController extends Controller
     }
 
 
+    public function viewcv(){
+        return view('employee.viewcv');
+    }
+
 }
