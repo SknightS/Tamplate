@@ -52,6 +52,34 @@
 
 <script>
 
+    {{--function checkFreeTime(){--}}
+
+
+        {{--var values =  $('select[name="dayName[]"]').map(function () {--}}
+            {{--return this.value; // $(this).val()--}}
+        {{--}).get();--}}
+
+        {{--for( var i = values.length-1; i--;){--}}
+            {{--if ( values[i] === '{{OTHERS}}') values.splice(i, 1);--}}
+        {{--}--}}
+
+
+        {{--var unique = values.filter(function(itm, i, values) {--}}
+
+            {{--return i == values.indexOf(itm);--}}
+
+
+        {{--});--}}
+
+        {{--if(values.length != unique.length){--}}
+
+            {{--alert("Already inserted");--}}
+           {{--// $(x).val('');--}}
+
+        {{--}--}}
+
+    {{--}--}}
+
 
 
 

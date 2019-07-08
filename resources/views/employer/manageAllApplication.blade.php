@@ -26,7 +26,7 @@
 
                         <th>Image</th>
                         <th>Aplicant Name</th>
-                        <th>Job Info</th>
+                        <th>Branch &<br> Job name</th>
                         <th>Email</th>
                         <th>Job Type</th>
                         <th>Status</th>
@@ -184,59 +184,208 @@
 
         function startJob(x) {
 
-            var id = $(x).data('panel-id');
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure to start this Job?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('employer.startJob')}}',
-                data: {_token:"{{csrf_token()}}",id:id},
-                success: function(data){
-                    location.reload();
-                },
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employer.startJob')}}',
+                                data: {_token:"{{csrf_token()}}",id:id},
+                                success: function(data){
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Job started successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+                                },
+                            });
+
+                        }
+                    },
+                    No: function () {
+                    },
+                }
             });
+
+
+
 
         }
         function completeJob(x) {
 
-            var id = $(x).data('panel-id');
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure to complete this Job?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('employer.completeJob')}}',
-                data: {_token:"{{csrf_token()}}",id:id},
-                success: function(data){
-                    location.reload();
-                },
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employer.completeJob')}}',
+                                data: {_token:"{{csrf_token()}}",id:id},
+                                success: function(data){
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Job completed successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+
+                                                }
+                                            }
+                                        }
+                                    });
+                                },
+                            });
+
+
+                        }
+                    },
+                    No: function () {
+                    },
+                }
             });
+
+
 
         }
         function approveJob(x) {
 
-            var id = $(x).data('panel-id');
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure to approve this Job?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('employer.approveJob')}}',
-                data: {_token:"{{csrf_token()}}",id:id},
-                success: function(data){
-                    location.reload();
-                    // console.log(data);
-                },
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employer.approveJob')}}',
+                                data: {_token:"{{csrf_token()}}",id:id},
+                                success: function(data){
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Job approved successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+                                },
+                            });
+
+                        }
+                    },
+                    No: function () {
+                    },
+                }
             });
+
 
         }
         function rejectJob(x) {
 
-            var id = $(x).data('panel-id');
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure to reject this Job?',
+                icon: 'fa fa-warning',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Yes',
+                        btnClass: 'btn-red',
+                        action: function(){
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('employer.rejectJob')}}',
-                data: {_token:"{{csrf_token()}}",id:id},
-                success: function(data){
-                    location.reload();
-                },
+                            var id = $(x).data('panel-id');
+
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route('employer.rejectJob')}}',
+                                data: {_token:"{{csrf_token()}}",id:id},
+                                success: function(data){
+
+                                    $.alert({
+                                        title: 'Success!',
+                                        type: 'green',
+                                        content: 'Job rejected successfully',
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Ok',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+                                },
+                            });
+
+                        }
+                    },
+                    No: function () {
+                    },
+                }
             });
+
 
         }
 
