@@ -177,7 +177,19 @@ class CandidateController extends Controller
 
 
     public function viewcv(){
-        return view('employee.viewcv');
+
+        $empId = 1 ;
+        $empinfo = Candidate::select('*','candidate.name as candidateName' , 'professionTitle')
+        ->where('candidateId', $empId)->leftjoin('address','address_addressId','addressId')->leftjoin('master_subarb','master_subarb.id','master_subarb_id')->leftjoin('master_state','master_state.id','master_state_id')->get();
+        $education = Education::where('fkcandidateId', $empId)->get();
+        $skill = Skill::where('candidateId', $empId)->leftjoin('master_skill','skillId','master_skill.id')->get();
+        $workexperience = workexperience::where('fkcandidateId', $empId)->get();
+
+        return view('employee.viewcv')
+            ->with('empinfo', $empinfo)
+            ->with('education', $education)
+            ->with('skill', $skill)
+            ->with('workexperience', $workexperience);
     }
 
 }
