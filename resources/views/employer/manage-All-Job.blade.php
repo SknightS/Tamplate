@@ -12,7 +12,7 @@
 
                 <th>SL</th>
                 <th>Job Name</th>
-                <th>Company Name</th>
+                <th>Company / Brach Name</th>
                 <th>Job Type</th>
                 <th>Job Vacancy</th>
                 <th>DeadLine</th>

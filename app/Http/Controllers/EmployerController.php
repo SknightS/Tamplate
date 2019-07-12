@@ -646,7 +646,7 @@ class EmployerController extends Controller
 
         $report=DB::table('hirereport')->where('fkrequestJobId',$r->id)->orderBy('hireReportId','desc')->limit(1)->update(['endTime' => now()]);
 
-        Session::flash('success_msg', 'Job Started Successfully!');
+        Session::flash('success_msg', 'Job Completed Successfully!');
 
 
 
@@ -670,7 +670,7 @@ class EmployerController extends Controller
             Session::flash('success_msg', 'Job Approved Successfully!');
         }else{
 
-            Session::flash('success_msg', 'Job can not approved due to vacancy limit!');
+            Session::flash('error_msg', 'Job can not approved due to vacancy limit!');
 
         }
 

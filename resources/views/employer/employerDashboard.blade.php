@@ -29,12 +29,15 @@
 		</div> <!-- end .section -->
 
 @if (Session::has('success_msg'))
-    <div class="alert alert-success">
+    <div class="alert alert-success" style="margin-bottom: 0px;text-align: center">
         <strong >{{Session::get('success_msg')}}</strong>
     </div>
+
+@elseif(Session::has('error_msg'))
+    <div class="alert alert-danger" style="margin-bottom: 0px;text-align: center" >
+        <strong >{{Session::get('error_msg')}}</strong>
+    </div>
 @endif
-
-
 		<!-- Employer Dashboard -->
         <div class="section candidate-dashboard-content solid-light-grey-bg">
             <div class="inner">
