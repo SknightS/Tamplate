@@ -76,7 +76,26 @@
                 </tr>
             @endforeach
         </table>
+        <hr>
+        <h1 style="font-size:15pt;">Free Time:</h1>
+        <table>
+            <tr>
+                <th>Day</th>
+                <th style="padding: 0px 30px">Start Time</th>
+                <th style="padding: 0px 30px">End Time</th>
 
+
+            </tr>
+            @foreach($freetime as $freetime)
+                <tr>
+                    <td >{{$freetime->day}}</td>
+                    <td style="padding: 0px 30px">{{$freetime->startTime}}</td>
+                    <td style="padding: 0px 30px">{{$freetime->endTime}}</td>
+
+
+                </tr>
+            @endforeach
+        </table>
     </div>
 </div>
 </body>

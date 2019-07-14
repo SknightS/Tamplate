@@ -184,12 +184,13 @@ class CandidateController extends Controller
         $education = Education::where('fkcandidateId', $empId)->get();
         $skill = Skill::where('candidateId', $empId)->leftjoin('master_skill','skillId','master_skill.id')->get();
         $workexperience = workexperience::where('fkcandidateId', $empId)->get();
-
+        $freetime = Freetime::where ('candidateId', $empId)->get();
         return view('employee.viewcv')
             ->with('empinfo', $empinfo)
             ->with('education', $education)
             ->with('skill', $skill)
-            ->with('workexperience', $workexperience);
+            ->with('workexperience', $workexperience)
+            ->with('freetime', $freetime);
     }
 
 }
