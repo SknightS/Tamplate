@@ -4,16 +4,16 @@
     <h3 class="tab-pane-title">Manage applications</h3>
     <div class="candidate-applications-list-wrapper">
 
-        <ul class="candidate-applications-table-headings flex items-center no-column no-wrap list-unstyled">
-            <li class="candidate-name-cell candidate-cell"><h6>Image</h6></li>
-            <li class="candidate-name-cell candidate-cell"><h6>Name</h6></li>
-            <li class="candidate-job-cell candidate-cell"><h6>Job</h6></li>
-            <li class="candidate-resume-cell"><h6>Email</h6></li>
+{{--        <ul class="candidate-applications-table-headings flex items-center no-column no-wrap list-unstyled">--}}
+{{--            <li class="candidate-name-cell candidate-cell"><h6>Image</h6></li>--}}
+{{--            <li class="candidate-name-cell candidate-cell"><h6>Name</h6></li>--}}
+{{--            <li class="candidate-job-cell candidate-cell"><h6>Job</h6></li>--}}
+{{--            <li class="candidate-resume-cell"><h6>Email</h6></li>--}}
 
-            <li class="candidate-resume-cell"><h6>JobType</h6></li>
-            <li class="candidate-resume-cell"><h6>Status</h6></li>
-            <li class="candidate-actions-cell"><h6>Actions</h6></li>
-        </ul>
+{{--            <li class="candidate-resume-cell"><h6>JobType</h6></li>--}}
+{{--            <li class="candidate-resume-cell"><h6>Status</h6></li>--}}
+{{--            <li class="candidate-actions-cell"><h6>Actions</h6></li>--}}
+{{--        </ul>--}}
         <!-- end .fav-candidates-table-headings -->
 
         <div id="allApplication">
@@ -82,6 +82,7 @@
 
                                         <a data-panel-id="{{$applications->requestJobId}} "onclick="approveJob(this)"><button class="btn btn-sm btn-info">Approve</button></a>
                                         <a data-panel-id="{{$applications->requestJobId}} "onclick="rejectJob(this)"><button class="btn btn-sm btn-info">Reject</button></a>
+                                         <a target="_blank" href="{{route('candidate.viewcv',['id'=>$applications->requestJobId])}}" ><button class="btn btn-sm btn-primary">View CV</button></a>
 
 
                                     @endif
@@ -387,6 +388,21 @@
             });
 
 
+        }
+
+        function viewCV(x) {
+            var id = $(x).data('panel-id');
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('candidate.viewcv')}}',
+                data: {_token:"{{csrf_token()}}",id:id},
+                success: function(data){
+
+
+
+                },
+            });
         }
 
 

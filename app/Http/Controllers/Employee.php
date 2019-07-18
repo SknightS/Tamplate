@@ -678,20 +678,37 @@ class Employee extends Controller
     public function applyForJob(Request $r) //  employee job Apply
     {
 
+
+
         $candidateInfo = Candidate::where('fkuserId', Auth::user()->id)->first();
-        $postid = Post::where('fkjobId',$r->jobIdforApply )->get();
+        $candidateInfo2 = Candidate::where('fkuserId', Auth::user()->id)->first()->candidateId;
 
-        $requestJob=new Requestjob();
-        $requestJob->fkcandidateId=$candidateInfo->candidateId;
-        $requestJob->applyTime=now();
-        $requestJob->request_status=JOB_REQUEST_STATUS['pending']['code'];
-        $requestJob->job_id=$r->jobIdforApply;
-        $requestJob->post_id = $postid->first()->id;
-        $requestJob->save();
+        $empinfo = Candidate::where('candidateId', $candidateInfo2)->leftjoin('address','address_addressId','addressId')->leftjoin('master_subarb','master_subarb.id','master_subarb_id')->leftjoin('master_state','master_state.id','master_state_id')->get();
+        $education = Education::where('fkcandidateId', $candidateInfo2)->get();
+        $skill = Skill::where('candidateId', $candidateInfo2)->leftjoin('master_skill','skillId','master_skill.id')->get();
+        $workexperience = workexperience::where('fkcandidateId', $candidateInfo2)->get();
+        $freetime = Freetime::where ('candidateId', $candidateInfo2)->get();
 
-        Session::flash('success_msg', 'Job Applied Successfully!');
-        return back();
+        if (!$empinfo->isEmpty() && !$education->isEmpty() && !$skill->isEmpty() && !$workexperience->isEmpty() && !$freetime->isEmpty() ) {
 
+            $postid = Post::where('fkjobId', $r->jobIdforApply)->get();
+
+            $requestJob = new Requestjob();
+            $requestJob->fkcandidateId = $candidateInfo->candidateId;
+            $requestJob->applyTime = now();
+            $requestJob->request_status = JOB_REQUEST_STATUS['pending']['code'];
+            $requestJob->job_id = $r->jobIdforApply;
+            $requestJob->post_id = $postid->first()->id;
+            $requestJob->save();
+
+            Session::flash('success_msg', 'Job Applied Successfully!');
+            return back();
+        }else {
+
+            echo "<script>alert('please finishe your cv first')</script>";
+            Session::flash('success_msg', 'Please Finish Your Cv Frist');
+            return back();
+        }
 
 
     }
